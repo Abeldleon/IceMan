@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 		ifstream ifs(path + someAsset);
 		if (!ifs)
 		{
-			cout << "Cannot find " << someAsset << " in ";
+			cout << "Cannot find: " << someAsset << " in ";
 			cout << (assetDirectory.empty() ? "current directory"
 											: assetDirectory) << endl;
 			return 1;
