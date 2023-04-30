@@ -9,6 +9,9 @@
 *.user
 *.userosscache
 *.sln.docstates
+*IceMan.exe.recipe
+*vc143.idb
+*IceMan.exe
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -17,7 +20,7 @@
 mono_crash.*
 
 # Build results
-[Dd]ebug/
+
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
