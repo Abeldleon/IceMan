@@ -1,6 +1,7 @@
 #ifndef STUDENTWORLD_H_
 #define STUDENTWORLD_H_
 
+#include "Actor.h"
 #include "GameWorld.h"
 #include "GameConstants.h"
 #include <string>
@@ -15,24 +16,15 @@ public:
 	{
 	}
 
-	virtual int init()
-	{
-		return GWSTATUS_CONTINUE_GAME;
-	}
+	virtual int init();
 
-	virtual int move()
-	{
-		// This code is here merely to allow the game to build, run, and terminate after you hit enter a few times.
-		// Notice that the return value GWSTATUS_PLAYER_DIED will cause our framework to end the current level.
-		decLives();
-		return GWSTATUS_PLAYER_DIED;
-	}
+	virtual int move();
 
-	virtual void cleanUp()
-	{
-	}
+	virtual void cleanUp(){}
 
 private:
+	Actor* iceman;
+	void createIceMan(StudentWorld * world);
 };
 
-#endif // STUDENTWORLD_H_
+#endif //STUDENTWORLD_H_
