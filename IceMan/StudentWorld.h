@@ -15,7 +15,7 @@
 //class Iceman;
 //class Ice;
 
-const int ICE_HEIGHT = 59;
+const int ICE_HEIGHT = 60;
 
 class StudentWorld : public GameWorld
 {
