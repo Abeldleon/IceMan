@@ -28,10 +28,7 @@ private:
 class Ice : public Actor {
 public:
 	Ice(int imageID, int startX, int startY,Direction dir, double size, unsigned int depth)
-		: Actor(imageID, startX, startY, dir, size, depth) {
-		dir = right;
-		
-	}
+		: Actor(imageID, startX, startY, dir, size, depth) {}
 	virtual void doSomething() {
 
 	}
