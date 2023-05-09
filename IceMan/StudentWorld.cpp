@@ -32,6 +32,15 @@ void StudentWorld::populateBoulders() {
 		int x = rand() % VIEW_WIDTH;
 		int y = rand() % 59;
 
+		for (int j = 0; j < 4; j++)
+		{
+			for(int k = 0; k < 4; k++)
+			{
+				delete icePtr[x+j][y + k];
+			}
+
+		}
+		
 
 		actorPtr.push_back(new Boulder(x,y));
 	}
@@ -40,4 +49,9 @@ void StudentWorld::populateBoulders() {
 int StudentWorld::min(int a, int b)
 {
 	return (a < b) ? a : b;
+}
+
+int StudentWorld::max(int a, int b)
+{
+	return (a > b) ? a : b;
 }

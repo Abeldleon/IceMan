@@ -77,7 +77,7 @@ public:
 	}
 
 	int min(int a, int b);
-
+	int max(int a, int b);
 private:
 	std::vector<Actor*> actorPtr;
 	Iceman* icemanPtr;
