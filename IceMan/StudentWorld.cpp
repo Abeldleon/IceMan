@@ -29,7 +29,7 @@ void StudentWorld::populateBoulders() {
 
 	for (int i = 0; i < numBouldersForLevel; i++) {
 
-		int x = rand() % VIEW_WIDTH;
+		int x = rand() % VIEW_WIDTH - 4;
 		int y = rand() % 59;
 
 		for (int j = 0; j < 4; j++)
