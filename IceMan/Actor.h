@@ -38,6 +38,21 @@ public:
 };
 
 class Boulder : public Actor {
+public: 
+
+	Boulder(int startX, int startY) 
+		:Actor(IID_BOULDER, startX, startY, down, 1.0, 1)
+	{
+		setVisible(true);
+	}
+
+	void Boulder::doSomething()
+	{
+	}
+
+
+	virtual ~Boulder() {}
+private:
 
 };
 

@@ -19,3 +19,14 @@ void StudentWorld::populateIce() {
 		}
 	}
 }
+
+
+
+void StudentWorld::populateBoulders() {
+
+	numBouldersForLevel = 1;
+
+	for (int i = 0; i < numBouldersForLevel; i++) {
+		actorPtr.push_back(new Boulder(20, 20));
+	}
+}

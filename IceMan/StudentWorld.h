@@ -33,10 +33,12 @@ public:
 		// construct a new oil field with ice, barrels, boulder, gold, etc
 		// allocate and insert an iceman objet into the game world
 		populateIce();
+		populateBoulders();
 
 		return GWSTATUS_CONTINUE_GAME;
 	}
 	void populateIce();
+	void populateBoulders();
 
 	virtual int move()
 	{
@@ -55,6 +57,8 @@ private:
 	std::vector<Actor*> actorPtr;
 	Iceman* icemanPtr;
 	Ice* icePtr[VIEW_WIDTH][ICE_HEIGHT];
+
+	int numBouldersForLevel;
 };
 
 #endif // STUDENTWORLD_H_
