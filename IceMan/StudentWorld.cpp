@@ -11,8 +11,8 @@ GameWorld* createStudentWorld(string assetDir)
 void StudentWorld::populateIce() {
 	for (int i = 0; i < VIEW_WIDTH; i++) {
 		//icePtr[i][0] = new Ice(IID_ICE, )
-		for (int j = 0; j <= ICE_HEIGHT; j++) {
-			if (i >= 30 && i <= 33 && j >= 4 && j <= 59)
+		for (int j = 0; j < ICE_HEIGHT; j++) {
+			if (i >= 30 && i <= 33 && j >= 4)
 				break;
 			icePtr[i][j] = new Ice(IID_ICE, i, j, GraphObject::right, 0.25, 3);
 			icePtr[i][j]->setVisible(true);
