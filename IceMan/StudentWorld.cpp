@@ -24,9 +24,20 @@ void StudentWorld::populateIce() {
 
 void StudentWorld::populateBoulders() {
 
-	numBouldersForLevel = 1;
+	numBouldersForLevel = min(getLevel() / 2 + 2, 9);
+
 
 	for (int i = 0; i < numBouldersForLevel; i++) {
-		actorPtr.push_back(new Boulder(20, 20));
+
+		int x = rand() % VIEW_WIDTH;
+		int y = rand() % 59;
+
+
+		actorPtr.push_back(new Boulder(x,y));
 	}
+}
+
+int StudentWorld::min(int a, int b)
+{
+	return (a < b) ? a : b;
 }

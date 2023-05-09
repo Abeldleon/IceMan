@@ -53,6 +53,8 @@ public:
 	{
 	}
 
+	int min(int a, int b);
+
 private:
 	std::vector<Actor*> actorPtr;
 	Iceman* icemanPtr;
