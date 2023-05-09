@@ -54,7 +54,14 @@ private:
 };
 
 class WaterPuddle : public Actor {
-
+public:
+	WaterPuddle(int startX, int startY, int ticksAvailable) : Actor(IID_WATER_POOL, startX, startY, right, 1.0, 2) {
+		setVisible(true);
+	}
+private:
+	//int m_ticksAvailable; // likely controlled by StudentWorld. if not then have to make permanent / temporary goodies a base class
+	// enum for state of pickuability? - pickupabble by iceman or protestor or neither
+	// other state: permanent and temporary
 };
 
 class Character : public Actor {

@@ -35,10 +35,33 @@ public:
 		populateIce();
 		populateBoulders();
 
+		//// TODO
+		//populateIceman();
+		//populateGold();
+		//populateWaterPool();
+		//populateWaterSquirt(); // this is probably in move since it only is populated once iceman shoots
+		//populateOilBarrels();
+		//populateSonarKit(); // i think this also occurs later in the game
+		//populateProtestors();
+
+		
+
 		return GWSTATUS_CONTINUE_GAME;
 	}
 	void populateIce();
 	void populateBoulders();
+
+
+	// TODO 
+	//void populateIceman();
+	//void populateGold();
+	//void populateWaterPool();
+	//void populateWaterSquirt(); 
+	//void populateOilBarrels();
+	//void populateSonarKit(); 
+	//void populateProtestors();
+
+	// double objectDistance() // returns euclidean distance to avoid populating objects close to one another
 
 	virtual int move()
 	{
