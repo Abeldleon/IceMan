@@ -29,8 +29,15 @@ void StudentWorld::populateBoulders() {
 
 	for (int i = 0; i < numBouldersForLevel; i++) {
 
-		int x = rand() % VIEW_WIDTH - 4;
-		int y = rand() % 59;
+		int x;
+		int y = rand() % 56;
+		
+		do {
+			x = rand() % 60;
+		} while (x >= 30 - 4 && x <= 33);
+
+		cerr << "Boulder " << i << " x: " << x << " y: " << y << endl;
+
 
 		for (int j = 0; j < 4; j++)
 		{
@@ -40,6 +47,7 @@ void StudentWorld::populateBoulders() {
 			}
 
 		}
+
 		
 
 		actorPtr.push_back(new Boulder(x,y));
