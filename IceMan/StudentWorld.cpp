@@ -29,12 +29,14 @@ void StudentWorld::populateBoulders() {
 
 	for (int i = 0; i < numBouldersForLevel; i++) {
 
+		//boulders might overlap
+
 		int x;
 		int y = rand() % 56;
 		
 		do {
 			x = rand() % 60;
-		} while (x >= 30 - 4 && x <= 33);
+		} while (x >= 30 - 4 && x <= 33); //boulders wont apper in middle path
 
 		cerr << "Boulder " << i << " x: " << x << " y: " << y << endl;
 
