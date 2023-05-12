@@ -29,7 +29,7 @@ void StudentWorld::populateBoulders() {
 
 	for (int i = 0; i < numBouldersForLevel; i++) {
 
-		//boulders might overlap
+		//boulders might overlap :: fix with objectDistance()
 
 		int x;
 		int y = rand() % 56;
@@ -55,6 +55,17 @@ void StudentWorld::populateBoulders() {
 		actorPtr.push_back(new Boulder(x,y));
 	}
 }
+
+
+
+void StudentWorld::populateIceman() {
+	icemanPtr = new Iceman();
+}
+
+void StudentWorld::populateGold() {
+
+}
+
 
 int StudentWorld::min(int a, int b)
 {

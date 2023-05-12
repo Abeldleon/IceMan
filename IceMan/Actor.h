@@ -64,11 +64,39 @@ private:
 	// other state: permanent and temporary
 };
 
+class GoldNugget : public Actor {
+	GoldNugget(int startX, int startY) : Actor(IID_GOLD, startX, startY, right, 1.0, 2) {
+
+	}
+};
+
 class Character : public Actor {
+public:
+	Character(int imageID, int startX, int startY, Direction dir, int hp) : Actor(imageID, startX, startY, dir, 1.0, 0) {
+		setVisible(true);
+		m_healthPoints = hp;
+	}
+private:
+	int m_healthPoints;
 
 };
 
 class Iceman : public Character {
+public:
+	Iceman() : Character(IID_PLAYER, 30, 60, right, 10) {
+		setVisible(true);
+		waterSquirts = 5;
+		sonarCharge = 1;
+		goldNuggets = 0;
+	}
+	virtual void doSomething() {
+
+	}
+
+private:
+	int waterSquirts;
+	int sonarCharge;
+	int goldNuggets;
 
 };
 

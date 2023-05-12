@@ -30,13 +30,14 @@ public:
 	virtual int init()
 	{
 		// initialize data structures to keep track of game's virtual world
-		// construct a new oil field with ice, barrels, boulder, gold, etc
-		// allocate and insert an iceman objet into the game world
+
+
+
+		// constructing oil field and inserting iceman
 		populateIce();
 		populateBoulders();
-
+		populateIceman();
 		//// TODO
-		//populateIceman();
 		//populateGold();
 		//populateWaterPool();
 		//populateWaterSquirt(); // this is probably in move since it only is populated once iceman shoots
@@ -50,11 +51,11 @@ public:
 	}
 	void populateIce();
 	void populateBoulders();
+	void populateIceman();
+	void populateGold();
 
 
 	// TODO 
-	//void populateIceman();
-	//void populateGold();
 	//void populateWaterPool();
 	//void populateWaterSquirt(); 
 	//void populateOilBarrels();
@@ -69,6 +70,13 @@ public:
 		// Notice that the return value GWSTATUS_PLAYER_DIED will cause our framework to end the current level.
 		//decLives();
 		//return GWSTATUS_PLAYER_DIED;
+
+
+		//TODO: 
+		//updateStatusText
+		//callDoSomethingForEveryActor
+		//deleteInactiveActors
+
 		return GWSTATUS_CONTINUE_GAME;
 	}
 
