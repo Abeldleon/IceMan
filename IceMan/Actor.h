@@ -53,9 +53,29 @@ private:
 
 };
 
-class WaterPuddle : public Actor {
+class Acquirable : public Actor {
 public:
-	WaterPuddle(int startX, int startY, int ticksAvailable) : Actor(IID_WATER_POOL, startX, startY, right, 1.0, 2) {
+	enum WhoCanPickUp {	icemanCan = 0, protestorCan = 1 };
+	enum PermOrTemp { permanent = 0, temporary = 1};
+	Acquirable(int imageID, int startX, int startY, WhoCanPickUp who, PermOrTemp pt) : Actor(imageID, startX, startY, right, 1.0, 2) {
+		m_WhoCanPickUp = who;
+		m_PermOrTemp = pt;
+	}
+	void setWhoCanPickUp(WhoCanPickUp w) {
+		m_WhoCanPickUp = w;
+	}
+	void setPermOrTemp(PermOrTemp p) {
+		m_PermOrTemp = p;
+	}
+
+private:
+	int m_WhoCanPickUp;
+	int m_PermOrTemp;
+};
+
+class WaterPuddle : public Acquirable {
+public:
+	WaterPuddle(int startX, int startY, int ticksAvailable) : Acquirable(IID_WATER_POOL, startX, startY, icemanCan, temporary) {
 		setVisible(true);
 	}
 private:
@@ -64,8 +84,25 @@ private:
 	// other state: permanent and temporary
 };
 
-class GoldNugget : public Actor {
-	GoldNugget(int startX, int startY) : Actor(IID_GOLD, startX, startY, right, 1.0, 2) {
+class GoldNugget : public Acquirable {
+public:
+	GoldNugget(int startX, int startY, WhoCanPickUp who, PermOrTemp pt) : Acquirable(IID_GOLD, startX, startY, who, pt) {
+
+	}
+	// if in perm state, starts invisble and becomes visible when iceman within radius of 3
+private:
+	
+};
+
+class OilBarrel : public Acquirable {
+	OilBarrel(int startX, int startY) : Acquirable(IID_BARREL, startX, startY, icemanCan, permanent) {
+
+	}
+	// starts invisible and becomes visible when iceman within radius of 4
+};
+
+class SonarKit : public Acquirable {
+	SonarKit(int startX, int startY) : Acquirable(IID_SONAR, startX, startY, icemanCan, temporary) {
 
 	}
 };
