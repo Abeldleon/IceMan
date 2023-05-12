@@ -38,7 +38,7 @@ public:
 		populateBoulders();
 		populateIceman();
 		//// TODO
-		//populateGold();
+		populateGold(GoldNugget::icemanCan, GoldNugget::permanent);
 		//populateWaterPool();
 		//populateWaterSquirt(); // this is probably in move since it only is populated once iceman shoots
 		//populateOilBarrels();
@@ -52,7 +52,7 @@ public:
 	void populateIce();
 	void populateBoulders();
 	void populateIceman();
-	void populateGold();
+	void populateGold(GoldNugget::WhoCanPickUp w, GoldNugget::PermOrTemp pt);
 
 
 	// TODO 
@@ -92,6 +92,7 @@ private:
 	Ice* icePtr[VIEW_WIDTH][ICE_HEIGHT];
 
 	int numBouldersForLevel;
+	int numGoldForLevel;
 };
 
 #endif // STUDENTWORLD_H_
