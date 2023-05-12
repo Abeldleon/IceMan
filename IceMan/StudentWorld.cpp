@@ -31,12 +31,20 @@ void StudentWorld::populateBoulders() {
 
 		//boulders might overlap :: fix with objectDistance()
 
+
 		int x;
-		int y = rand() % 56;
-		
+		int y;
+		bool overlapping = false;
+
 		do {
 			x = rand() % 60;
-		} while (x >= 30 - 4 && x <= 33); //boulders wont apper in middle path
+			y = rand() % 56;
+
+			if (i >= 1) { //if another boulder has been created
+				overlapping = (objectDistance(x, y, actorPtr[0]) < 6);
+			}
+			
+		} while (x >= 30 - 4 && x <= 33 || overlapping); //boulders wont apper in middle path
 
 		cerr << "Boulder " << i << " x: " << x << " y: " << y << endl;
 
@@ -64,6 +72,11 @@ void StudentWorld::populateIceman() {
 
 void StudentWorld::populateGold() {
 
+}
+
+double StudentWorld::objectDistance(int xPos, int yPos, Actor* otherActor)
+{
+	return sqrt(pow(xPos - otherActor->getX(), 2) + pow(yPos - otherActor->getY(), 2));
 }
 
 

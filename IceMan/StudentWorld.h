@@ -62,7 +62,7 @@ public:
 	//void populateSonarKit(); 
 	//void populateProtestors();
 
-	// double objectDistance() // returns euclidean distance to avoid populating objects close to one another
+	double objectDistance(int xPos, int yPos , Actor *otherActor); // returns euclidean distance to avoid populating objects close to one another
 
 	virtual int move()
 	{
