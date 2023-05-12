@@ -58,10 +58,10 @@ void StudentWorld::populateBoulders() {
 
 		}
 
-		
-
 		actorPtr.push_back(new Boulder(x,y));
 	}
+
+	actorPtr.push_back(new Boulder(30, 50));
 }
 
 
