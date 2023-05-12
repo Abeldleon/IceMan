@@ -70,7 +70,11 @@ void StudentWorld::populateIceman() {
 	icemanPtr = new Iceman();
 }
 
-void StudentWorld::populateGold() {
+void StudentWorld::populateGold(GoldNugget::WhoCanPickUp w, GoldNugget::PermOrTemp pt) {
+	numGoldForLevel = max(5 - (getLevel()) / 2, 2);
+	//cerr << numGoldForLevel << endl;
+	int x = 0;
+	int y = 0;
 
 }
 
