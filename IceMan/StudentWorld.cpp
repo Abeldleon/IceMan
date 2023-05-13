@@ -44,7 +44,7 @@ void StudentWorld::populateBoulders() {
 				overlapping = (objectDistance(x, y, actorPtr[0]) < 6);
 			}
 			
-		} while (x >= 30 - 4 && x <= 33 || overlapping); //boulders wont apper in middle path
+		} while (x >= 30 - 4 && x <= 33 || y < 20|| overlapping); //boulders wont apper in middle path
 
 		cerr << "Boulder " << i << " x: " << x << " y: " << y << endl;
 
@@ -58,10 +58,10 @@ void StudentWorld::populateBoulders() {
 
 		}
 
-		
-
 		actorPtr.push_back(new Boulder(x,y));
 	}
+
+	actorPtr.push_back(new Boulder(30, 50));
 }
 
 

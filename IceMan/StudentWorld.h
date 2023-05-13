@@ -70,12 +70,14 @@ public:
 		// Notice that the return value GWSTATUS_PLAYER_DIED will cause our framework to end the current level.
 		//decLives();
 		//return GWSTATUS_PLAYER_DIED;
-
-
 		//TODO: 
 		//updateStatusText
 		//callDoSomethingForEveryActor
+		actorPtr[0]->doSomething();
+		actorPtr[1]->doSomething();
+		actorPtr[2]->doSomething();
 		//deleteInactiveActors
+
 
 		return GWSTATUS_CONTINUE_GAME;
 	}

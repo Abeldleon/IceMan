@@ -45,6 +45,7 @@ public:
 
 	void Boulder::doSomething()
 	{
+		moveTo(getX(), getY() - 1);
 	}
 
 
