@@ -58,7 +58,7 @@ class Acquirable : public Actor {
 public:
 	enum WhoCanPickUp {	icemanCan = 0, protestorCan = 1 };
 	enum PermOrTemp { permanent = 0, temporary = 1};
-	Acquirable(int imageID, int startX, int startY, WhoCanPickUp who, PermOrTemp pt) : Actor(imageID, startX, startY, right, 1.0, 2) {
+	Acquirable(int imageID, int startX, int startY, WhoCanPickUp who, PermOrTemp pt) : Actor(imageID, startX, startY, right, 1.0, 0) {
 		m_WhoCanPickUp = who;
 		m_PermOrTemp = pt;
 	}
@@ -90,7 +90,7 @@ private:
 class GoldNugget : public Acquirable {
 public:
 	GoldNugget(int startX, int startY, WhoCanPickUp who, PermOrTemp pt) : Acquirable(IID_GOLD, startX, startY, who, pt) {
-		//setVisible(true); 
+		setVisible(true); 
 	}
 	// if in perm state, starts invisble and becomes visible when iceman within radius of 3
 	virtual void doSomething() {
@@ -101,16 +101,25 @@ private:
 };
 
 class OilBarrel : public Acquirable {
+public:
 	OilBarrel(int startX, int startY) : Acquirable(IID_BARREL, startX, startY, icemanCan, permanent) {
-
+		setVisible(true);
 	}
 	// starts invisible and becomes visible when iceman within radius of 4
+	virtual void doSomething() {
+
+	}
+private:
+
 };
 
 class SonarKit : public Acquirable {
+public:
 	SonarKit(int startX, int startY) : Acquirable(IID_SONAR, startX, startY, icemanCan, temporary) {
 
 	}
+private:
+
 };
 
 class Character : public Actor {

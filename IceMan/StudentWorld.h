@@ -41,9 +41,9 @@ public:
 		//// TODO
 		populateGold(GoldNugget::icemanCan, GoldNugget::permanent);
 		std::cerr << "shoudl be 7: " << invalidCoordinates.size() << std::endl;
+		populateOilBarrels();
 		//populateWaterPool();
 		//populateWaterSquirt(); // this is probably in move since it only is populated once iceman shoots
-		//populateOilBarrels();
 		//populateSonarKit(); // i think this also occurs later in the game
 		//populateProtestors();
 
@@ -59,12 +59,12 @@ public:
 	void populateBoulders();
 	void populateIceman();
 	void populateGold(GoldNugget::WhoCanPickUp w, GoldNugget::PermOrTemp pt);
+	void populateOilBarrels();
 
 
 	// TODO 
 	//void populateWaterPool();
 	//void populateWaterSquirt(); 
-	//void populateOilBarrels();
 	//void populateSonarKit(); 
 	//void populateProtestors();
 

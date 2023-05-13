@@ -97,6 +97,16 @@ void StudentWorld::populateGold(GoldNugget::WhoCanPickUp w, GoldNugget::PermOrTe
 
 }
 
+void StudentWorld::populateOilBarrels() {
+	int numOilBarrels = min(2 + getLevel(), 21);
+	int x = 0;
+	int y = 0;
+	for (int i = 0; i < numOilBarrels; i++) {
+		generateRandomLocation(x, y, isGoldOrOilBarrel);
+		actorPtr.push_back(new OilBarrel(x, y));
+	}
+}
+
 double StudentWorld::objectDistance(int xPos, int yPos, Actor* otherActor)
 {
 	return sqrt(pow(xPos - otherActor->getX(), 2) + pow(yPos - otherActor->getY(), 2));
