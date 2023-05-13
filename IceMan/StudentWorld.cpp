@@ -144,6 +144,18 @@ bool StudentWorld::invalidCoord(const int& x1,const int& y1) {
 
 }
 
+bool StudentWorld::isThereIceBelow(int xPos, int yPos)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (icePtr[xPos + i][yPos] != nullptr)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 int StudentWorld::min(int a, int b)
 {
 	return (a < b) ? a : b;

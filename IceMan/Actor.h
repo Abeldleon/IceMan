@@ -5,8 +5,6 @@
 
 // Students:  Add code to this file, Actor.cpp, StudentWorld.h, and StudentWorld.cpp
 
-
-
 class Actor : public GraphObject { // ABC
 public:
 	Actor(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth)
@@ -43,9 +41,11 @@ public:
 		setVisible(true);
 	}
 
-	void Boulder::doSomething()
-	{
-		moveTo(getX(), getY() - 1);
+	void doSomething(){
+		/*if (isThereIceBelow(3, 4)) { //it can't see the function isThereIceBelow
+			moveTo(getX(), getY() - 1); //even if you include "StudentWorld.h"
+		}*/
+		
 	}
 
 
