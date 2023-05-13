@@ -69,6 +69,8 @@ public:
 		m_PermOrTemp = p;
 	}
 
+
+
 private:
 	int m_WhoCanPickUp;
 	int m_PermOrTemp;
@@ -88,9 +90,12 @@ private:
 class GoldNugget : public Acquirable {
 public:
 	GoldNugget(int startX, int startY, WhoCanPickUp who, PermOrTemp pt) : Acquirable(IID_GOLD, startX, startY, who, pt) {
-
+		//setVisible(true); 
 	}
 	// if in perm state, starts invisble and becomes visible when iceman within radius of 3
+	virtual void doSomething() {
+
+	}
 private:
 	
 };

@@ -20,6 +20,7 @@ const int ICE_HEIGHT = 60;
 class StudentWorld : public GameWorld
 {
 public:
+	enum ActorType { isBoulder, isGoldOrOilBarrel }; // for populating in init
 	StudentWorld(std::string assetDir)
 		: GameWorld(assetDir)
 	{
@@ -39,6 +40,7 @@ public:
 		populateIceman();
 		//// TODO
 		populateGold(GoldNugget::icemanCan, GoldNugget::permanent);
+		std::cerr << "shoudl be 7: " << invalidCoordinates.size() << std::endl;
 		//populateWaterPool();
 		//populateWaterSquirt(); // this is probably in move since it only is populated once iceman shoots
 		//populateOilBarrels();
@@ -49,6 +51,10 @@ public:
 
 		return GWSTATUS_CONTINUE_GAME;
 	}
+
+	void generateRandomLocation(int &x, int &y, ActorType at); // generate random coordinates that aren't within a euclidean 
+												 // distance of 6 of already generated coordinates
+
 	void populateIce();
 	void populateBoulders();
 	void populateIceman();
@@ -63,6 +69,7 @@ public:
 	//void populateProtestors();
 
 	double objectDistance(int xPos, int yPos , Actor *otherActor); // returns euclidean distance to avoid populating objects close to one another
+	bool invalidCoord(const int& x1, const int& y1);
 
 	virtual int move()
 	{
@@ -73,9 +80,9 @@ public:
 		//TODO: 
 		//updateStatusText
 		//callDoSomethingForEveryActor
-		actorPtr[0]->doSomething();
-		actorPtr[1]->doSomething();
-		actorPtr[2]->doSomething();
+		//actorPtr[0]->doSomething();
+		//actorPtr[1]->doSomething();
+		//actorPtr[2]->doSomething();
 		//deleteInactiveActors
 
 
@@ -92,6 +99,8 @@ private:
 	std::vector<Actor*> actorPtr;
 	Iceman* icemanPtr;
 	Ice* icePtr[VIEW_WIDTH][ICE_HEIGHT];
+
+	std::vector<std::pair<int, int>> invalidCoordinates;
 
 	int numBouldersForLevel;
 	int numGoldForLevel;
