@@ -70,6 +70,7 @@ public:
 
 	double objectDistance(int xPos, int yPos , Actor *otherActor); // returns euclidean distance to avoid populating objects close to one another
 	bool invalidCoord(const int& x1, const int& y1);
+	bool isThereIceBelow(int xPos, int yPos);
 
 	virtual int move()
 	{
@@ -82,7 +83,7 @@ public:
 		//callDoSomethingForEveryActor
 		//actorPtr[0]->doSomething();
 		//actorPtr[1]->doSomething();
-		//actorPtr[2]->doSomething();
+		actorPtr[2]->doSomething();
 		//deleteInactiveActors
 
 
