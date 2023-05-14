@@ -47,13 +47,6 @@ public:
 		setVisible(true);
 	}
 
-	//virtual void doSomething(){
-	//	if (getWorld()->isThereIceBelow(3, 4)) { //it can't see the function isThereIceBelow
-	//		moveTo(getX(), getY() - 1); //even if you include "StudentWorld.h"
-	//	}
-
-	//	
-	//}
 	virtual void doSomething();
 
 	virtual ~Boulder() {}

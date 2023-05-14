@@ -112,33 +112,17 @@ double StudentWorld::objectDistance(int xPos, int yPos, Actor* otherActor)
 	return sqrt(pow(xPos - otherActor->getX(), 2) + pow(yPos - otherActor->getY(), 2));
 }
 bool StudentWorld::invalidCoord(const int& x1,const int& y1) {
-	//cerr << "size: " << invalidCoordinates.size() << endl;
 	double dist = 0;
 	for (unsigned int i = 0; i < invalidCoordinates.size(); i++) { // iterate thru vector containing pair of invalid coordinates
 		//set dist equal to euclidean distance from generated coordinates to the i'th pair of invalid coordinates
 		dist = sqrt(pow(invalidCoordinates[i].first - x1, 2) + pow(invalidCoordinates[i].second - y1, 2)); 
-		//cerr << "dist: " << dist << endl;
-		cerr << "invalids: (" << invalidCoordinates[i].first << ", " << invalidCoordinates[i].second
-			<< ")		curr coord: (" << x1 << ", " << y1 << ")			dist: " << dist << endl;
 		if (dist < 6) { // if dist is less than 6, return true to regenerate coordinates
-			//cerr << "dist redo: " << dist << endl;
-			//cerr << "x1: " << x1 << " " << "y1: " << y1 << endl;
 			return true;
 		}
-		//else { // if dist is greater than 6, store these coordinates as invalid and return false to proceed
-		//	invalidCoordinates.emplace_back(x1, y1);
-		//	cerr << "emplacing:  x1: " << x1 << " " << "y1: " << y1 << endl;
-		//	//cerr << "dist proceed: " << dist << endl;
-		//	return false;
-		//}
-
 	}
 	// if it hasn't returned a value at this point, there are no coordinates in invalidCoordinates
 	// OR all checked coordinates are valid (dist > 6 for all stored coordinates)
 	// so store these coordinates inside of invalidCoordinates and return false to proceed
-
-	//cerr << "x1: " << x1 << " " << "y1: " << y1 << endl;
-	cerr << "valid distance: " << dist << endl;
 	invalidCoordinates.emplace_back(x1, y1);
 	return false;
 
@@ -148,7 +132,7 @@ bool StudentWorld::isThereIceBelow(int xPos, int yPos)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (icePtr[xPos + i][yPos] != nullptr)
+		if (icePtr[xPos + i][yPos] != nullptr) // should be yPos - 1?
 		{
 			return true;
 		}
@@ -182,7 +166,7 @@ void StudentWorld::generateRandomLocation(int& x, int& y, ActorType at) {
 		do {
 			x = rand() % 60; // generate random coordinates
 			y = rand() % 56;
-		} while (invalidCoord(x, y)); /* keep generating if coordinates are invalid
+		} while ((x > 26 && x < 34) || invalidCoord(x, y)); /* keep generating if coordinates are invalid
 									    (within euclidean distance of 6 within another
 										object already populated on the map             */
 

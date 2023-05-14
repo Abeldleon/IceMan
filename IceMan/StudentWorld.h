@@ -25,8 +25,13 @@ public:
 		: GameWorld(assetDir)
 	{
 		icemanPtr = nullptr;
-		
+		for (int i = 0; i < VIEW_WIDTH; i++) { // initialize all iceptrs to null
+			for (int j = 0; j < ICE_HEIGHT; j++) {
+				icePtr[i][j] = nullptr;
+			}
+		}
 	}
+
 
 	virtual int init()
 	{
@@ -47,7 +52,6 @@ public:
 		//populateSonarKit(); // i think this also occurs later in the game
 		//populateProtestors();
 
-		
 
 		return GWSTATUS_CONTINUE_GAME;
 	}
