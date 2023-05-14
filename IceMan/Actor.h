@@ -2,15 +2,14 @@
 #define ACTOR_H_
 
 #include "GraphObject.h"
-
+class StudentWorld;
 // Students:  Add code to this file, Actor.cpp, StudentWorld.h, and StudentWorld.cpp
 
 class Actor : public GraphObject { // ABC
 public:
-	Actor(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth)
-		: GraphObject(imageID, startX, startY, dir, size, depth) {
-		isActive = true;
-		
+	Actor(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* sw)
+		: GraphObject(imageID, startX, startY, dir, size, depth), isActive(true), m_sw(sw){
+		//isActive = true;
 	}
 	virtual void doSomething() = 0;
 	bool getIsActive() { // to check is object is active
@@ -19,14 +18,22 @@ public:
 	void setInactive() { // to set an object inactive
 		isActive = false;
 	}
+	StudentWorld* getWorld() {
+		return m_sw;
+	}
+protected:
 private:
 	bool isActive; // for move() function in StudentWorld that will check whether each actor is active. Can be modified by each derived class
+	StudentWorld* m_sw;
+
+private:
 };
 
 class Ice : public Actor {
 public:
-	Ice(int imageID, int startX, int startY,Direction dir, double size, unsigned int depth)
-		: Actor(imageID, startX, startY, dir, size, depth) {}
+	Ice(int imageID, int startX, int startY,Direction dir, double size, unsigned int depth, StudentWorld* sw)
+		: Actor(imageID, startX, startY, dir, size, depth, sw) {
+	}
 	virtual void doSomething() {
 
 	}
@@ -34,31 +41,30 @@ public:
 
 class Boulder : public Actor {
 public: 
-
-	Boulder(int startX, int startY) 
-		:Actor(IID_BOULDER, startX, startY, down, 1.0, 1)
+	Boulder(int startX, int startY, StudentWorld* sw)
+		:Actor(IID_BOULDER, startX, startY, down, 1.0, 1, sw)
 	{
 		setVisible(true);
 	}
 
-	void doSomething(){
-		/*if (isThereIceBelow(3, 4)) { //it can't see the function isThereIceBelow
-			moveTo(getX(), getY() - 1); //even if you include "StudentWorld.h"
-		}*/
-		
-	}
+	//virtual void doSomething(){
+	//	if (getWorld()->isThereIceBelow(3, 4)) { //it can't see the function isThereIceBelow
+	//		moveTo(getX(), getY() - 1); //even if you include "StudentWorld.h"
+	//	}
 
+	//	
+	//}
+	virtual void doSomething();
 
 	virtual ~Boulder() {}
 private:
-
 };
 
 class Acquirable : public Actor {
 public:
 	enum WhoCanPickUp {	icemanCan = 0, protestorCan = 1 };
 	enum PermOrTemp { permanent = 0, temporary = 1};
-	Acquirable(int imageID, int startX, int startY, WhoCanPickUp who, PermOrTemp pt) : Actor(imageID, startX, startY, right, 1.0, 0) {
+	Acquirable(int imageID, int startX, int startY, WhoCanPickUp who, PermOrTemp pt, StudentWorld* sw) : Actor(imageID, startX, startY, right, 1.0, 0, sw) {
 		m_WhoCanPickUp = who;
 		m_PermOrTemp = pt;
 	}
@@ -78,7 +84,7 @@ private:
 
 class WaterPuddle : public Acquirable {
 public:
-	WaterPuddle(int startX, int startY, int ticksAvailable) : Acquirable(IID_WATER_POOL, startX, startY, icemanCan, temporary) {
+	WaterPuddle(int startX, int startY, int ticksAvailable, StudentWorld* sw) : Acquirable(IID_WATER_POOL, startX, startY, icemanCan, temporary, sw) {
 		setVisible(true);
 	}
 private:
@@ -89,7 +95,7 @@ private:
 
 class GoldNugget : public Acquirable {
 public:
-	GoldNugget(int startX, int startY, WhoCanPickUp who, PermOrTemp pt) : Acquirable(IID_GOLD, startX, startY, who, pt) {
+	GoldNugget(int startX, int startY, WhoCanPickUp who, PermOrTemp pt, StudentWorld* sw) : Acquirable(IID_GOLD, startX, startY, who, pt, sw) {
 		setVisible(true); 
 	}
 	// if in perm state, starts invisble and becomes visible when iceman within radius of 3
@@ -102,7 +108,7 @@ private:
 
 class OilBarrel : public Acquirable {
 public:
-	OilBarrel(int startX, int startY) : Acquirable(IID_BARREL, startX, startY, icemanCan, permanent) {
+	OilBarrel(int startX, int startY, StudentWorld* sw) : Acquirable(IID_BARREL, startX, startY, icemanCan, permanent, sw) {
 		setVisible(true);
 	}
 	// starts invisible and becomes visible when iceman within radius of 4
@@ -115,7 +121,7 @@ private:
 
 class SonarKit : public Acquirable {
 public:
-	SonarKit(int startX, int startY) : Acquirable(IID_SONAR, startX, startY, icemanCan, temporary) {
+	SonarKit(int startX, int startY, StudentWorld* sw) : Acquirable(IID_SONAR, startX, startY, icemanCan, temporary, sw) {
 
 	}
 private:
@@ -124,7 +130,7 @@ private:
 
 class Character : public Actor {
 public:
-	Character(int imageID, int startX, int startY, Direction dir, int hp) : Actor(imageID, startX, startY, dir, 1.0, 0) {
+	Character(int imageID, int startX, int startY, Direction dir, int hp, StudentWorld* sw) : Actor(imageID, startX, startY, dir, 1.0, 0, sw) {
 		setVisible(true);
 		m_healthPoints = hp;
 	}
@@ -135,7 +141,7 @@ private:
 
 class Iceman : public Character {
 public:
-	Iceman() : Character(IID_PLAYER, 30, 60, right, 10) {
+	Iceman(StudentWorld* sw) : Character(IID_PLAYER, 30, 60, right, 10, sw) {
 		setVisible(true);
 		waterSquirts = 5;
 		sonarCharge = 1;

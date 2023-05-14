@@ -17,7 +17,7 @@ void StudentWorld::populateIce() {
 		for (int j = 0; j < ICE_HEIGHT; j++) {
 			if (i >= 30 && i <= 33 && j >= 4)
 				break;
-			icePtr[i][j] = new Ice(IID_ICE, i, j, GraphObject::right, 0.25, 3);
+			icePtr[i][j] = new Ice(IID_ICE, i, j, GraphObject::right, 0.25, 3, this);
 			icePtr[i][j]->setVisible(true);
 		}
 	}
@@ -62,17 +62,17 @@ void StudentWorld::populateBoulders() {
 
 		}
 
-		actorPtr.push_back(new Boulder(x,y));
+		actorPtr.push_back(new Boulder(x,y, this));
 		invalidCoordinates.emplace_back(x, y);  // store coorinates in invalid so that GoldNugget and OilBarrel aren't populated nearby
 	}
 
-	actorPtr.push_back(new Boulder(30, 50));
+	actorPtr.push_back(new Boulder(30, 50, this));
 }
 
 
 
 void StudentWorld::populateIceman() {
-	icemanPtr = new Iceman();
+	icemanPtr = new Iceman(this);
 }
 
 void StudentWorld::populateGold(GoldNugget::WhoCanPickUp w, GoldNugget::PermOrTemp pt) {
@@ -85,7 +85,7 @@ void StudentWorld::populateGold(GoldNugget::WhoCanPickUp w, GoldNugget::PermOrTe
 		if (pt == GoldNugget::permanent) {
 			// TODO: generate random location for numGoldForLevel and create new GoldNugget at that location
 			generateRandomLocation(x, y, isGoldOrOilBarrel);
-			actorPtr.push_back(new GoldNugget(x, y, w, pt));
+			actorPtr.push_back(new GoldNugget(x, y, w, pt, this));
 			//cerr << "Gold " << i << " x: " << x << " y: " << y << endl;
 
 		}
@@ -103,7 +103,7 @@ void StudentWorld::populateOilBarrels() {
 	int y = 0;
 	for (int i = 0; i < numOilBarrels; i++) {
 		generateRandomLocation(x, y, isGoldOrOilBarrel);
-		actorPtr.push_back(new OilBarrel(x, y));
+		actorPtr.push_back(new OilBarrel(x, y, this));
 	}
 }
 
