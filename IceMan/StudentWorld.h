@@ -75,7 +75,8 @@ public:
 	double objectDistance(int xPos, int yPos , Actor *otherActor); // returns euclidean distance to avoid populating objects close to one another
 	bool invalidCoord(const int& x1, const int& y1);
 	bool isThereIceBelow(int xPos, int yPos);
-
+	bool isThereIceAround(int xPos, int yPos);
+	void deleteInactiveActors();
 	virtual int move()
 	{
 		// This code is here merely to allow the game to build, run, and terminate after you hit enter a few times.
@@ -88,7 +89,7 @@ public:
 		//actorPtr[0]->doSomething();
 		//actorPtr[1]->doSomething();
 		actorPtr[2]->doSomething();
-		//deleteInactiveActors
+		deleteInactiveActors();
 
 
 		return GWSTATUS_CONTINUE_GAME;

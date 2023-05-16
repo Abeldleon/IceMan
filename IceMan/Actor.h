@@ -41,16 +41,27 @@ public:
 
 class Boulder : public Actor {
 public: 
+	enum State {
+		Stable, Waiting, Falling
+	};
+
 	Boulder(int startX, int startY, StudentWorld* sw)
 		:Actor(IID_BOULDER, startX, startY, down, 1.0, 1, sw)
 	{
 		setVisible(true);
+		currentState = Stable;
 	}
 
 	virtual void doSomething();
-
+	void setState(State state) {
+		currentState = state;
+	}
+	State getState() {
+		return currentState;
+	}
 	virtual ~Boulder() {}
 private:
+	State currentState;
 };
 
 class Acquirable : public Actor {
