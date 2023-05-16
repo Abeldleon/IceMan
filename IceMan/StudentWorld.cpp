@@ -140,6 +140,21 @@ bool StudentWorld::isThereIceBelow(int xPos, int yPos)
 	return false;
 }
 
+bool StudentWorld::isThereIceAround(int xPos, int yPos) {
+	for (int i = -1; i < 5; i++) {
+		for (int j = -1; j < 5; j++) {
+			if (icePtr[xPos + i][yPos + j] != nullptr)
+			{
+				return true;
+			}
+			if (i > -1 && i < 4) {
+				j += 4;
+			}
+		}
+	}
+	return false;
+}
+
 int StudentWorld::min(int a, int b)
 {
 	return (a < b) ? a : b;
@@ -170,5 +185,15 @@ void StudentWorld::generateRandomLocation(int& x, int& y, ActorType at) {
 									    (within euclidean distance of 6 within another
 										object already populated on the map             */
 
+	}
+}
+
+void StudentWorld::deleteInactiveActors() {
+	// Removes objects that are inactive from the actorPtr vector
+	for (int i = 0; i < actorPtr.size(); i++) {
+		if (!actorPtr[i]->getIsActive()) {
+			actorPtr[i]->setVisible(false);
+			actorPtr.erase(actorPtr.begin() + i);
+		}
 	}
 }
