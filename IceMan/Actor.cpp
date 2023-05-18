@@ -22,3 +22,24 @@ void Boulder::doSomething() { // still need to implement waiting state for 30 ti
 		}
 	}
 }
+
+void WaterPuddle::doSomething()
+{
+	m_ticksAvailable++;
+	int T = getWorld()->max(100, 300 - 10 * getWorld()->getLevel());
+	
+	if (m_ticksAvailable == T) {
+		setInactive();
+	}
+
+}
+
+void SonarKit::doSomething()
+{
+	m_ticksAvailable++;
+	int T = getWorld()->max(100, 300 - 10 * getWorld()->getLevel());
+
+	if (m_ticksAvailable == T) {
+		setInactive();
+	}
+}

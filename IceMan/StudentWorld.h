@@ -20,7 +20,7 @@ const int ICE_HEIGHT = 60;
 class StudentWorld : public GameWorld
 {
 public:
-	enum ActorType { isBoulder, isGoldOrOilBarrel, isSonarKit}; // for populating in init
+	enum ActorType { isBoulder, isGoldOrOilBarrel, isWaterPuddle}; // for populating in init
 	StudentWorld(std::string assetDir)
 		: GameWorld(assetDir)
 	{
@@ -47,7 +47,7 @@ public:
 		populateGold(GoldNugget::icemanCan, GoldNugget::permanent);
 		std::cerr << "shoudl be 7: " << invalidCoordinates.size() << std::endl;
 		populateOilBarrels();
-		//populateWaterPool();
+
 		//populateWaterSquirt(); // this is probably in move since it only is populated once iceman shoots
 		//populateSonarKit(); // i think this also occurs later in the game
 		//populateProtestors();
@@ -67,16 +67,16 @@ public:
 
 
 	// TODO 
-	//void populateWaterPool();
-	//void populateWaterSquirt(); 
-	void populateSonarKit(); 
+	void populateSonarKitAndWaterPool(); 
 	//void populateProtestors();
 
+	double distanceToIceman();
 	double objectDistance(int xPos, int yPos , Actor *otherActor); // returns euclidean distance to avoid populating objects close to one another
 	bool invalidCoord(const int& x1, const int& y1);
 	bool isThereIceBelow(int xPos, int yPos);
 	//bool isThereIceAround(int xPos, int yPos);
 	void deleteInactiveActors();
+	bool isThereIce(int xPos, int yPos);
 	virtual int move()
 	{
 		// This code is here merely to allow the game to build, run, and terminate after you hit enter a few times.
@@ -86,10 +86,13 @@ public:
 		//TODO: 
 		//updateStatusText
 		//callDoSomethingForEveryActor
+		populateSonarKitAndWaterPool();
+
 		icemanPtr->doSomething();
-		actorPtr[0]->doSomething();
-		actorPtr[1]->doSomething();
-		actorPtr[2]->doSomething();
+		for (Actor* a : actorPtr) {
+			a->doSomething();
+		}
+
 		deleteInactiveActors();
 
 
@@ -111,6 +114,8 @@ private:
 
 	int numBouldersForLevel;
 	int numGoldForLevel;
+	int probForWaterPoolOrSonar;
+
 };
 
 #endif // STUDENTWORLD_H_

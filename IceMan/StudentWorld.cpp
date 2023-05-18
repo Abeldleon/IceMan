@@ -63,7 +63,7 @@ void StudentWorld::populateBoulders() {
 		}
 
 		actorPtr.push_back(new Boulder(x,y, this));
-		invalidCoordinates.emplace_back(x, y);  // store coorinates in invalid so that GoldNugget and OilBarrel aren't populated nearby
+		//invalidCoordinates.emplace_back(x, y);  // store coorinates in invalid so that GoldNugget and OilBarrel aren't populated nearby
 	}
 
 	actorPtr.push_back(new Boulder(30, 50, this));
@@ -107,10 +107,28 @@ void StudentWorld::populateOilBarrels() {
 	}
 }
 
-void StudentWorld::populateSonarKit()
+
+void StudentWorld::populateSonarKitAndWaterPool()
 {
+	probForWaterPoolOrSonar = getLevel() * 25 + 300;
+	int num = rand() % probForWaterPoolOrSonar;
+	int chance = rand() % 5;
+
+	if (num == 0) {
+		if (chance > 0) {
+			int x = 0;
+			int y = 0;
+			generateRandomLocation(x, y, isWaterPuddle);
+			actorPtr.push_back(new WaterPuddle(x, y, 20, this));
+			invalidCoord(x, y);
+		}
+		else {
+			actorPtr.push_back(new SonarKit(0, 60, this));
+		}
+	}
 
 }
+
 
 double StudentWorld::objectDistance(int xPos, int yPos, Actor* otherActor)
 {
@@ -118,9 +136,11 @@ double StudentWorld::objectDistance(int xPos, int yPos, Actor* otherActor)
 }
 bool StudentWorld::invalidCoord(const int& x1,const int& y1) {
 	double dist = 0;
-	for (unsigned int i = 0; i < invalidCoordinates.size(); i++) { // iterate thru vector containing pair of invalid coordinates
+
+
+	for (unsigned int i = 0; i < actorPtr.size(); i++) { // iterate thru vector containing pair of invalid coordinates
 		//set dist equal to euclidean distance from generated coordinates to the i'th pair of invalid coordinates
-		dist = sqrt(pow(invalidCoordinates[i].first - x1, 2) + pow(invalidCoordinates[i].second - y1, 2)); 
+		dist = sqrt(pow(actorPtr[i]->getX() - x1, 2) + pow(actorPtr[i]->getY() - y1, 2));
 		if (dist < 6) { // if dist is less than 6, return true to regenerate coordinates
 			return true;
 		}
@@ -128,9 +148,8 @@ bool StudentWorld::invalidCoord(const int& x1,const int& y1) {
 	// if it hasn't returned a value at this point, there are no coordinates in invalidCoordinates
 	// OR all checked coordinates are valid (dist > 6 for all stored coordinates)
 	// so store these coordinates inside of invalidCoordinates and return false to proceed
-	invalidCoordinates.emplace_back(x1, y1);
+	//invalidCoordinates.emplace_back(x1, y1);
 	return false;
-
 }
 
 bool StudentWorld::isThereIceBelow(int xPos, int yPos)
@@ -144,21 +163,6 @@ bool StudentWorld::isThereIceBelow(int xPos, int yPos)
 	}
 	return false;
 }
-
-//bool StudentWorld::isThereIceAround(int xPos, int yPos) {
-//	for (int i = -1; i < 5; i++) {
-//		for (int j = -1; j < 5; j++) {
-//			if (icePtr[xPos + i][yPos + j] != nullptr)
-//			{
-//				return true;
-//			}
-//			if (i > -1 && i < 4) {
-//				j += 4;
-//			}
-//		}
-//	}
-//	return false;
-//}
 
 int StudentWorld::min(int a, int b)
 {
@@ -189,9 +193,12 @@ void StudentWorld::generateRandomLocation(int& x, int& y, ActorType at) {
 									    (within euclidean distance of 6 within another
 										object already populated on the map             */
 	}
-	else if (at == isSonarKit) {
+	else if (at == isWaterPuddle) {
+		do {
+			x = rand() % 60; // generate random coordinates
+			y = rand() % 56;
+		} while (isThereIce(x, y) || invalidCoord(x,y));
 	}
-
 }
 
 void StudentWorld::deleteInactiveActors() {
@@ -202,4 +209,17 @@ void StudentWorld::deleteInactiveActors() {
 			actorPtr.erase(actorPtr.begin() + i);
 		}
 	}
+}
+
+bool StudentWorld::isThereIce(int xPos, int yPos)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++) {
+			if (icePtr[xPos+i][yPos+j]) {
+				return true;
+			}
+		}
+	}
+	return false;
 }

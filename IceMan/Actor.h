@@ -92,9 +92,12 @@ class WaterPuddle : public Acquirable {
 public:
 	WaterPuddle(int startX, int startY, int ticksAvailable, StudentWorld* sw) : Acquirable(IID_WATER_POOL, startX, startY, icemanCan, temporary, sw) {
 		setVisible(true);
+		m_ticksAvailable = 0;
 	}
+	virtual void doSomething();
+
 private:
-	//int m_ticksAvailable; // likely controlled by StudentWorld. if not then have to make permanent / temporary goodies a base class
+	int m_ticksAvailable; // likely controlled by StudentWorld. if not then have to make permanent / temporary goodies a base class
 	// enum for state of pickuability? - pickupabble by iceman or protestor or neither
 	// other state: permanent and temporary
 };
@@ -128,10 +131,12 @@ private:
 class SonarKit : public Acquirable {
 public:
 	SonarKit(int startX, int startY, StudentWorld* sw) : Acquirable(IID_SONAR, startX, startY, icemanCan, temporary, sw) {
-
+		setVisible(true);
 	}
-private:
 
+	void doSomething();
+private:
+	int m_ticksAvailable;
 };
 
 class Character : public Actor {
