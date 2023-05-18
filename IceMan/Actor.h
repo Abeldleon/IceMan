@@ -50,6 +50,7 @@ public:
 	{
 		setVisible(true);
 		currentState = Stable;
+		ticksElapsed = 0;
 	}
 
 	virtual void doSomething();
@@ -62,6 +63,7 @@ public:
 	virtual ~Boulder() {}
 private:
 	State currentState;
+	int ticksElapsed;
 };
 
 class Acquirable : public Actor {
@@ -140,7 +142,6 @@ public:
 	}
 private:
 	int m_healthPoints;
-
 };
 
 class Iceman : public Character {
@@ -151,9 +152,8 @@ public:
 		sonarCharge = 1;
 		goldNuggets = 0;
 	}
-	virtual void doSomething() {
-
-	}
+	virtual void doSomething()
+	{}
 
 private:
 	int waterSquirts;

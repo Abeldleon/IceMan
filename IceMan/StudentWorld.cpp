@@ -107,6 +107,11 @@ void StudentWorld::populateOilBarrels() {
 	}
 }
 
+void StudentWorld::populateSonarKit()
+{
+
+}
+
 double StudentWorld::objectDistance(int xPos, int yPos, Actor* otherActor)
 {
 	return sqrt(pow(xPos - otherActor->getX(), 2) + pow(yPos - otherActor->getY(), 2));
@@ -140,20 +145,20 @@ bool StudentWorld::isThereIceBelow(int xPos, int yPos)
 	return false;
 }
 
-bool StudentWorld::isThereIceAround(int xPos, int yPos) {
-	for (int i = -1; i < 5; i++) {
-		for (int j = -1; j < 5; j++) {
-			if (icePtr[xPos + i][yPos + j] != nullptr)
-			{
-				return true;
-			}
-			if (i > -1 && i < 4) {
-				j += 4;
-			}
-		}
-	}
-	return false;
-}
+//bool StudentWorld::isThereIceAround(int xPos, int yPos) {
+//	for (int i = -1; i < 5; i++) {
+//		for (int j = -1; j < 5; j++) {
+//			if (icePtr[xPos + i][yPos + j] != nullptr)
+//			{
+//				return true;
+//			}
+//			if (i > -1 && i < 4) {
+//				j += 4;
+//			}
+//		}
+//	}
+//	return false;
+//}
 
 int StudentWorld::min(int a, int b)
 {
@@ -175,7 +180,6 @@ void StudentWorld::generateRandomLocation(int& x, int& y, ActorType at) {
 												   (within euclidean distance of 6 within another
 											    	object already populated on the map) OR if y < 20  */
 				
-
 	}
 	else if (at == isGoldOrOilBarrel) { 
 		do {
@@ -184,8 +188,10 @@ void StudentWorld::generateRandomLocation(int& x, int& y, ActorType at) {
 		} while ((x > 26 && x < 34) || invalidCoord(x, y)); /* keep generating if coordinates are invalid
 									    (within euclidean distance of 6 within another
 										object already populated on the map             */
-
 	}
+	else if (at == isSonarKit) {
+	}
+
 }
 
 void StudentWorld::deleteInactiveActors() {
