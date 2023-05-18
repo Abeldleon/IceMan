@@ -20,7 +20,7 @@ const int ICE_HEIGHT = 60;
 class StudentWorld : public GameWorld
 {
 public:
-	enum ActorType { isBoulder, isGoldOrOilBarrel }; // for populating in init
+	enum ActorType { isBoulder, isGoldOrOilBarrel, isSonarKit}; // for populating in init
 	StudentWorld(std::string assetDir)
 		: GameWorld(assetDir)
 	{
@@ -69,13 +69,13 @@ public:
 	// TODO 
 	//void populateWaterPool();
 	//void populateWaterSquirt(); 
-	//void populateSonarKit(); 
+	void populateSonarKit(); 
 	//void populateProtestors();
 
 	double objectDistance(int xPos, int yPos , Actor *otherActor); // returns euclidean distance to avoid populating objects close to one another
 	bool invalidCoord(const int& x1, const int& y1);
 	bool isThereIceBelow(int xPos, int yPos);
-	bool isThereIceAround(int xPos, int yPos);
+	//bool isThereIceAround(int xPos, int yPos);
 	void deleteInactiveActors();
 	virtual int move()
 	{
@@ -86,8 +86,9 @@ public:
 		//TODO: 
 		//updateStatusText
 		//callDoSomethingForEveryActor
-		//actorPtr[0]->doSomething();
-		//actorPtr[1]->doSomething();
+		icemanPtr->doSomething();
+		actorPtr[0]->doSomething();
+		actorPtr[1]->doSomething();
 		actorPtr[2]->doSomething();
 		deleteInactiveActors();
 
