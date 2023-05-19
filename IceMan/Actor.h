@@ -157,8 +157,7 @@ public:
 		sonarCharge = 1;
 		goldNuggets = 0;
 	}
-	virtual void doSomething()
-	{}
+	virtual void doSomething();
 
 private:
 	int waterSquirts;
