@@ -223,3 +223,51 @@ bool StudentWorld::isThereIce(int xPos, int yPos)
 	}
 	return false;
 }
+
+bool StudentWorld::icemanOverlaps(int x, int y) {
+	// delete the overlapping ice accordint to the direction that the iceman is facing
+
+	if (isThereIce(x, y) && icemanPtr->getDirection() == Iceman::left) { 
+		for (int i = 0; i < 4; i++) {
+			if (icePtr[x][y + i] == nullptr) // to prevent double deletion
+				break;
+			cerr << "deleting left coordinates: " << x << " " << y + i << endl;
+			delete icePtr[x][y + i];
+			icePtr[x][y + i] = nullptr;
+		}
+		return true;
+
+	}
+	else if (isThereIce(x, y) && icemanPtr->getDirection() == Iceman::right) {
+		for (int i = 0; i < 4; i++) {
+			if (icePtr[x + 3][y + i] == nullptr)
+				break;
+			cerr << "deleting right coordinates: " << x + 4 << " " << y + i << endl;
+			delete icePtr[x + 3][y + i];
+			icePtr[x + 3][y + i] = nullptr;
+		}
+		return true;
+
+	}
+	else if (isThereIce(x, y) && icemanPtr->getDirection() == Iceman::down) {
+		for (int i = 0; i < 4; i++) {
+			if (icePtr[x + i][y] == nullptr)
+				break;
+			delete icePtr[x + i][y];
+			icePtr[x + i][y] = nullptr;
+		}
+		return true;
+
+	}
+	else if (isThereIce(x, y) && icemanPtr->getDirection() == Iceman::up) {
+		for (int i = 0; i < 4; i++) {
+			if (icePtr[x + i][y + 3] == nullptr)
+				break;
+			delete icePtr[x + i][y + 3];
+			icePtr[x + i][y + 3] = nullptr;
+		}
+		return true;
+
+	}
+	return false;
+}
