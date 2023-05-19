@@ -51,7 +51,13 @@ public:
 		//populateWaterSquirt(); // this is probably in move since it only is populated once iceman shoots
 		//populateSonarKit(); // i think this also occurs later in the game
 		//populateProtestors();
-
+		//delete icePtr[29][59];
+		//delete icePtr[29][60];
+		//delete icePtr[29][61];
+		//delete icePtr[29][62];
+		//delete icePtr[29][58];
+		//delete icePtr[30][0];
+		//delete icePtr[29][60];
 
 		return GWSTATUS_CONTINUE_GAME;
 	}
@@ -77,6 +83,8 @@ public:
 	//bool isThereIceAround(int xPos, int yPos);
 	void deleteInactiveActors();
 	bool isThereIce(int xPos, int yPos);
+	bool icemanOverlaps(int x, int y);
+
 	virtual int move()
 	{
 		// This code is here merely to allow the game to build, run, and terminate after you hit enter a few times.
