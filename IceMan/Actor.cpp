@@ -49,22 +49,34 @@ void Iceman::doSomething() {
 	if (!getIsActive()) // if not alive, return immediately
 		return;
 	// need to remove ice when iceman overlaps
+	if (getWorld()->icemanOverlaps(getX(), getY())) {
+		getWorld()->playSound(SOUND_DIG);
+	}
+	//std::cerr << getWorld()->icemanOverlaps(getX(), getY()) << std::endl;
 	int key = 0;
 	if (getWorld()->getKey(key) == true) {
 		switch (key) {
 		case KEY_PRESS_LEFT:
+			if (getX() == 0)
+				break;
 			setDirection(left);
 			moveTo(getX() - 1, getY());
 			break;
 		case KEY_PRESS_RIGHT:
+			if (getX() == VIEW_WIDTH - 4)
+				break;
 			setDirection(right);
 			moveTo(getX() + 1, getY());
 			break;
 		case KEY_PRESS_DOWN:
+			if (getY() == 0)
+				break;
 			setDirection(down);
 			moveTo(getX(), getY() - 1);
 			break;
 		case KEY_PRESS_UP:
+			if (getY() == VIEW_HEIGHT - 4)
+				break;
 			setDirection(up);
 			moveTo(getX(), getY() + 1);
 			break;
