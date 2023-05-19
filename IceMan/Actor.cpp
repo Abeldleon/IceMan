@@ -43,3 +43,31 @@ void SonarKit::doSomething()
 		setInactive();
 	}
 }
+
+
+void Iceman::doSomething() {
+	if (!getIsActive()) // if not alive, return immediately
+		return;
+	// need to remove ice when iceman overlaps
+	int key = 0;
+	if (getWorld()->getKey(key) == true) {
+		switch (key) {
+		case KEY_PRESS_LEFT:
+			setDirection(left);
+			moveTo(getX() - 1, getY());
+			break;
+		case KEY_PRESS_RIGHT:
+			setDirection(right);
+			moveTo(getX() + 1, getY());
+			break;
+		case KEY_PRESS_DOWN:
+			setDirection(down);
+			moveTo(getX(), getY() - 1);
+			break;
+		case KEY_PRESS_UP:
+			setDirection(up);
+			moveTo(getX(), getY() + 1);
+			break;
+		}
+	}
+}
