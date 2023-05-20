@@ -26,7 +26,7 @@ public:
 	{
 		icemanPtr = nullptr;
 		for (int i = 0; i < VIEW_WIDTH; i++) { // initialize all iceptrs to null
-			for (int j = 0; j < ICE_HEIGHT; j++) {
+			for (int j = 0; j < VIEW_HEIGHT; j++) {
 				icePtr[i][j] = nullptr;
 			}
 		}
@@ -116,7 +116,7 @@ public:
 private:
 	std::vector<Actor*> actorPtr;
 	Iceman* icemanPtr;
-	Ice* icePtr[VIEW_WIDTH][ICE_HEIGHT];
+	Ice* icePtr[VIEW_WIDTH][VIEW_HEIGHT];
 
 	std::vector<std::pair<int, int>> invalidCoordinates;
 
