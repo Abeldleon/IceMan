@@ -58,6 +58,7 @@ void StudentWorld::populateBoulders() {
 			for(int k = 0; k < 4; k++)
 			{
 				delete icePtr[x+j][y + k];
+				icePtr[x + j][y + k] = nullptr;
 			}
 
 		}
@@ -156,7 +157,7 @@ bool StudentWorld::isThereIceBelow(int xPos, int yPos)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (icePtr[xPos + i][yPos] != nullptr) // should be yPos - 1?
+		if (icePtr[xPos + i][yPos - 1] != nullptr) // should be yPos - 1?
 		{
 			return true;
 		}
