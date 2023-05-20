@@ -207,6 +207,8 @@ void StudentWorld::deleteInactiveActors() {
 	for (int i = 0; i < actorPtr.size(); i++) {
 		if (!actorPtr[i]->getIsActive()) {
 			actorPtr[i]->setVisible(false);
+			delete actorPtr[i];
+			actorPtr[i] = nullptr;
 			actorPtr.erase(actorPtr.begin() + i);
 		}
 	}
@@ -218,7 +220,6 @@ bool StudentWorld::isThereIce(int xPos, int yPos)
 	{
 		for (int j = 0; j < 4; j++) {
 			if (icePtr[xPos+i][yPos+j]) {
-				cerr << "There is ice!!" << endl;
 				return true;
 			}
 		}
@@ -233,7 +234,6 @@ bool StudentWorld::icemanOverlaps(int x, int y) {
 		for (int i = 0; i < 4; i++) {
 			if (icePtr[x][y + i] == nullptr) // to prevent double deletion
 				continue;
-			cerr << "deleting left coordinates: " << x << " " << y + i << endl;
 			delete icePtr[x][y + i];
 			icePtr[x][y + i] = nullptr;
 		}
@@ -244,7 +244,6 @@ bool StudentWorld::icemanOverlaps(int x, int y) {
 		for (int i = 0; i < 4; i++) {
 			if (icePtr[x + 3][y + i] == nullptr)
 				continue;
-			cerr << "deleting right coordinates: " << x + 4 << " " << y + i << endl;
 			delete icePtr[x + 3][y + i];
 			icePtr[x + 3][y + i] = nullptr;
 		}
@@ -255,7 +254,6 @@ bool StudentWorld::icemanOverlaps(int x, int y) {
 		for (int i = 0; i < 4; i++) {
 			if (icePtr[x + i][y] == nullptr)
 				continue;
-			cerr << "deleting down coordinates: " << x + i << " " << y << endl;
 			delete icePtr[x + i][y];
 			icePtr[x + i][y] = nullptr;
 		}
@@ -266,7 +264,6 @@ bool StudentWorld::icemanOverlaps(int x, int y) {
 		for (int i = 0; i < 4; i++) {
 			if (icePtr[x + i][y + 3] == nullptr)
 				continue;
-			cerr << "deleting right coordinates: " << x + i << " " << y + 3 << endl;
 			delete icePtr[x + i][y + 3];
 			icePtr[x + i][y + 3] = nullptr;
 		}

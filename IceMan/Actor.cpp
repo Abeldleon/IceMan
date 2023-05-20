@@ -50,7 +50,6 @@ void Iceman::doSomething() {
 		return;
 	// need to remove ice when iceman overlaps
 	if (getWorld()->icemanOverlaps(getX(), getY())) {
-		std::cerr << "????" << std::endl;
 		getWorld()->playSound(SOUND_DIG);
 	}
 	//std::cerr << getWorld()->icemanOverlaps(getX(), getY()) << std::endl;
@@ -101,6 +100,8 @@ void Iceman::doSomething() {
 				setDirection(up);
 				break;
 			}
+		case KEY_PRESS_ESCAPE: // calls cleanup() in studentworld. doesn't currently delete actorPtrs
+			setInactive();
 		}
 	}
 
@@ -110,7 +111,6 @@ void Iceman::doSomething() {
 	// if spacebar is pressed fire squirt and reduce water count by one
 	// if z is pressed use sonar charge (illuminate acquirables within radius of 12) if available and dec numSonar
 	// if tab is pressed and iceman has gold, drop a gold nugget with a temporary and visible state
-	// if iceman not currently facing direction of key stroke, just turn in that direction, but don't move
 }
 bool Iceman::invalidIcemanCoordinate(const int& x, const int& y) {
 

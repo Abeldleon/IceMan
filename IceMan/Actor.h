@@ -21,6 +21,9 @@ public:
 	StudentWorld* getWorld() {
 		return m_sw;
 	}
+	//virtual ~Actor() {
+	//
+	//}
 protected:
 private:
 	bool isActive; // for move() function in StudentWorld that will check whether each actor is active. Can be modified by each derived class
@@ -37,6 +40,9 @@ public:
 	virtual void doSomething() {
 
 	}
+	//virtual ~Ice() {
+	//	
+	//}
 };
 
 class Boulder : public Actor {
@@ -60,7 +66,7 @@ public:
 	State getState() {
 		return currentState;
 	}
-	virtual ~Boulder() {}
+	//virtual ~Boulder() {}
 private:
 	State currentState;
 	int ticksElapsed;
@@ -80,7 +86,9 @@ public:
 	void setPermOrTemp(PermOrTemp p) {
 		m_PermOrTemp = p;
 	}
+	//virtual ~Acquirable() {
 
+	//}
 
 
 private:
@@ -95,6 +103,9 @@ public:
 		m_ticksAvailable = 0;
 	}
 	virtual void doSomething();
+	//virtual ~WaterPuddle() {
+
+	//}
 
 private:
 	int m_ticksAvailable; // likely controlled by StudentWorld. if not then have to make permanent / temporary goodies a base class
@@ -111,6 +122,9 @@ public:
 	virtual void doSomething() {
 
 	}
+	//virtual ~GoldNugget() {
+
+	//}
 private:
 	
 };
@@ -124,6 +138,9 @@ public:
 	virtual void doSomething() {
 
 	}
+	//virtual ~OilBarrel() {
+
+	//}
 private:
 
 };
@@ -135,6 +152,9 @@ public:
 	}
 
 	void doSomething();
+	//virtual ~SonarKit() {
+
+	//}
 private:
 	int m_ticksAvailable;
 };
@@ -145,6 +165,9 @@ public:
 		setVisible(true);
 		m_healthPoints = hp;
 	}
+	//virtual ~Character() {
+
+	//}
 private:
 	int m_healthPoints;
 };
@@ -159,6 +182,9 @@ public:
 	}
 	virtual void doSomething();
 	bool invalidIcemanCoordinate(const int& x, const int& y);
+	//virtual ~Iceman() {
+
+	//}
 
 private:
 	int waterSquirts;
