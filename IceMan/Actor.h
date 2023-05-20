@@ -158,6 +158,7 @@ public:
 		goldNuggets = 0;
 	}
 	virtual void doSomething();
+	bool invalidIcemanCoordinate(const int& x, const int& y);
 
 private:
 	int waterSquirts;
