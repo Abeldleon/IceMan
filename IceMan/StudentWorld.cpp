@@ -208,6 +208,7 @@ void StudentWorld::deleteInactiveActors() {
 		if (!actorPtr[i]->getIsActive()) {
 			actorPtr[i]->setVisible(false);
 			delete actorPtr[i];
+			actorPtr[i] = nullptr;
 			actorPtr.erase(actorPtr.begin() + i);
 		}
 	}

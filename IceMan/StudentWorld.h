@@ -45,7 +45,6 @@ public:
 		populateIceman();
 		//// TODO
 		populateGold(GoldNugget::icemanCan, GoldNugget::permanent);
-		std::cerr << "shoudl be 7: " << invalidCoordinates.size() << std::endl;
 		populateOilBarrels();
 
 		//populateWaterSquirt(); // this is probably in move since it only is populated once iceman shoots
@@ -99,9 +98,10 @@ public:
 
 			icemanPtr->doSomething();
 			for (Actor* a : actorPtr) {
+				if (!a->getIsActive() || a == nullptr)
+					continue;
 				a->doSomething();
 			}
-
 			deleteInactiveActors();
 
 
@@ -117,11 +117,20 @@ public:
 	{
 		delete icemanPtr;
 		//for (Actor* a : actorPtr) { //CRASHES
-		//	if (a == nullptr)
+		//	if (!a->getIsActive() || a == nullptr)
 		//		continue;
-		//	std::cerr << a->getID() << std::endl;
-		//	delete a;
+		//	//std::cerr << a->getID() << std::endl;
+		//	//delete a;
+
 		//}
+		for (int k = 0; k < actorPtr.size();) {
+			if (actorPtr[k] == nullptr) {
+				continue;
+			}
+			delete actorPtr[k];
+			actorPtr[k] = nullptr;
+			actorPtr.erase(actorPtr.begin() + k);
+		}
 		//delete actorPtr[0];
 		//delete actorPtr[1];
 		//delete actorPtr[2];
@@ -146,11 +155,19 @@ public:
 	~StudentWorld() {
 		delete icemanPtr;
 		//for (Actor* a : actorPtr) { // CRASHES
-		//	if (a == nullptr)
+		//	if (!a->getIsActive() || a == nullptr)
 		//		continue;
 		//	std::cerr << a->getID() << std::endl;
 		//	delete a;
 		//}
+		for (int k = 0; k < actorPtr.size();) {
+			if (actorPtr[k] == nullptr) {
+				continue;
+			}
+			delete actorPtr[k];
+			actorPtr[k] = nullptr;
+			actorPtr.erase(actorPtr.begin() + k);
+		}
 
 		for (int i = 0; i < VIEW_WIDTH; i++) {
 			for (int j = 0; j < ICE_HEIGHT; j++) {
