@@ -50,6 +50,7 @@ void Iceman::doSomething() {
 		return;
 	// need to remove ice when iceman overlaps
 	if (getWorld()->icemanOverlaps(getX(), getY())) {
+		std::cerr << "????" << std::endl;
 		getWorld()->playSound(SOUND_DIG);
 	}
 	//std::cerr << getWorld()->icemanOverlaps(getX(), getY()) << std::endl;
@@ -82,4 +83,8 @@ void Iceman::doSomething() {
 			break;
 		}
 	}
+}
+bool Iceman::invalidIcemanCoordinate(const int& x, const int& y) {
+
+	return false;
 }
