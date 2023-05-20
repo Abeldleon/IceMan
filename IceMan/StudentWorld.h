@@ -94,25 +94,73 @@ public:
 		//TODO: 
 		//updateStatusText
 		//callDoSomethingForEveryActor
-		populateSonarKitAndWaterPool();
+		if (icemanPtr->getIsActive()) {
+			populateSonarKitAndWaterPool();
 
-		icemanPtr->doSomething();
-		for (Actor* a : actorPtr) {
-			a->doSomething();
+			icemanPtr->doSomething();
+			for (Actor* a : actorPtr) {
+				a->doSomething();
+			}
+
+			deleteInactiveActors();
+
+
+			return GWSTATUS_CONTINUE_GAME;
 		}
-
-		deleteInactiveActors();
-
-
-		return GWSTATUS_CONTINUE_GAME;
+		else {
+			decLives();
+			return GWSTATUS_PLAYER_DIED;
+		}
 	}
 
 	virtual void cleanUp()
 	{
+		delete icemanPtr;
+		//for (Actor* a : actorPtr) { //CRASHES
+		//	if (a == nullptr)
+		//		continue;
+		//	std::cerr << a->getID() << std::endl;
+		//	delete a;
+		//}
+		//delete actorPtr[0];
+		//delete actorPtr[1];
+		//delete actorPtr[2];
+		//delete actorPtr[3];
+		//delete actorPtr[4];
+		//delete actorPtr[5];
+
+		for (int i = 0; i < VIEW_WIDTH; i++) {
+			for (int j = 0; j < ICE_HEIGHT; j++) {
+				if (icePtr[i][j] == nullptr)
+					continue;
+				delete icePtr[i][j];
+			}
+		}
+
+
 	}
 
 	int min(int a, int b);
 	int max(int a, int b);
+
+	~StudentWorld() {
+		delete icemanPtr;
+		//for (Actor* a : actorPtr) { // CRASHES
+		//	if (a == nullptr)
+		//		continue;
+		//	std::cerr << a->getID() << std::endl;
+		//	delete a;
+		//}
+
+		for (int i = 0; i < VIEW_WIDTH; i++) {
+			for (int j = 0; j < ICE_HEIGHT; j++) {
+				if (icePtr[i][j] == nullptr)
+					continue;
+				delete icePtr[i][j];
+			}
+		}
+
+	}
 private:
 	std::vector<Actor*> actorPtr;
 	Iceman* icemanPtr;
