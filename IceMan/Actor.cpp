@@ -60,29 +60,57 @@ void Iceman::doSomething() {
 		case KEY_PRESS_LEFT:
 			if (getX() == 0)
 				break;
-			setDirection(left);
-			moveTo(getX() - 1, getY());
-			break;
+			else if (getDirection() == left) {
+				moveTo(getX() - 1, getY());
+				break;
+			}
+			else {
+				setDirection(left);
+				break;
+			}
 		case KEY_PRESS_RIGHT:
 			if (getX() == VIEW_WIDTH - 4)
 				break;
-			setDirection(right);
-			moveTo(getX() + 1, getY());
-			break;
+			else if (getDirection() == right) {
+				moveTo(getX() + 1, getY());
+				break;
+			}
+			else {
+				setDirection(right);
+				break;
+			}
 		case KEY_PRESS_DOWN:
 			if (getY() == 0)
 				break;
-			setDirection(down);
-			moveTo(getX(), getY() - 1);
-			break;
+			else if (getDirection() == down) {
+				moveTo(getX(), getY() - 1);
+				break;
+			}
+			else {
+				setDirection(down);
+				break;
+			}
 		case KEY_PRESS_UP:
 			if (getY() == VIEW_HEIGHT - 4)
 				break;
-			setDirection(up);
-			moveTo(getX(), getY() + 1);
-			break;
+			else if (getDirection() == up) {
+				moveTo(getX(), getY() + 1);
+				break;
+			}
+			else {
+				setDirection(up);
+				break;
+			}
 		}
 	}
+
+	// TODO: 
+	// don't allow iceman to move through boulders
+	// if esc key is pressed abort current level (set iceman to inactive and dec lives or end game if out of lives
+	// if spacebar is pressed fire squirt and reduce water count by one
+	// if z is pressed use sonar charge (illuminate acquirables within radius of 12) if available and dec numSonar
+	// if tab is pressed and iceman has gold, drop a gold nugget with a temporary and visible state
+	// if iceman not currently facing direction of key stroke, just turn in that direction, but don't move
 }
 bool Iceman::invalidIcemanCoordinate(const int& x, const int& y) {
 
