@@ -156,6 +156,7 @@ class SonarKit : public Acquirable {
 public:
 	SonarKit(int startX, int startY, StudentWorld* sw) : Acquirable(IID_SONAR, startX, startY, icemanCan, temporary, sw) {
 		setVisible(true);
+		m_ticksAvailable = 0;
 	}
 
 	void doSomething();
