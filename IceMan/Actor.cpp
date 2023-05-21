@@ -32,6 +32,12 @@ void WaterPuddle::doSomething()
 		setInactive();
 	}
 
+	if (getWorld()->isOverlappingIceman(getX(), getY())) {
+		getWorld()->updateWaterSquirts();
+		getWorld()->increaseScore(75);
+		setInactive();
+	}
+
 }
 
 void SonarKit::doSomething()

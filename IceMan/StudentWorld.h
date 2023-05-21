@@ -86,8 +86,10 @@ public:
 	bool isOverLappingActor(int xPos, int yPos, Actor* otherActor);
 	bool isOverlappingIceman(int xPos, int yPos);
 	void formatAndSetDisplayText();
-	void updateGoldNuggets();
 
+
+	void updateGoldNuggets();
+	void updateWaterSquirts();
 
 	virtual int move()
 	{

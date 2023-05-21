@@ -328,5 +328,9 @@ void StudentWorld::formatAndSetDisplayText() {
 void StudentWorld::updateGoldNuggets() //GoldNugget::doSomething() calls this when it overlaps iceman
 {
 	icemanPtr->increaseGoldNuggets();
+}
 
+void StudentWorld::updateWaterSquirts()
+{
+	icemanPtr->increaseWaterSquirts();
 }

@@ -111,7 +111,7 @@ public:
 		setVisible(true);
 		m_ticksAvailable = 0;
 	}
-	virtual void doSomething();
+	void doSomething() override;
 	//virtual ~WaterPuddle() {
 
 	//}
@@ -128,7 +128,7 @@ public:
 		setVisible(true); 
 	}
 	// if in perm state, starts invisble and becomes visible when iceman within radius of 3
-	virtual void doSomething();
+	void doSomething() override;
 	//virtual ~GoldNugget() {
 
 	//}
@@ -200,6 +200,9 @@ public:
 		goldNuggets++;
 	}
 
+	void increaseWaterSquirts() {
+		waterSquirts++;
+	}
 
 	int getSquirts() {
 		return waterSquirts;
