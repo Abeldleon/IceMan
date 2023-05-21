@@ -44,7 +44,6 @@ void SonarKit::doSomething()
 	}
 }
 
-
 void Iceman::doSomething() {
 	if (!getIsActive()) // if not alive, return immediately
 		return;
@@ -60,8 +59,17 @@ void Iceman::doSomething() {
 			if (getX() == 0)
 				break;
 			else if (getDirection() == left) {
-				moveTo(getX() - 1, getY());
-				break;
+
+				if (getWorld()->isBlocked(getX()-2, getY())) {
+					moveTo(getX(), getY());
+				}
+				else {
+
+					moveTo(getX() - 1, getY());
+					break;
+
+				}
+
 			}
 			else {
 				setDirection(left);
@@ -71,8 +79,16 @@ void Iceman::doSomething() {
 			if (getX() == VIEW_WIDTH - 4)
 				break;
 			else if (getDirection() == right) {
-				moveTo(getX() + 1, getY());
-				break;
+
+				if (getWorld()->isBlocked(getX() + 2, getY())) {
+					moveTo(getX(), getY());
+				}
+				else {
+
+					moveTo(getX() + 1, getY());
+					break;
+				
+				}
 			}
 			else {
 				setDirection(right);
@@ -82,8 +98,13 @@ void Iceman::doSomething() {
 			if (getY() == 0)
 				break;
 			else if (getDirection() == down) {
-				moveTo(getX(), getY() - 1);
-				break;
+				if (getWorld()->isBlocked(getX(), getY() - 1)) {
+					moveTo(getX(), getY());
+				}
+				else {
+					moveTo(getX(), getY() - 1);
+					break;
+				}
 			}
 			else {
 				setDirection(down);
@@ -93,8 +114,14 @@ void Iceman::doSomething() {
 			if (getY() == VIEW_HEIGHT - 4)
 				break;
 			else if (getDirection() == up) {
-				moveTo(getX(), getY() + 1);
-				break;
+
+				if (getWorld()->isBlocked(getX(), getY() + 2)) {
+					moveTo(getX(), getY());
+				}
+				else {
+					moveTo(getX(), getY() + 1);
+					break;
+				}
 			}
 			else {
 				setDirection(up);

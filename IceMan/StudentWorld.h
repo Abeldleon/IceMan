@@ -79,10 +79,11 @@ public:
 	double objectDistance(int xPos, int yPos , Actor *otherActor); // returns euclidean distance to avoid populating objects close to one another
 	bool invalidCoord(const int& x1, const int& y1);
 	bool isThereIceBelow(int xPos, int yPos);
-	//bool isThereIceAround(int xPos, int yPos);
 	void deleteInactiveActors();
 	bool isThereIce(int xPos, int yPos);
 	bool icemanOverlaps(int x, int y);
+	bool isBlocked(int xPos, int yPos);
+	bool isOverLappingActor(int xPos, int yPos, Actor* otherActor);
 
 	virtual int move()
 	{

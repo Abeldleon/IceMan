@@ -21,6 +21,10 @@ public:
 	StudentWorld* getWorld() {
 		return m_sw;
 	}
+
+	virtual bool isCollidable() {
+		return false;
+	}
 	//virtual ~Actor() {
 	//
 	//}
@@ -66,6 +70,11 @@ public:
 	State getState() {
 		return currentState;
 	}
+
+	bool isCollidable() override {
+		return true;
+	}
+
 	//virtual ~Boulder() {}
 private:
 	State currentState;
