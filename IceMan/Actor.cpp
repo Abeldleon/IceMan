@@ -61,7 +61,8 @@ void Iceman::doSomething() {
 			else if (getDirection() == left) {
 
 				if (getWorld()->isBlocked(getX()-2, getY())) {
-					moveTo(getX(), getY());
+					//moveTo(getX(), getY());
+					break;
 				}
 				else {
 
@@ -81,7 +82,8 @@ void Iceman::doSomething() {
 			else if (getDirection() == right) {
 
 				if (getWorld()->isBlocked(getX() + 2, getY())) {
-					moveTo(getX(), getY());
+					//moveTo(getX(), getY());
+					break;
 				}
 				else {
 
@@ -99,7 +101,8 @@ void Iceman::doSomething() {
 				break;
 			else if (getDirection() == down) {
 				if (getWorld()->isBlocked(getX(), getY() - 1)) {
-					moveTo(getX(), getY());
+					//moveTo(getX(), getY());
+					break;
 				}
 				else {
 					moveTo(getX(), getY() - 1);
@@ -116,7 +119,8 @@ void Iceman::doSomething() {
 			else if (getDirection() == up) {
 
 				if (getWorld()->isBlocked(getX(), getY() + 2)) {
-					moveTo(getX(), getY());
+					//moveTo(getX(), getY());
+					break;
 				}
 				else {
 					moveTo(getX(), getY() + 1);
