@@ -34,7 +34,7 @@ void WaterPuddle::doSomething()
 
 	if (getWorld()->isOverlappingIceman(getX(), getY())) {
 		getWorld()->updateWaterSquirts();
-		getWorld()->increaseScore(75);
+		getWorld()->increaseScore(100);
 		setInactive();
 	}
 
@@ -139,6 +139,10 @@ void Iceman::doSomething() {
 			}
 		case KEY_PRESS_ESCAPE: // calls cleanup() in studentworld. doesn't currently delete actorPtrs
 			setInactive();
+		
+		case KEY_PRESS_SPACE:
+			userSquirt();
+			break;
 		}
 	}
 

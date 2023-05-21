@@ -204,6 +204,12 @@ public:
 		waterSquirts++;
 	}
 
+	void userSquirt() {
+		if (waterSquirts > 0) {
+			waterSquirts--;
+		}
+	}
+
 	int getSquirts() {
 		return waterSquirts;
 	}
