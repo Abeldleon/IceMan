@@ -90,6 +90,7 @@ public:
 
 	void updateGoldNuggets();
 	void updateWaterSquirts();
+	void updateSonarCharge();
 
 	virtual int move()
 	{

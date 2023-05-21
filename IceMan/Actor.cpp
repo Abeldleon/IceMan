@@ -48,6 +48,12 @@ void SonarKit::doSomething()
 	if (m_ticksAvailable == T) {
 		setInactive();
 	}
+
+	if (getWorld()->isOverlappingIceman(getX(), getY())) {
+		getWorld()->updateSonarCharge();
+		getWorld()->increaseScore(75);
+		setInactive();
+	}
 }
 
 void Iceman::doSomething() {
@@ -143,6 +149,10 @@ void Iceman::doSomething() {
 		case KEY_PRESS_SPACE:
 			userSquirt();
 			break;
+		case 'z':
+			useSonar();
+			break;
+
 		}
 	}
 

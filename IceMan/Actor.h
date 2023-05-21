@@ -195,6 +195,9 @@ public:
 	virtual void doSomething();
 	bool invalidIcemanCoordinate(const int& x, const int& y);
 
+	void increaseSonar() {
+		sonarCharge++;
+	}
 
 	void increaseGoldNuggets() {
 		goldNuggets++;
@@ -207,6 +210,12 @@ public:
 	void userSquirt() {
 		if (waterSquirts > 0) {
 			waterSquirts--;
+		}
+	}
+
+	void useSonar() {
+		if (sonarCharge > 0) {
+			sonarCharge--;
 		}
 	}
 

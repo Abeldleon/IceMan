@@ -334,3 +334,8 @@ void StudentWorld::updateWaterSquirts()
 {
 	icemanPtr->increaseWaterSquirts();
 }
+
+void StudentWorld::updateSonarCharge()
+{
+	icemanPtr->increaseSonar();
+}
