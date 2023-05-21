@@ -130,6 +130,31 @@ void StudentWorld::populateSonarKitAndWaterPool()
 
 }
 
+bool StudentWorld::isBlocked(int xPos, int yPos) {
+	for (int k = 0; k < actorPtr.size(); k++) {
+		if (actorPtr[k]->isCollidable()) {
+		
+			if (isOverLappingActor(xPos, yPos, actorPtr[k])) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+
+bool StudentWorld::isOverLappingActor(int xPos, int yPos, Actor* otherActor)
+{
+	for (int i = -2; i < 4; i++) {
+		for (int k = -2; k < 4; k++) {
+			if (sqrt(pow(xPos - (otherActor->getX() + i), 2) + pow(yPos - (otherActor->getY() + k), 2)) == 0) {				
+				cerr << "is overlapping" << endl;
+				return true;
+			}
+		}
+	}
+	return false;
+}
 
 double StudentWorld::objectDistance(int xPos, int yPos, Actor* otherActor)
 {
