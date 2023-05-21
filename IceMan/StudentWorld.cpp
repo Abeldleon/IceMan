@@ -145,7 +145,7 @@ bool StudentWorld::isBlocked(int xPos, int yPos) {
 
 bool StudentWorld::isOverLappingActor(int xPos, int yPos, Actor* otherActor)
 {
-	for (int i = -2; i < 4; i++) {
+	for (int i = -3; i < 3; i++) {
 		for (int k = -2; k < 4; k++) {
 			if (sqrt(pow(xPos - (otherActor->getX() + i), 2) + pow(yPos - (otherActor->getY() + k), 2)) == 0) {				
 				cerr << "is overlapping" << endl;

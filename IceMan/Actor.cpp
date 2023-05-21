@@ -81,7 +81,7 @@ void Iceman::doSomething() {
 				break;
 			else if (getDirection() == right) {
 
-				if (getWorld()->isBlocked(getX() + 2, getY())) {
+				if (getWorld()->isBlocked(getX() + 1, getY())) {
 					//moveTo(getX(), getY());
 					break;
 				}
