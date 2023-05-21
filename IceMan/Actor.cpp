@@ -152,6 +152,7 @@ void GoldNugget::doSomething()
 {
 	if (getWorld()->isOverlappingIceman(getX(), getY())) {
 		getWorld()->updateGoldNuggets();
+		getWorld()->increaseScore(10);
 		setInactive();
 	}
 }
