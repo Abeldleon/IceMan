@@ -84,6 +84,7 @@ public:
 	bool icemanOverlaps(int x, int y);
 	bool isBlocked(int xPos, int yPos);
 	bool isOverLappingActor(int xPos, int yPos, Actor* otherActor);
+	void formatAndSetDisplayText();
 
 	virtual int move()
 	{
@@ -95,6 +96,7 @@ public:
 		//updateStatusText
 		//callDoSomethingForEveryActor
 		if (icemanPtr->getIsActive()) {
+			formatAndSetDisplayText();
 			populateSonarKitAndWaterPool();
 
 			icemanPtr->doSomething();
@@ -189,6 +191,7 @@ private:
 	int numBouldersForLevel;
 	int numGoldForLevel;
 	int probForWaterPoolOrSonar;
+	int numOilBarrelsForLevel;
 
 };
 

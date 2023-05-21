@@ -174,6 +174,9 @@ public:
 		setVisible(true);
 		m_healthPoints = hp;
 	}
+	int getHP() {
+		return m_healthPoints;
+	}
 	//virtual ~Character() {
 
 	//}
@@ -188,9 +191,22 @@ public:
 		waterSquirts = 5;
 		sonarCharge = 1;
 		goldNuggets = 0;
+		numBarrelsCollected = 0;
 	}
 	virtual void doSomething();
 	bool invalidIcemanCoordinate(const int& x, const int& y);
+	int getSquirts() {
+		return waterSquirts;
+	}
+	int getSonar() {
+		return sonarCharge;
+	}
+	int getGold() {
+		return goldNuggets;
+	}
+	int getBarrelsCollected() {
+		return numBarrelsCollected;
+	}
 	//virtual ~Iceman() {
 
 	//}
@@ -199,7 +215,7 @@ private:
 	int waterSquirts;
 	int sonarCharge;
 	int goldNuggets;
-
+	int numBarrelsCollected;
 };
 
 class Protestor : public Character {
