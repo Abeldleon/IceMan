@@ -84,7 +84,10 @@ public:
 	bool icemanOverlaps(int x, int y);
 	bool isBlocked(int xPos, int yPos);
 	bool isOverLappingActor(int xPos, int yPos, Actor* otherActor);
+	bool isOverlappingIceman(int xPos, int yPos);
 	void formatAndSetDisplayText();
+	void updateGoldNuggets();
+
 
 	virtual int move()
 	{

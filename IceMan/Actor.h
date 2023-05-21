@@ -128,9 +128,7 @@ public:
 		setVisible(true); 
 	}
 	// if in perm state, starts invisble and becomes visible when iceman within radius of 3
-	virtual void doSomething() {
-
-	}
+	virtual void doSomething();
 	//virtual ~GoldNugget() {
 
 	//}
@@ -195,6 +193,13 @@ public:
 	}
 	virtual void doSomething();
 	bool invalidIcemanCoordinate(const int& x, const int& y);
+
+
+	void increaseGoldNuggets() {
+		goldNuggets++;
+	}
+
+
 	int getSquirts() {
 		return waterSquirts;
 	}

@@ -143,6 +143,7 @@ bool StudentWorld::isBlocked(int xPos, int yPos) {
 }
 
 
+
 bool StudentWorld::isOverLappingActor(int xPos, int yPos, Actor* otherActor)
 {
 	for (int i = -3; i < 3; i++) {
@@ -152,6 +153,14 @@ bool StudentWorld::isOverLappingActor(int xPos, int yPos, Actor* otherActor)
 				return true;
 			}
 		}
+	}
+	return false;
+}
+
+bool StudentWorld::isOverlappingIceman(int xPos, int yPos)
+{
+	if (isOverLappingActor(xPos, yPos, icemanPtr)) {
+		return true;
 	}
 	return false;
 }
@@ -313,4 +322,10 @@ void StudentWorld::formatAndSetDisplayText() {
 		" Gld: " + std::to_string(gold) + " Oil Left: " + std::to_string(barrelsLeft) +
 		" Sonar: " + std::to_string(sonar) + " Scr: " + std::to_string(score);
 	setGameStatText(s);
+}
+
+
+void StudentWorld::updateGoldNuggets() //GoldNugget::doSomething() calls this when it overlaps iceman
+{
+	icemanPtr->increaseGoldNuggets();
 }

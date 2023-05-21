@@ -147,3 +147,11 @@ bool Iceman::invalidIcemanCoordinate(const int& x, const int& y) {
 
 	return false;
 }
+
+void GoldNugget::doSomething()
+{
+	if (getWorld()->isOverlappingIceman(getX(), getY())) {
+		getWorld()->updateGoldNuggets();
+		setInactive();
+	}
+}
