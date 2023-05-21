@@ -99,10 +99,10 @@ void StudentWorld::populateGold(GoldNugget::WhoCanPickUp w, GoldNugget::PermOrTe
 }
 
 void StudentWorld::populateOilBarrels() {
-	int numOilBarrels = min(2 + getLevel(), 21);
+	numOilBarrelsForLevel = min(2 + getLevel(), 21);
 	int x = 0;
 	int y = 0;
-	for (int i = 0; i < numOilBarrels; i++) {
+	for (int i = 0; i < numOilBarrelsForLevel; i++) {
 		generateRandomLocation(x, y, isGoldOrOilBarrel);
 		actorPtr.push_back(new OilBarrel(x, y, this));
 	}
@@ -296,4 +296,21 @@ bool StudentWorld::icemanOverlaps(int x, int y) {
 
 	}
 	return false;
+}
+
+
+void StudentWorld::formatAndSetDisplayText() {
+	int level = getLevel();
+	int lives = getLives();
+	int health = icemanPtr->getHP() * 10;
+	int squirts = icemanPtr->getSquirts();
+	int gold = icemanPtr->getGold();
+	int barrelsLeft = numOilBarrelsForLevel - icemanPtr->getBarrelsCollected();
+	int sonar = icemanPtr->getSonar();
+	int score = getScore();
+	string s = "Lvl: " + std::to_string(level) + " Lives: " + std::to_string(lives) +
+		" Hlth: " + std::to_string(health) + "% Wtr: " + std::to_string(squirts) + 
+		" Gld: " + std::to_string(gold) + " Oil Left: " + std::to_string(barrelsLeft) +
+		" Sonar: " + std::to_string(sonar) + " Scr: " + std::to_string(score);
+	setGameStatText(s);
 }
