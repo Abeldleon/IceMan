@@ -25,9 +25,9 @@ public:
 	virtual bool isCollidable() {
 		return false;
 	}
-	//virtual ~Actor() {
-	//
-	//}
+	virtual ~Actor() {
+	
+	}
 protected:
 private:
 	bool isActive; // for move() function in StudentWorld that will check whether each actor is active. Can be modified by each derived class
@@ -44,9 +44,9 @@ public:
 	virtual void doSomething() {
 
 	}
-	//virtual ~Ice() {
-	//	
-	//}
+	virtual ~Ice() {
+		
+	}
 };
 
 class Boulder : public Actor {
@@ -75,7 +75,7 @@ public:
 		return true;
 	}
 
-	//virtual ~Boulder() {}
+	virtual ~Boulder() {}
 private:
 	State currentState;
 	int ticksElapsed;
@@ -95,9 +95,9 @@ public:
 	void setPermOrTemp(PermOrTemp p) {
 		m_PermOrTemp = p;
 	}
-	//virtual ~Acquirable() {
+	virtual ~Acquirable() {
 
-	//}
+	}
 
 
 private:
@@ -112,9 +112,9 @@ public:
 		m_ticksAvailable = 0;
 	}
 	void doSomething() override;
-	//virtual ~WaterPuddle() {
+	virtual ~WaterPuddle() {
 
-	//}
+	}
 
 private:
 	int m_ticksAvailable; // likely controlled by StudentWorld. if not then have to make permanent / temporary goodies a base class
@@ -129,9 +129,9 @@ public:
 	}
 	// if in perm state, starts invisble and becomes visible when iceman within radius of 3
 	void doSomething() override;
-	//virtual ~GoldNugget() {
+	virtual ~GoldNugget() {
 
-	//}
+	}
 private:
 	
 };
@@ -145,9 +145,9 @@ public:
 	virtual void doSomething() {
 
 	}
-	//virtual ~OilBarrel() {
+	virtual ~OilBarrel() {
 
-	//}
+	}
 private:
 
 };
@@ -160,9 +160,9 @@ public:
 	}
 
 	void doSomething();
-	//virtual ~SonarKit() {
+	virtual ~SonarKit() {
 
-	//}
+	}
 private:
 	int m_ticksAvailable;
 };
@@ -176,9 +176,9 @@ public:
 	int getHP() {
 		return m_healthPoints;
 	}
-	//virtual ~Character() {
+	virtual ~Character() {
 
-	//}
+	}
 private:
 	int m_healthPoints;
 };
@@ -231,9 +231,9 @@ public:
 	int getBarrelsCollected() {
 		return numBarrelsCollected;
 	}
-	//virtual ~Iceman() {
+	virtual ~Iceman() {
 
-	//}
+	}
 
 private:
 	int waterSquirts;
