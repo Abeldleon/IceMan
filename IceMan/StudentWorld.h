@@ -24,6 +24,10 @@ public:
 	StudentWorld(std::string assetDir)
 		: GameWorld(assetDir)
 	{
+		numBouldersForLevel = 0;
+		numGoldForLevel = 0;
+		numOilBarrelsForLevel = 0;
+		probForWaterPoolOrSonar = 0;
 		icemanPtr = nullptr;
 		for (int i = 0; i < VIEW_WIDTH; i++) { // initialize all iceptrs to null
 			for (int j = 0; j < VIEW_HEIGHT; j++) {
