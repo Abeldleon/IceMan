@@ -10,6 +10,8 @@ public:
 	Actor(int imageID, int startX, int startY, Direction dir, double size, unsigned int depth, StudentWorld* sw)
 		: GraphObject(imageID, startX, startY, dir, size, depth), isActive(true), m_sw(sw){
 		//isActive = true;
+		ticksElapsed = 0;
+		ticksAvailable = 0;
 	}
 	virtual void doSomething() = 0;
 	bool getIsActive() { // to check is object is active
@@ -29,6 +31,8 @@ public:
 	
 	}
 protected:
+	int ticksElapsed;
+	int ticksAvailable;
 private:
 	bool isActive; // for move() function in StudentWorld that will check whether each actor is active. Can be modified by each derived class
 	StudentWorld* m_sw;
@@ -78,7 +82,7 @@ public:
 	virtual ~Boulder() {}
 private:
 	State currentState;
-	int ticksElapsed;
+	//int ticksElapsed;
 };
 
 class Acquirable : public Actor {
@@ -95,21 +99,23 @@ public:
 	void setPermOrTemp(PermOrTemp p) {
 		m_PermOrTemp = p;
 	}
+	WhoCanPickUp getWhoCanPickUp() {
+		return m_WhoCanPickUp;
+	}
 	virtual ~Acquirable() {
 
 	}
 
 
 private:
-	int m_WhoCanPickUp;
-	int m_PermOrTemp;
+	WhoCanPickUp m_WhoCanPickUp;
+	PermOrTemp m_PermOrTemp;
 };
 
 class WaterPuddle : public Acquirable {
 public:
 	WaterPuddle(int startX, int startY, int ticksAvailable, StudentWorld* sw) : Acquirable(IID_WATER_POOL, startX, startY, icemanCan, temporary, sw) {
 		setVisible(true);
-		m_ticksAvailable = 0;
 	}
 	void doSomething() override;
 	virtual ~WaterPuddle() {
@@ -117,7 +123,7 @@ public:
 	}
 
 private:
-	int m_ticksAvailable; // likely controlled by StudentWorld. if not then have to make permanent / temporary goodies a base class
+	//int m_ticksAvailable; // likely controlled by StudentWorld. if not then have to make permanent / temporary goodies a base class
 	// enum for state of pickuability? - pickupabble by iceman or protestor or neither
 	// other state: permanent and temporary
 };
@@ -156,7 +162,7 @@ class SonarKit : public Acquirable {
 public:
 	SonarKit(int startX, int startY, StudentWorld* sw) : Acquirable(IID_SONAR, startX, startY, icemanCan, temporary, sw) {
 		setVisible(true);
-		m_ticksAvailable = 0;
+
 	}
 
 	void doSomething();
@@ -164,7 +170,7 @@ public:
 
 	}
 private:
-	int m_ticksAvailable;
+	/*int m_ticksAvailable*/;
 };
 
 class Character : public Actor {
@@ -216,6 +222,12 @@ public:
 	void useSonar() {
 		if (sonarCharge > 0) {
 			sonarCharge--;
+		}
+	}
+
+	void dropGold() {
+		if (goldNuggets > 0) {
+			goldNuggets--;
 		}
 	}
 

@@ -92,6 +92,7 @@ void StudentWorld::populateGold(GoldNugget::WhoCanPickUp w, GoldNugget::PermOrTe
 		}
 		else if (pt == GoldNugget::temporary) { // called when iceman drops gold
 			// TODO: populate gold at location that iceman is at
+			actorPtr.push_back(new GoldNugget(icemanPtr->getX(), icemanPtr->getY(), w, pt, this));
 		}
 
 	}
