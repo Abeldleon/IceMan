@@ -339,3 +339,35 @@ void StudentWorld::updateSonarCharge()
 {
 	icemanPtr->increaseSonar();
 }
+void StudentWorld::populateWaterSquirt() { // is called by Iceman when spacebar is pressed
+	// TODO: need to do same for boulder. Will have to make boulder coordinates a data member
+	if (icemanPtr->getDirection() == Iceman::right) {
+		if (isThereIce(icemanPtr->getX() + 4, icemanPtr->getY())) { // if theres ice within specified distance make shooting noise but don't populate (so it won't damage protestors
+			playSound(SOUND_PLAYER_SQUIRT);
+			return;
+		}
+		actorPtr.push_back(new WaterSquirt(icemanPtr->getX() + 4, icemanPtr->getY(), icemanPtr->getDirection(), this)); // populate in front of iceman
+	}
+	else if (icemanPtr->getDirection() == Iceman::left) {
+		if (isThereIce(icemanPtr->getX() - 4, icemanPtr->getY())) {
+			playSound(SOUND_PLAYER_SQUIRT);
+			return;
+		}
+		actorPtr.push_back(new WaterSquirt(icemanPtr->getX() - 4, icemanPtr->getY(), icemanPtr->getDirection(), this));
+	}
+	else if (icemanPtr->getDirection() == Iceman::up) {
+		if (isThereIce(icemanPtr->getX(), icemanPtr->getY() + 4)) {
+			playSound(SOUND_PLAYER_SQUIRT);
+			return;
+		}
+		actorPtr.push_back(new WaterSquirt(icemanPtr->getX(), icemanPtr->getY() + 4, icemanPtr->getDirection(), this));
+		}
+	else if (icemanPtr->getDirection() == Iceman::down) {
+		if (isThereIce(icemanPtr->getX(), icemanPtr->getY() - 4)) {
+			playSound(SOUND_PLAYER_SQUIRT);
+			return;
+		}
+		actorPtr.push_back(new WaterSquirt(icemanPtr->getX(), icemanPtr->getY() - 4, icemanPtr->getDirection(), this));
+	}
+
+}

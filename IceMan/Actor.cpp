@@ -147,6 +147,8 @@ void Iceman::doSomething() {
 			setInactive();
 		
 		case KEY_PRESS_SPACE:
+			getWorld()->populateWaterSquirt();
+			getWorld()->playSound(SOUND_PLAYER_SQUIRT);
 			userSquirt();
 			break;
 		case 'z':
@@ -174,5 +176,39 @@ void GoldNugget::doSomething()
 		getWorld()->updateGoldNuggets();
 		getWorld()->increaseScore(10);
 		setInactive();
+	}
+}
+
+void WaterSquirt::doSomething() {
+	// if within radius of 3 to one or more protestor cause two points of annoyance to protestor and set state to dead
+
+	if (getDistanceTravelled() == 4) {
+		setInactive();
+		return;
+	}
+	//if (getWorld()->overlapsProtestor()) { // make these functions in studentworld when create proetestors
+	//	getWorld()->damageProtestor();
+	//	setInactive();
+	//	return;
+	//}
+
+	// checking to see if ice or boulder infront of squirt done by studentworld (seems like sample is implemented this way also)
+
+	// move squirt one in direction that it's facing
+	if (getDirection() == right) {
+		moveTo(getX() + 1, getY());
+		incrementDistanceTravelled();
+	}
+	else if (getDirection() == left) {
+		moveTo(getX() - 1, getY());
+		incrementDistanceTravelled();
+	}
+	else if (getDirection() == down) {
+		moveTo(getX(), getY() - 1);
+		incrementDistanceTravelled();
+	}
+	else if (getDirection() == up) {
+		moveTo(getX(), getY() + 1);
+		incrementDistanceTravelled();
 	}
 }

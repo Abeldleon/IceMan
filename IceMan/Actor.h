@@ -254,6 +254,21 @@ class RegularProtestor : public Protestor {
 
 };
 
-
+class WaterSquirt : public Actor {
+public:
+	WaterSquirt(int x, int y, Direction dir, StudentWorld* sw) : Actor(IID_WATER_SPURT, x, y, dir, 1, 1.0, sw) {
+		setVisible(true);
+		distanceTravelled = 0;
+	}
+	int getDistanceTravelled() {
+		return distanceTravelled;
+	}
+	void incrementDistanceTravelled() {
+		distanceTravelled++;
+	}
+	virtual void doSomething();
+private:
+	int distanceTravelled;
+};
 
 #endif // ACTOR_H_

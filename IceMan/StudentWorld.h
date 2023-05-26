@@ -77,6 +77,7 @@ public:
 
 	// TODO 
 	void populateSonarKitAndWaterPool(); 
+	void populateWaterSquirt();
 	//void populateProtestors();
 
 	double distanceToIceman();
