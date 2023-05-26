@@ -25,10 +25,10 @@ void Boulder::doSomething() { // still need to implement waiting state for 30 ti
 
 void WaterPuddle::doSomething()
 {
-	m_ticksAvailable++;
-	int T = getWorld()->max(100, 300 - 10 * getWorld()->getLevel());
+	ticksElapsed++;
+	ticksAvailable = getWorld()->max(100, 300 - 10 * getWorld()->getLevel()); // num ticks available
 	
-	if (m_ticksAvailable == T) {
+	if (ticksElapsed == ticksAvailable) {
 		setInactive();
 	}
 
@@ -42,10 +42,11 @@ void WaterPuddle::doSomething()
 
 void SonarKit::doSomething()
 {
-	m_ticksAvailable++;
-	int T = getWorld()->max(100, 300 - 10 * getWorld()->getLevel());
+	//m_ticksAvailable++;
+	ticksElapsed++;
+	ticksAvailable = getWorld()->max(100, 300 - 10 * getWorld()->getLevel()); // numticks avialable
 
-	if (m_ticksAvailable == T) {
+	if (ticksElapsed == ticksAvailable) {
 		setInactive();
 	}
 
@@ -154,6 +155,11 @@ void Iceman::doSomething() {
 		case 'z':
 			useSonar();
 			break;
+		case KEY_PRESS_TAB:
+			if (goldNuggets > 0) {
+				dropGold(); // decrements goldNuggets
+				getWorld()->populateGold(GoldNugget::protestorCan, GoldNugget::temporary); // populates gold at iceman's location.
+			}
 
 		}
 	}
@@ -172,10 +178,17 @@ bool Iceman::invalidIcemanCoordinate(const int& x, const int& y) {
 
 void GoldNugget::doSomething()
 {
-	if (getWorld()->isOverlappingIceman(getX(), getY())) {
+	if (getWhoCanPickUp() == icemanCan && getWorld()->isOverlappingIceman(getX(), getY())) {
 		getWorld()->updateGoldNuggets();
 		getWorld()->increaseScore(10);
 		setInactive();
+	}
+	else if (getWhoCanPickUp() == protestorCan) {
+		ticksElapsed++;
+		// TODO: if overlaps protestor, setInactive and make regular protestor leave the oil field, hardcore protestor pause
+		if (ticksElapsed == 100) {
+			setInactive();
+		}
 	}
 }
 
