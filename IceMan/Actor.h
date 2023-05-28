@@ -148,9 +148,7 @@ public:
 		setVisible(true);
 	}
 	// starts invisible and becomes visible when iceman within radius of 4
-	virtual void doSomething() {
-
-	}
+	virtual void doSomething();
 	virtual ~OilBarrel() {
 
 	}
@@ -211,6 +209,9 @@ public:
 
 	void increaseWaterSquirts() {
 		waterSquirts++;
+	}
+	void increaseOilBarrels() {
+		numBarrelsCollected++;
 	}
 
 	void userSquirt() {

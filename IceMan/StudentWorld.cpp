@@ -149,7 +149,7 @@ bool StudentWorld::isOverLappingActor(int xPos, int yPos, Actor* otherActor)
 {
 	for (int i = -3; i < 3; i++) {
 		for (int k = -2; k < 4; k++) {
-			if (sqrt(pow(xPos - (otherActor->getX() + i), 2) + pow(yPos - (otherActor->getY() + k), 2)) == 0) {				
+			if (sqrt(pow(xPos - (otherActor->getX() + i), 2) + pow(yPos - (otherActor->getY() + k), 2)) == 0) {			
 				cerr << "is overlapping" << endl;
 				return true;
 			}
@@ -340,6 +340,11 @@ void StudentWorld::updateSonarCharge()
 {
 	icemanPtr->increaseSonar();
 }
+void StudentWorld::updateOilBarrel()
+{
+	icemanPtr->increaseOilBarrels();
+}
+
 void StudentWorld::populateWaterSquirt() { // is called by Iceman when spacebar is pressed
 	// TODO: need to do same for boulder. Will have to make boulder coordinates a data member
 	if (icemanPtr->getDirection() == Iceman::right) {

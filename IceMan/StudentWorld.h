@@ -24,7 +24,7 @@ public:
 	StudentWorld(std::string assetDir)
 		: GameWorld(assetDir)
 	{
-		numBouldersForLevel = 0;
+		numBouldersForLevel = 0; // changed in populate functions
 		numGoldForLevel = 0;
 		numOilBarrelsForLevel = 0;
 		probForWaterPoolOrSonar = 0;
@@ -96,6 +96,7 @@ public:
 	void updateGoldNuggets();
 	void updateWaterSquirts();
 	void updateSonarCharge();
+	void updateOilBarrel();
 
 	virtual int move()
 	{
@@ -107,6 +108,9 @@ public:
 		//updateStatusText
 		//callDoSomethingForEveryActor
 		if (icemanPtr->getIsActive()) {
+			if (icemanPtr->getBarrelsCollected() == numOilBarrelsForLevel) {
+				return GWSTATUS_FINISHED_LEVEL;
+			}
 			formatAndSetDisplayText();
 			populateSonarKitAndWaterPool();
 
