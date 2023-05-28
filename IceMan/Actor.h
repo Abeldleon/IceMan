@@ -131,7 +131,7 @@ private:
 class GoldNugget : public Acquirable {
 public:
 	GoldNugget(int startX, int startY, WhoCanPickUp who, PermOrTemp pt, StudentWorld* sw) : Acquirable(IID_GOLD, startX, startY, who, pt, sw) {
-		setVisible(true); 
+		setVisible(false); 
 	}
 	// if in perm state, starts invisble and becomes visible when iceman within radius of 3
 	void doSomething() override;
@@ -145,7 +145,7 @@ private:
 class OilBarrel : public Acquirable {
 public:
 	OilBarrel(int startX, int startY, StudentWorld* sw) : Acquirable(IID_BARREL, startX, startY, icemanCan, permanent, sw) {
-		setVisible(true);
+		setVisible(false);
 	}
 	// starts invisible and becomes visible when iceman within radius of 4
 	virtual void doSomething();
@@ -220,11 +220,7 @@ public:
 		}
 	}
 
-	void useSonar() {
-		if (sonarCharge > 0) {
-			sonarCharge--;
-		}
-	}
+	void useSonar();
 
 	void dropGold() {
 		if (goldNuggets > 0) {
