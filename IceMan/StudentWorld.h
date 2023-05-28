@@ -101,7 +101,7 @@ public:
 	bool isOverLappingActor(int xPos, int yPos, Actor* otherActor);
 	bool isOverlappingIceman(int xPos, int yPos);
 	void formatAndSetDisplayText();
-
+	void makeActorsVisible(int x, int y);
 
 	void updateGoldNuggets();
 	void updateWaterSquirts();

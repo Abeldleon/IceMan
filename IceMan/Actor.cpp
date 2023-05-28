@@ -153,6 +153,7 @@ void Iceman::doSomething() {
 			userSquirt();
 			break;
 		case 'z':
+
 			useSonar();
 			break;
 		case KEY_PRESS_TAB:
@@ -174,6 +175,15 @@ void Iceman::doSomething() {
 bool Iceman::invalidIcemanCoordinate(const int& x, const int& y) {
 
 	return false;
+}
+
+void Iceman::useSonar()
+{
+	if (sonarCharge > 0) {
+		sonarCharge--;
+		getWorld()->makeActorsVisible(getX(), getY());
+	
+	}
 }
 
 void GoldNugget::doSomething()

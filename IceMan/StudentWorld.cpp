@@ -325,6 +325,15 @@ void StudentWorld::formatAndSetDisplayText() {
 	setGameStatText(s);
 }
 
+void StudentWorld::makeActorsVisible(int x, int y)
+{
+	for (Actor* a : actorPtr) {
+		if (objectDistance(x, y, a) < 6) {
+			a->setVisible(true);
+		}
+	}
+}
+
 
 void StudentWorld::updateGoldNuggets() //GoldNugget::doSomething() calls this when it overlaps iceman
 {
