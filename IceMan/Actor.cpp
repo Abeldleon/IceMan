@@ -225,3 +225,12 @@ void WaterSquirt::doSomething() {
 		incrementDistanceTravelled();
 	}
 }
+
+void OilBarrel::doSomething() {
+	if (getWorld()->isOverlappingIceman(getX(), getY())) {
+		getWorld()->updateOilBarrel(); // increments num oil barrels iceman has
+		getWorld()->increaseScore(1000);
+		getWorld()->playSound(SOUND_FOUND_OIL);
+		setInactive();
+	}
+}
