@@ -256,7 +256,19 @@ private:
 };
 
 class Protestor : public Character {
+public:
+	enum StayOrLeave{stay, leave};
+	Protestor(int id, int hp, int numSquaresToMove, StudentWorld* sw) : Character(id, 60, 60, left, hp, sw) {
+		m_numSquaresToMove = numSquaresToMove;
+		m_StayLeave = stay;
+		setVisible(true);
+	}
+	virtual ~Protestor() {
 
+	}
+private:
+	StayOrLeave m_StayLeave;
+	int m_numSquaresToMove;
 };
 
 class HardcoreProtestor : public Protestor {
@@ -264,7 +276,14 @@ class HardcoreProtestor : public Protestor {
 };
 
 class RegularProtestor : public Protestor {
+public:
+	RegularProtestor(int numSquaresToMove, StudentWorld* sw) : Protestor(IID_PROTESTER, 5, numSquaresToMove, sw) {
 
+	}
+	virtual void doSomething() {}
+	virtual ~RegularProtestor() {
+
+	}
 };
 
 class WaterSquirt : public Actor {

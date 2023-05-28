@@ -377,3 +377,13 @@ void StudentWorld::populateWaterSquirt() { // is called by Iceman when spacebar 
 	}
 
 }
+
+void StudentWorld::populateProtestor() {
+	if (numProtestors == 0) { // populate first protestor at first tick
+		actorPtr.push_back(new RegularProtestor(1, this)); 
+		return;
+	}
+	if (numProtestors < numProtestorsForLevel && (ticks - tickAtWhichLastProtestorWasAdded > numTicksToAddNewProtestor)) {
+		actorPtr.push_back(new RegularProtestor(1, this));
+	}
+}

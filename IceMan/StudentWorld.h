@@ -28,6 +28,13 @@ public:
 		numGoldForLevel = 0;
 		numOilBarrelsForLevel = 0;
 		probForWaterPoolOrSonar = 0;
+		numProtestorsForLevel = 0;
+		probForHardcore = 0;
+		ticks = 0;
+		tickAtWhichLastProtestorWasAdded = 0;
+		numTicksToAddNewProtestor = 0;
+		numProtestors = 0;
+
 		icemanPtr = nullptr;
 		for (int i = 0; i < VIEW_WIDTH; i++) { // initialize all iceptrs to null
 			for (int j = 0; j < VIEW_HEIGHT; j++) {
@@ -40,13 +47,15 @@ public:
 	virtual int init()
 	{
 		// initialize data structures to keep track of game's virtual world
-
+		numProtestorsForLevel = min(15, 2 + getLevel() * 1.5); // put here so it's not calculated every time populate is called in move
+		numTicksToAddNewProtestor = max(25, 200 - getLevel());
 
 
 		// constructing oil field and inserting iceman
 		populateIce();
 		populateBoulders();
 		populateIceman();
+		populateProtestor();
 		//// TODO
 		populateGold(GoldNugget::icemanCan, GoldNugget::permanent);
 		populateOilBarrels();
@@ -78,7 +87,7 @@ public:
 	// TODO 
 	void populateSonarKitAndWaterPool(); 
 	void populateWaterSquirt();
-	//void populateProtestors();
+	void populateProtestor();
 
 	double distanceToIceman();
 	double objectDistance(int xPos, int yPos , Actor *otherActor); // returns euclidean distance to avoid populating objects close to one another
@@ -108,6 +117,7 @@ public:
 		//updateStatusText
 		//callDoSomethingForEveryActor
 		if (icemanPtr->getIsActive()) {
+			ticks++;
 			if (icemanPtr->getBarrelsCollected() == numOilBarrelsForLevel) {
 				return GWSTATUS_FINISHED_LEVEL;
 			}
@@ -208,6 +218,12 @@ private:
 	int probForWaterPoolOrSonar;
 	int numOilBarrelsForLevel;
 
+	int ticks;
+	int tickAtWhichLastProtestorWasAdded;
+	int numTicksToAddNewProtestor;
+	int numProtestorsForLevel;
+	int probForHardcore;
+	int numProtestors;
 };
 
 #endif // STUDENTWORLD_H_
