@@ -131,7 +131,7 @@ void StudentWorld::populateSonarKitAndWaterPool()
 
 }
 
-bool StudentWorld::isBlocked(int xPos, int yPos) {
+bool StudentWorld::isBlocked(int xPos, int yPos) { // can just use boulder location
 	for (int k = 0; k < actorPtr.size(); k++) {
 		if (actorPtr[k]->isCollidable()) {
 		
@@ -160,7 +160,11 @@ bool StudentWorld::isOverLappingActor(int xPos, int yPos, Actor* otherActor)
 
 bool StudentWorld::isOverlappingIceman(int xPos, int yPos)
 {
-	if (isOverLappingActor(xPos, yPos, icemanPtr)) {
+	//if (isOverLappingActor(xPos, yPos, icemanPtr)) {
+	//	return true;
+	//}
+	//return false;
+	if (objectDistance(xPos, yPos, icemanPtr) < 4) {
 		return true;
 	}
 	return false;
@@ -262,7 +266,7 @@ bool StudentWorld::isThereIce(int xPos, int yPos)
 	return false;
 }
 
-bool StudentWorld::icemanOverlaps(int x, int y) {
+bool StudentWorld::icemanOverlapsIce(int x, int y) {
 	// delete the overlapping ice accordint to the direction that the iceman is facing
 
 	if (isThereIce(x, y) && icemanPtr->getDirection() == Iceman::left) { 
@@ -325,13 +329,24 @@ void StudentWorld::formatAndSetDisplayText() {
 	setGameStatText(s);
 }
 
-void StudentWorld::makeActorsVisible(int x, int y)
+bool StudentWorld::makeActorsVisible(int x, int y, bool sonarUsed)
 {
-	for (Actor* a : actorPtr) {
-		if (objectDistance(x, y, a) < 6) {
-			a->setVisible(true);
+	if (sonarUsed) {
+		for (Actor* a : actorPtr) {
+			if (objectDistance(x, y, a) < 12.0) {
+				cerr << "sonar made visible" << endl;
+				a->setVisible(true);
+			}
+		}
+		return true;
+	}
+	else if (!sonarUsed) { // iceman walks close by to gold or oil
+		if (objectDistance(x, y, icemanPtr) <= 4.0) {
+			cerr << "walking by made visible" << endl;
+			return true;
 		}
 	}
+	return false;
 }
 
 
