@@ -10,6 +10,7 @@ void Boulder::doSomething() { // still need to implement waiting state for 30 ti
 	if (getState() == Waiting) {
 		ticksElapsed++;
 		if (ticksElapsed >= 30) {
+			getWorld()->playSound(SOUND_FALLING_ROCK);
 			setState(Falling);
 			ticksElapsed = 0;
 		}
@@ -33,6 +34,7 @@ void WaterPuddle::doSomething()
 	}
 
 	if (getWorld()->isOverlappingIceman(getX(), getY())) {
+		getWorld()->playSound(SOUND_GOT_GOODIE);
 		getWorld()->updateWaterSquirts();
 		getWorld()->increaseScore(100);
 		setInactive();
@@ -51,6 +53,7 @@ void SonarKit::doSomething()
 	}
 
 	if (getWorld()->isOverlappingIceman(getX(), getY())) {
+		getWorld()->playSound(SOUND_GOT_GOODIE);
 		getWorld()->updateSonarCharge();
 		getWorld()->increaseScore(75);
 		setInactive();
@@ -146,14 +149,13 @@ void Iceman::doSomething() {
 			}
 		case KEY_PRESS_ESCAPE: // calls cleanup() in studentworld. doesn't currently delete actorPtrs
 			setInactive();
-		
+			break;
 		case KEY_PRESS_SPACE:
 			getWorld()->populateWaterSquirt();
 			getWorld()->playSound(SOUND_PLAYER_SQUIRT);
 			userSquirt();
 			break;
 		case 'z':
-
 			useSonar();
 			break;
 		case KEY_PRESS_TAB:
@@ -161,7 +163,7 @@ void Iceman::doSomething() {
 				dropGold(); // decrements goldNuggets
 				getWorld()->populateGold(GoldNugget::protestorCan, GoldNugget::temporary); // populates gold at iceman's location.
 			}
-
+			break;
 		}
 	}
 
@@ -180,15 +182,16 @@ bool Iceman::invalidIcemanCoordinate(const int& x, const int& y) {
 void Iceman::useSonar()
 {
 	if (sonarCharge > 0) {
+		getWorld()->playSound(SOUND_SONAR);
 		sonarCharge--;
 		getWorld()->makeActorsVisible(getX(), getY());
-	
 	}
 }
 
 void GoldNugget::doSomething()
 {
 	if (getWhoCanPickUp() == icemanCan && getWorld()->isOverlappingIceman(getX(), getY())) {
+		getWorld()->playSound(SOUND_GOT_GOODIE);
 		getWorld()->updateGoldNuggets();
 		getWorld()->increaseScore(10);
 		setInactive();
