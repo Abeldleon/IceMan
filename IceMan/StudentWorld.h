@@ -96,12 +96,12 @@ public:
 	bool isThereIceBelow(int xPos, int yPos);
 	void deleteInactiveActors();
 	bool isThereIce(int xPos, int yPos);
-	bool icemanOverlaps(int x, int y);
+	bool icemanOverlapsIce(int x, int y);
 	bool isBlocked(int xPos, int yPos);
 	bool isOverLappingActor(int xPos, int yPos, Actor* otherActor);
 	bool isOverlappingIceman(int xPos, int yPos);
 	void formatAndSetDisplayText();
-	void makeActorsVisible(int x, int y);
+	bool makeActorsVisible(int x, int y, bool sonarUsed);
 
 	void updateGoldNuggets();
 	void updateWaterSquirts();
