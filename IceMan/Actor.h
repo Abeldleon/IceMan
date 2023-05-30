@@ -131,7 +131,10 @@ private:
 class GoldNugget : public Acquirable {
 public:
 	GoldNugget(int startX, int startY, WhoCanPickUp who, PermOrTemp pt, StudentWorld* sw) : Acquirable(IID_GOLD, startX, startY, who, pt, sw) {
-		setVisible(false); 
+		if (who == icemanCan)
+			setVisible(false);
+		else if (who == protestorCan)
+			setVisible(true);
 	}
 	// if in perm state, starts invisble and becomes visible when iceman within radius of 3
 	void doSomething() override;
