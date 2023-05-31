@@ -64,7 +64,7 @@ void Iceman::doSomething() {
 	if (!getIsActive()) // if not alive, return immediately
 		return;
 	// need to remove ice when iceman overlaps
-	if (getWorld()->icemanOverlaps(getX(), getY())) {
+	if (getWorld()->icemanOverlapsIce(getX(), getY())) {
 		getWorld()->playSound(SOUND_DIG);
 	}
 	//std::cerr << getWorld()->icemanOverlaps(getX(), getY()) << std::endl;
@@ -184,7 +184,7 @@ void Iceman::useSonar()
 	if (sonarCharge > 0) {
 		getWorld()->playSound(SOUND_SONAR);
 		sonarCharge--;
-		getWorld()->makeActorsVisible(getX(), getY());
+		getWorld()->makeActorsVisible(getX(), getY(), true);
 	}
 }
 
@@ -203,6 +203,7 @@ void GoldNugget::doSomething()
 			setInactive();
 		}
 	}
+	setVisibleIfGoodieClose();
 }
 
 void WaterSquirt::doSomething() {
@@ -246,6 +247,7 @@ void OilBarrel::doSomething() {
 		getWorld()->playSound(SOUND_FOUND_OIL);
 		setInactive();
 	}
+	setVisibleIfGoodieClose();
 }
 
 void RegularProtestor::doSomething()
@@ -343,5 +345,10 @@ void RegularProtestor::doSomething()
 		else setNumSquaresToMove(0);
 		break;
 	}
+}
 
+void Acquirable::setVisibleIfGoodieClose() {
+	if (getWorld()->makeActorsVisible(getX(), getY(), false)) {
+		setVisible(true);
+	}
 }

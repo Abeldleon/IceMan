@@ -93,6 +93,7 @@ public:
 		m_WhoCanPickUp = who;
 		m_PermOrTemp = pt;
 	}
+	void setVisibleIfGoodieClose();
 	void setWhoCanPickUp(WhoCanPickUp w) {
 		m_WhoCanPickUp = w;
 	}
@@ -339,7 +340,7 @@ public:
 
 class WaterSquirt : public Actor {
 public:
-	WaterSquirt(int x, int y, Direction dir, StudentWorld* sw) : Actor(IID_WATER_SPURT, x, y, dir, 1, 1.0, sw) {
+	WaterSquirt(int x, int y, Direction dir, StudentWorld* sw) : Actor(IID_WATER_SPURT, x, y, dir, 1.0, 1, sw) {
 		setVisible(true);
 		distanceTravelled = 0;
 	}
