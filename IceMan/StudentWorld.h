@@ -49,7 +49,8 @@ public:
 		// initialize data structures to keep track of game's virtual world
 		numProtestorsForLevel = min(15, 2 + getLevel() * 1.5); // put here so it's not calculated every time populate is called in move
 		numTicksToAddNewProtestor = max(25, 200 - getLevel());
-		actorPtr.push_back(new RegularProtestor(1, this)); // populate first protestor at first tick
+		protestorDelayTicks = max(0, 3 - getLevel() / 4);
+		actorPtr.push_back(new RegularProtestor(1, 200, protestorDelayTicks, this)); // populate first protestor at first tick
 
 
 		// constructing oil field and inserting iceman
@@ -93,7 +94,7 @@ public:
 	double distanceToIceman();
 	double objectDistance(int xPos, int yPos , Actor *otherActor); // returns euclidean distance to avoid populating objects close to one another
 	bool invalidCoord(const int& x1, const int& y1);
-	bool isThereIceBelow(int xPos, int yPos);
+	bool isThereIceInThisDirection(int xPos, int yPos, GraphObject::Direction direction);
 	void deleteInactiveActors();
 	bool isThereIce(int xPos, int yPos);
 	bool icemanOverlaps(int x, int y);
@@ -220,6 +221,7 @@ private:
 	int numOilBarrelsForLevel;
 
 	int ticks;
+	int protestorDelayTicks;
 	int tickAtWhichLastProtestorWasAdded;
 	int numTicksToAddNewProtestor;
 	int numProtestorsForLevel;
