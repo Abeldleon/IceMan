@@ -202,10 +202,6 @@ bool StudentWorld::isThereIceInThisDirection(int xPos, int yPos, GraphObject::Di
 		{
 			if (icePtr[xPos + i][yPos - 1] != nullptr) // should be yPos - 1?
 			{
-
-				std::cout << "enoc is an efai mousex " << xPos << std::endl;
-				std::cout << "enoc is an efai mousey " << yPos << std::endl;
-
 				return true;
 			}
 		}
