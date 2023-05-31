@@ -258,17 +258,67 @@ private:
 class Protestor : public Character {
 public:
 	enum StayOrLeave{stay, leave};
-	Protestor(int id, int hp, int numSquaresToMove, StudentWorld* sw) : Character(id, 60, 60, left, hp, sw) {
+	Protestor(int id, int hp, int numSquaresToMove, int pTicks, int restTicks, StudentWorld* sw) : Character(id, 60, 60, left, hp, sw) {
 		m_numSquaresToMove = numSquaresToMove;
+		perpendicularTicks = pTicks;
 		m_StayLeave = stay;
+		protestorDelayTicks = restTicks;
 		setVisible(true);
 	}
+
+	int getNumSquaresToMove() {
+		return m_numSquaresToMove;
+	}
+
+	virtual void decreaseNumSquaresToMove() {
+		if (m_numSquaresToMove > 0) {
+			m_numSquaresToMove--;
+		}
+	}
+
+	void setNumSquaresToMove(int m) {
+		m_numSquaresToMove = m;
+	}
+
+	//perpencidualr ticks
+	virtual void decreasePerpendicularTicks() {
+		if (perpendicularTicks > 0) {
+			perpendicularTicks--;
+		}
+	}
+
+	void setPerpendicularTicks(int m) {
+		perpendicularTicks= m;
+	}
+
+	int getPerpendicularTicks() {
+		return perpendicularTicks;
+	}
+
+
+	virtual void decreaseProtestorDelayTicks() {
+		if (protestorDelayTicks > 0) {
+			protestorDelayTicks--;
+		}
+	}
+
+	void setProtestorDelayTicks(int m) {
+		protestorDelayTicks = m;
+	}
+
+	int getProtestorDelayTicks() {
+		return protestorDelayTicks;
+	}
+	//resting ticks
+
 	virtual ~Protestor() {
 
 	}
 private:
 	StayOrLeave m_StayLeave;
 	int m_numSquaresToMove;
+	int perpendicularTicks;
+	int protestorDelayTicks;
 };
 
 class HardcoreProtestor : public Protestor {
@@ -277,10 +327,12 @@ class HardcoreProtestor : public Protestor {
 
 class RegularProtestor : public Protestor {
 public:
-	RegularProtestor(int numSquaresToMove, StudentWorld* sw) : Protestor(IID_PROTESTER, 5, numSquaresToMove, sw) {
+	RegularProtestor(int numSquaresToMove, int numPerpendicularTicks, int restTicks, StudentWorld* sw) : Protestor(IID_PROTESTER, 5, numSquaresToMove, numPerpendicularTicks, restTicks, sw) {
 
 	}
-	virtual void doSomething() {}
+
+
+	void doSomething();
 	virtual ~RegularProtestor() {
 
 	}

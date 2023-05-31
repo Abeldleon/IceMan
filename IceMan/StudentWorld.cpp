@@ -192,14 +192,51 @@ bool StudentWorld::invalidCoord(const int& x1,const int& y1) {
 	return false;
 }
 
-bool StudentWorld::isThereIceBelow(int xPos, int yPos)
+bool StudentWorld::isThereIceInThisDirection(int xPos, int yPos, GraphObject::Direction direction)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		if (icePtr[xPos + i][yPos - 1] != nullptr) // should be yPos - 1?
+
+	switch (direction) {
+
+	case GraphObject::down:
+		for (int i = 0; i < 4; i++)
 		{
-			return true;
+			if (icePtr[xPos + i][yPos - 1] != nullptr) // should be yPos - 1?
+			{
+
+				std::cout << "enoc is an efai mousex " << xPos << std::endl;
+				std::cout << "enoc is an efai mousey " << yPos << std::endl;
+
+				return true;
+			}
 		}
+		break;
+	case GraphObject::left:
+		for (int i = 0; i < 4; i++)
+		{
+			if (icePtr[xPos - 1][yPos + i] != nullptr) // should be yPos - 1?
+			{
+				return true;
+			}
+		}
+		break;
+	case GraphObject::right:
+		for (int i = 0; i < 4; i++)
+		{
+			if (icePtr[xPos + 4][yPos + i] != nullptr) // should be yPos - 1?
+			{
+				return true;
+			}
+		}
+		break;
+	case GraphObject::up:
+		for (int i = 0; i < 4; i++)
+		{
+			if (icePtr[xPos + i][yPos + 4] != nullptr) // should be yPos - 1?
+			{
+				return true;
+			}
+		}
+		break;
 	}
 	return false;
 }
@@ -408,6 +445,6 @@ void StudentWorld::populateProtestor() {
 	//	return;
 	//}
 	if (numProtestors < numProtestorsForLevel && (ticks - tickAtWhichLastProtestorWasAdded > numTicksToAddNewProtestor)) {
-		actorPtr.push_back(new RegularProtestor(1, this));
+		actorPtr.push_back(new RegularProtestor(1, 200, 0, this));
 	}
 }

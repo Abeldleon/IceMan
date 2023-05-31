@@ -3,7 +3,7 @@
 // Students:  Add code to this file (if you wish), Actor.h, StudentWorld.h, and StudentWorld.cpp
 
 void Boulder::doSomething() { // still need to implement waiting state for 30 ticks. Will figure out how to ocunt ticks as we go along. Set isActive to false
-	if (!getWorld()->isThereIceBelow(getX(), getY()) && getState() == Stable) {
+	if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down) && getState() == Stable) {
 		setState(Waiting);
 	}
 	// if the boulder is Waiting && 30 ticks have elpased transition to Falling
@@ -18,7 +18,7 @@ void Boulder::doSomething() { // still need to implement waiting state for 30 ti
 	}
 	if (getState() == Falling) {
 		moveTo(getX(), getY() - 1);
-		if (getWorld()->isThereIceBelow(getX(), getY())) {
+		if (getWorld()->isThereIceInThisDirection(getX(), getY(), down)) {
 			setInactive();
 		}
 	}
@@ -248,6 +248,103 @@ void OilBarrel::doSomething() {
 		setInactive();
 	}
 	setVisibleIfGoodieClose();
+}
+
+void RegularProtestor::doSomething()
+{
+
+
+	decreasePerpendicularTicks();
+
+	decreaseProtestorDelayTicks();
+	if (getProtestorDelayTicks() > 0) return;
+	setProtestorDelayTicks(3);
+
+	decreaseNumSquaresToMove();
+
+	//if (!getWorld()->isOverlappingIceman(getX(), getY()))
+	//{
+
+	if (getNumSquaresToMove() <= 0) {
+		std::cout << getNumSquaresToMove() << std::endl;
+		setNumSquaresToMove(8 + std::rand() % 53);
+		std::vector<GraphObject::Direction> availableDirections;
+
+
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && (getX() + 4 < 64)) {
+			availableDirections.push_back(right);
+		}
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left) && (getX() - 1 > 0)) {
+			availableDirections.push_back(left);
+		}
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down) && (getY() > 0)) {
+			availableDirections.push_back(down);
+		}
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && (getY() + 4 < 64)) {
+			availableDirections.push_back(up);
+		}
+		if (availableDirections.size() > 0) {
+			int randomIndex = rand() % availableDirections.size();
+			setDirection(availableDirections[randomIndex]);
+		}
+	}
+	else if(getPerpendicularTicks() <= 0){
+		if (getDirection() == right || getDirection() == left) {
+			std::vector<GraphObject::Direction> availableDirections;
+			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down) && (getY() - 1 > 0)) {
+				availableDirections.push_back(down);
+			}
+			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && (getY() + 4 < 64)) {
+				availableDirections.push_back(up);
+			}
+
+			if (availableDirections.size() > 0) {
+				int randomIndex = rand() % availableDirections.size();
+				setDirection(availableDirections[randomIndex]);
+				setPerpendicularTicks(200);
+			}
+
+		}
+		else if (getDirection() == up || getDirection() == down) {
+			std::vector<GraphObject::Direction> availableDirections;
+			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && (getX() + 4 < 64)) {
+				availableDirections.push_back(right);
+			}
+			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left) && (getX() - 1 > 0)) {
+				availableDirections.push_back(left);
+			}
+
+			if (availableDirections.size() > 0) {
+				int randomIndex = rand() % availableDirections.size();
+				setDirection(availableDirections[randomIndex]);
+				setPerpendicularTicks(200);
+			}
+		}
+	}
+	
+	switch (getDirection())
+	{
+	case up:
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64)
+			moveTo(getX(), getY() + 1);
+		else setNumSquaresToMove(0);
+		break;
+	case down:
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down))
+			moveTo(getX(), getY() - 1);
+		else setNumSquaresToMove(0);
+		break;
+	case right:
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64)
+			moveTo(getX() + 1, getY());
+		else setNumSquaresToMove(0);
+		break;
+	case left:
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left))
+			moveTo(getX() - 1, getY());
+		else setNumSquaresToMove(0);
+		break;
+	}
 }
 
 void Acquirable::setVisibleIfGoodieClose() {
