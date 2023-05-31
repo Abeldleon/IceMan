@@ -266,7 +266,6 @@ void RegularProtestor::doSomething()
 	//{
 
 	if (getNumSquaresToMove() <= 0) {
-		std::cout << getNumSquaresToMove() << std::endl;
 		setNumSquaresToMove(8 + std::rand() % 53);
 		std::vector<GraphObject::Direction> availableDirections;
 
