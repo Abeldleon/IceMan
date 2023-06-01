@@ -286,7 +286,7 @@ void RegularProtestor::doSomething()
 	if (getState() == leave) {
 		return;
 	}
-	setProtestorDelayTicks(3);
+	setProtestorDelayTicks(4);
 
 	decreaseNumSquaresToMove();
 
@@ -353,26 +353,23 @@ void RegularProtestor::doSomething()
 		if (d == GraphObject::left && !getWorld()->isThereIceInThisDirection(getX(), getY(), left)) { // second condition makes it so iceman doesn't move thru ice
 			std::cerr << "iceman to left of protestor" << std::endl;
 			setDirection(d);
-			moveTo(getX() - 1, getY());
+			//moveTo(getX() - 1, getY());
 		}
 		else if (d == GraphObject::right && !getWorld()->isThereIceInThisDirection(getX(), getY(), right)) {
 			std::cerr << "iceman to right of protestor" << std::endl;
 			setDirection(d);
-			moveTo(getX() + 1, getY());
+			//moveTo(getX() + 1, getY());
 		}
 		else if (d == GraphObject::down && !getWorld()->isThereIceInThisDirection(getX(), getY(), down)) {
 			std::cerr << "iceman below protestor" << std::endl;
 			setDirection(d);
-			moveTo(getX(), getY() - 1);
+			//moveTo(getX(), getY() - 1);
 		}
 		else if (d == GraphObject::up && !getWorld()->isThereIceInThisDirection(getX(), getY(), up)) {
 			std::cerr << "iceman above protestor" << std::endl;
 			setDirection(d);
-			moveTo(getX(), getY() + 1);
+			//moveTo(getX(), getY() + 1);
 		}
-		else if (d == GraphObject::none) { // if not in line of sight, move randomly
-			//}
-			//else {
 				//if (getWorld()->isOverlappingIceman(getX(), getY())) { // this code tried to get protestor to stay still if directly in front of iceman
 				//	//moveTo(getX(), getY()); // stay still if overlaps iceman. Add damage later
 				//	//setDirection(none);
@@ -380,29 +377,28 @@ void RegularProtestor::doSomething()
 				//}
 				//if (getNumSquaresToMove() == 0)
 				//	return;
-			switch (getDirection())
-			{
-			case up:
-				if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64)
-					moveTo(getX(), getY() + 1);
-				else setNumSquaresToMove(0);
+		switch (getDirection())
+		{
+		case up:
+			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64)
+				moveTo(getX(), getY() + 1);
+			else setNumSquaresToMove(0);
 				break;
-			case down:
-				if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down))
-					moveTo(getX(), getY() - 1);
-				else setNumSquaresToMove(0);
+		case down:
+			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down))
+				moveTo(getX(), getY() - 1);
+			else setNumSquaresToMove(0);
 				break;
-			case right:
-				if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64)
-					moveTo(getX() + 1, getY());
-				else setNumSquaresToMove(0);
+		case right:
+			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64)
+				moveTo(getX() + 1, getY());
+			else setNumSquaresToMove(0);
 				break;
-			case left:
-				if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left))
-					moveTo(getX() - 1, getY());
-				else setNumSquaresToMove(0);
+		case left:
+			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left))
+				moveTo(getX() - 1, getY());
+			else setNumSquaresToMove(0);
 				break;
-			}
 		}
 	
 }
