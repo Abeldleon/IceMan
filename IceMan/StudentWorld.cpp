@@ -164,7 +164,7 @@ bool StudentWorld::isOverlappingIceman(int xPos, int yPos)
 	//	return true;
 	//}
 	//return false;
-	if (objectDistance(xPos, yPos, icemanPtr) < 4) {
+	if (objectDistance(xPos, yPos, icemanPtr) <= 4) {
 		return true;
 	}
 	return false;
@@ -488,4 +488,50 @@ void StudentWorld::populateProtestor() {
 	if (numProtestors < numProtestorsForLevel && (ticks - tickAtWhichLastProtestorWasAdded > numTicksToAddNewProtestor)) {
 		actorPtr.push_back(new RegularProtestor(1, 200, 0, 0,  this));
 	}
+}
+GraphObject::Direction StudentWorld::lineOfSightToIceman(int protestorX, int protestorY) { // no good right now
+	int xDistance = protestorX - icemanPtr->getX();
+	int yDistance = protestorY - icemanPtr->getY();
+	if (protestorY == icemanPtr->getY()) { // if on same row
+		//if (objectDistance(protestorX, protestorY, icemanPtr)) { // if overlapping NEED ALSO Y DIST // DONT CHECK OVERLAP FOR NOW
+		//	std::cerr << "damage iceman" << std::endl;
+		//	return GraphObject::none;
+		//}
+		if (xDistance < 0) { // if iceman is to the right of protestor
+			xDistance = xDistance * (-1); // make distance positive
+			for (int j = 0 ; j < xDistance - 4; j++) { // return right if theres no ice btw protestor and iceman
+				if (!isThereIceInThisDirection(protestorX + j, protestorY, GraphObject::right)) { // need to also check boulder
+					return GraphObject::right;
+				}
+			}
+		}
+		if (xDistance > 0) { // if iceman is to the left of protestor
+			for (int j = 0; j < xDistance - 4; j++) {
+				if (!isThereIceInThisDirection(protestorX + j, protestorY, GraphObject::left)) {
+					return GraphObject::left;
+				}
+			}
+				
+		}
+	}
+	else if (protestorX == icemanPtr->getX()) { /// if on same column
+		if (yDistance < 0) { // if iceman is above protestor
+			yDistance = yDistance * (-1); // make distance positive
+			for (int j = 0; j < yDistance - 4; j++) { // return up if theres no ice btw protestor and iceman
+				if (!isThereIceInThisDirection(protestorX, protestorY + j, GraphObject::up)) { // need to also check boulder
+					return GraphObject::up;
+				}
+			}
+		}
+		if (yDistance > 0) { // if iceman is below protestor
+			for (int j = 0; j < yDistance - 4; j++) {
+				if (!isThereIceInThisDirection(protestorX, protestorY + j, GraphObject::down)) {
+					return GraphObject::down;
+				}
+			}
+
+		}
+
+	}
+	return GraphObject::none;
 }
