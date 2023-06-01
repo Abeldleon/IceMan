@@ -50,7 +50,8 @@ public:
 		numProtestorsForLevel = min(15, 2 + getLevel() * 1.5); // put here so it's not calculated every time populate is called in move
 		numTicksToAddNewProtestor = max(25, 200 - getLevel());
 		protestorDelayTicks = max(0, 3 - getLevel() / 4);
-		actorPtr.push_back(new RegularProtestor(1, 200, protestorDelayTicks, this)); // populate first protestor at first tick
+		stunnedProtestorTicks = max(50, 100 - getLevel() * 10);
+		actorPtr.push_back(new RegularProtestor(1, 200, protestorDelayTicks, stunnedProtestorTicks, this)); // populate first protestor at first tick
 
 
 		// constructing oil field and inserting iceman
@@ -103,11 +104,14 @@ public:
 	bool isOverlappingIceman(int xPos, int yPos);
 	void formatAndSetDisplayText();
 	bool makeActorsVisible(int x, int y, bool sonarUsed);
-
+	void killIceman();
+	Actor * getOverlappingProtestor(int xPos, int yPos);
+	bool isOverlappingSquirt(int xPos, int yPos);
 	void updateGoldNuggets();
 	void updateWaterSquirts();
 	void updateSonarCharge();
 	void updateOilBarrel();
+	bool overlapsAnyActor(int xPos, int yPos); //for squirt to check if it overlaps any other actor
 
 	virtual int move()
 	{
@@ -227,6 +231,7 @@ private:
 	int numProtestorsForLevel;
 	int probForHardcore;
 	int numProtestors;
+	int stunnedProtestorTicks;
 };
 
 #endif // STUDENTWORLD_H_

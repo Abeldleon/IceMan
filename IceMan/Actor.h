@@ -27,6 +27,17 @@ public:
 	virtual bool isCollidable() {
 		return false;
 	}
+
+	virtual bool isProtestor() {
+		return false;
+	}
+	virtual void setLeaveState() {}
+
+	virtual void setAnnoyed(bool a){}
+
+	virtual bool isSquirt() {
+		return false;
+	}
 	virtual ~Actor() {
 	
 	}
@@ -184,6 +195,9 @@ public:
 	int getHP() {
 		return m_healthPoints;
 	}
+	void decHP() {
+		m_healthPoints--;
+	}
 	virtual ~Character() {
 
 	}
@@ -258,14 +272,20 @@ private:
 class Protestor : public Character {
 public:
 	enum StayOrLeave{stay, leave};
-	Protestor(int id, int hp, int numSquaresToMove, int pTicks, int restTicks, StudentWorld* sw) : Character(id, 60, 60, left, hp, sw) {
+	Protestor(int id, int hp, int numSquaresToMove, int pTicks, int restTicks, int stunnedTicks, StudentWorld* sw) : Character(id, 60, 60, left, hp, sw) {
 		m_numSquaresToMove = numSquaresToMove;
 		perpendicularTicks = pTicks;
 		m_StayLeave = stay;
 		protestorDelayTicks = restTicks;
+		stunnedRestingTicks = stunnedTicks;
+		stunnedTicksCounter = 0;
 		setVisible(true);
+		annoyed = false;
 	}
 
+	bool isProtestor() {
+		return true;
+	}
 	int getNumSquaresToMove() {
 		return m_numSquaresToMove;
 	}
@@ -309,7 +329,39 @@ public:
 	int getProtestorDelayTicks() {
 		return protestorDelayTicks;
 	}
+
+	void setLeaveState() {
+		m_StayLeave = leave;
+	}
 	//resting ticks
+
+	void setStunnedTicksCounter(int n) {
+		stunnedTicksCounter = n;
+	}
+
+	void increaseStunnedTicksCounter() {
+		stunnedTicksCounter++;
+	}
+
+	int getStunnedTicksCounter() {
+		return stunnedTicksCounter;
+	}
+
+	int getStunnedRestingTicks() {
+		return stunnedRestingTicks;
+	}
+
+	StayOrLeave getState() {
+		return m_StayLeave;
+	}
+
+	void setAnnoyed(bool a) {
+		annoyed = a;
+	}
+
+	bool isAnnoyed() {
+		return annoyed;
+	}
 
 	virtual ~Protestor() {
 
@@ -319,6 +371,9 @@ private:
 	int m_numSquaresToMove;
 	int perpendicularTicks;
 	int protestorDelayTicks;
+	int stunnedRestingTicks;
+	int stunnedTicksCounter;
+	bool annoyed;
 };
 
 class HardcoreProtestor : public Protestor {
@@ -327,7 +382,7 @@ class HardcoreProtestor : public Protestor {
 
 class RegularProtestor : public Protestor {
 public:
-	RegularProtestor(int numSquaresToMove, int numPerpendicularTicks, int restTicks, StudentWorld* sw) : Protestor(IID_PROTESTER, 5, numSquaresToMove, numPerpendicularTicks, restTicks, sw) {
+	RegularProtestor(int numSquaresToMove, int numPerpendicularTicks, int restTicks, int stunnedTicks, StudentWorld* sw) : Protestor(IID_PROTESTER, 5, numSquaresToMove, numPerpendicularTicks, restTicks, stunnedTicks, sw) {
 
 	}
 
@@ -351,6 +406,10 @@ public:
 		distanceTravelled++;
 	}
 	virtual void doSomething();
+
+	bool isSquirt() {
+		return true;
+	}
 private:
 	int distanceTravelled;
 };
