@@ -18,9 +18,17 @@ void Boulder::doSomething() { // still need to implement waiting state for 30 ti
 	}
 	if (getState() == Falling) {
 		moveTo(getX(), getY() - 1);
+		if (getWorld()->isOverlappingIceman(getX(), getY())) {
+			getWorld()->killIceman();
+		}
 		if (getWorld()->isThereIceInThisDirection(getX(), getY(), down)) {
 			setInactive();
 		}
+		Actor* overlappingProtestor = getWorld()->getOverlappingProtestor(getX(), getY());
+		if (overlappingProtestor) {
+			overlappingProtestor->setLeaveState();
+		}
+
 	}
 }
 
@@ -213,11 +221,12 @@ void WaterSquirt::doSomething() {
 		setInactive();
 		return;
 	}
-	//if (getWorld()->overlapsProtestor()) { // make these functions in studentworld when create proetestors
-	//	getWorld()->damageProtestor();
-	//	setInactive();
-	//	return;
-	//}
+
+	if (getWorld()->overlapsAnyActor(getX(), getY())) {
+		setVisible(false);
+		setInactive();
+		return;
+	}
 
 	// checking to see if ice or boulder infront of squirt done by studentworld (seems like sample is implemented this way also)
 
@@ -253,11 +262,30 @@ void OilBarrel::doSomething() {
 void RegularProtestor::doSomething()
 {
 
-
+	if (getHP() <= 0) {
+		setLeaveState();
+	}
+	
 	decreasePerpendicularTicks();
 
 	decreaseProtestorDelayTicks();
 	if (getProtestorDelayTicks() > 0) return;
+
+	if (isAnnoyed()) {
+		increaseStunnedTicksCounter();
+		if (getStunnedTicksCounter() <= getStunnedRestingTicks())
+		{
+			return;
+		}
+		decHP();
+		std::cout << "hp: " << getHP() << std::endl;
+		setAnnoyed(false);
+		setStunnedTicksCounter(0);
+	}
+
+	if (getState() == leave) {
+		return;
+	}
 	setProtestorDelayTicks(3);
 
 	decreaseNumSquaresToMove();

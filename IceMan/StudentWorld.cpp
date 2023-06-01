@@ -170,6 +170,8 @@ bool StudentWorld::isOverlappingIceman(int xPos, int yPos)
 	return false;
 }
 
+
+
 double StudentWorld::objectDistance(int xPos, int yPos, Actor* otherActor)
 {
 	return sqrt(pow(xPos - otherActor->getX(), 2) + pow(yPos - otherActor->getY(), 2));
@@ -382,6 +384,38 @@ bool StudentWorld::makeActorsVisible(int x, int y, bool sonarUsed)
 	return false;
 }
 
+void StudentWorld::killIceman()
+{
+	icemanPtr->setInactive();
+}
+
+Actor * StudentWorld::getOverlappingProtestor(int xPos, int yPos)
+{
+	
+	for (Actor* a : actorPtr) {
+		if (a->isProtestor()) {
+			if (isOverLappingActor(xPos, yPos, a)) {
+				return a;
+			}
+		}
+	}
+	
+	
+	return nullptr;
+}
+
+bool StudentWorld::isOverlappingSquirt(int xPos, int yPos)
+{
+	for (Actor* a : actorPtr) {
+		if (a->isSquirt()) {
+			if (isOverLappingActor(xPos, yPos, a)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 
 void StudentWorld::updateGoldNuggets() //GoldNugget::doSomething() calls this when it overlaps iceman
 {
@@ -400,6 +434,17 @@ void StudentWorld::updateSonarCharge()
 void StudentWorld::updateOilBarrel()
 {
 	icemanPtr->increaseOilBarrels();
+}
+
+bool StudentWorld::overlapsAnyActor(int xPos, int yPos)
+{
+	Actor* a = getOverlappingProtestor(xPos, yPos);
+	if (a != nullptr) {
+		a->setAnnoyed(true);
+		std::cout << "squirt overlaps with protestor" << std::endl;
+		return true;
+	}
+	return false;
 }
 
 void StudentWorld::populateWaterSquirt() { // is called by Iceman when spacebar is pressed
@@ -441,6 +486,6 @@ void StudentWorld::populateProtestor() {
 	//	return;
 	//}
 	if (numProtestors < numProtestorsForLevel && (ticks - tickAtWhichLastProtestorWasAdded > numTicksToAddNewProtestor)) {
-		actorPtr.push_back(new RegularProtestor(1, 200, 0, this));
+		actorPtr.push_back(new RegularProtestor(1, 200, 0, 0,  this));
 	}
 }
