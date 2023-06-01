@@ -349,9 +349,7 @@ void RegularProtestor::doSomething()
 		}
 	}
 	
-	if (getWorld()->lineOfSightToIceman(getX(), getY()) != none) { // if iceman is in line of sight change direction to iceman and move towards him
-		GraphObject::Direction d = getWorld()->lineOfSightToIceman(getX(), getY());
-		//setDirection(d);
+		GraphObject::Direction d = getWorld()->lineOfSightToIceman(getX(), getY()); // if d != none, iceman is in line of sight so turn towards iceman and move towards him
 		if (d == GraphObject::left && !getWorld()->isThereIceInThisDirection(getX(), getY(), left)) { // second condition makes it so iceman doesn't move thru ice
 			std::cerr << "iceman to left of protestor" << std::endl;
 			setDirection(d);
@@ -372,40 +370,41 @@ void RegularProtestor::doSomething()
 			setDirection(d);
 			moveTo(getX(), getY() + 1);
 		}
-
-	}
-	else {
-		//if (getWorld()->isOverlappingIceman(getX(), getY())) { // this code tried to get protestor to stay still if directly in front of iceman
-		//	//moveTo(getX(), getY()); // stay still if overlaps iceman. Add damage later
-		//	//setDirection(none);
-		//	setNumSquaresToMove(0);
-		//}
-		//if (getNumSquaresToMove() == 0)
-		//	return;
-		switch (getDirection())
-		{
-		case up:
-			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64)
-				moveTo(getX(), getY() + 1);
-			else setNumSquaresToMove(0);
-			break;
-		case down:
-			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down))
-				moveTo(getX(), getY() - 1);
-			else setNumSquaresToMove(0);
-			break;
-		case right:
-			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64)
-				moveTo(getX() + 1, getY());
-			else setNumSquaresToMove(0);
-			break;
-		case left:
-			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left))
-				moveTo(getX() - 1, getY());
-			else setNumSquaresToMove(0);
-			break;
+		else if (d == GraphObject::none) { // if not in line of sight, move randomly
+			//}
+			//else {
+				//if (getWorld()->isOverlappingIceman(getX(), getY())) { // this code tried to get protestor to stay still if directly in front of iceman
+				//	//moveTo(getX(), getY()); // stay still if overlaps iceman. Add damage later
+				//	//setDirection(none);
+				//	setNumSquaresToMove(0);
+				//}
+				//if (getNumSquaresToMove() == 0)
+				//	return;
+			switch (getDirection())
+			{
+			case up:
+				if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64)
+					moveTo(getX(), getY() + 1);
+				else setNumSquaresToMove(0);
+				break;
+			case down:
+				if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down))
+					moveTo(getX(), getY() - 1);
+				else setNumSquaresToMove(0);
+				break;
+			case right:
+				if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64)
+					moveTo(getX() + 1, getY());
+				else setNumSquaresToMove(0);
+				break;
+			case left:
+				if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left))
+					moveTo(getX() - 1, getY());
+				else setNumSquaresToMove(0);
+				break;
+			}
 		}
-	}
+	
 }
 
 void Acquirable::setVisibleIfGoodieClose() {
