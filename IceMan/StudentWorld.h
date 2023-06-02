@@ -182,8 +182,7 @@ public:
 				delete icePtr[i][j];
 			}
 		}
-
-
+		numProtestors = 0;
 	}
 
 	int min(int a, int b);
