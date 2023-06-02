@@ -261,16 +261,21 @@ void OilBarrel::doSomething() {
 
 void RegularProtestor::doSomething()
 {
-	
 	if (getHP() <= 0) {
 		setLeaveState();
 		setInactive();
 	}
 	
 	decreasePerpendicularTicks();
-
 	decreaseProtestorDelayTicks();
 	if (getProtestorDelayTicks() > 0) return;
+
+	if (getShoutingDelayTicks() <= 15) {
+		increasingShoutingDelayTicks();
+
+	}
+
+	
 
 	if (isAnnoyed()) {
 		increaseStunnedTicksCounter();
@@ -286,6 +291,17 @@ void RegularProtestor::doSomething()
 		return;
 	}
 	setProtestorDelayTicks(4);
+	
+	if (getWorld()->isOverlappingIceman(getX(), getY()))
+	{
+		if (getShoutingDelayTicks() >= 15) {
+			getWorld()->annoyIceman();
+			getWorld()->playSound(SOUND_PROTESTER_YELL);
+			setShoutingDelayTicks(0);
+		}
+
+		return;
+	}
 
 	decreaseNumSquaresToMove();
 

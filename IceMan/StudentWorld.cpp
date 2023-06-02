@@ -439,6 +439,11 @@ void StudentWorld::updateOilBarrel()
 	icemanPtr->increaseOilBarrels();
 }
 
+void StudentWorld::annoyIceman()
+{
+	icemanPtr->setAnnoyed(true);
+}
+
 bool StudentWorld::overlapsAnyActor(int xPos, int yPos)
 {
 	Actor* a = getOverlappingProtestor(xPos, yPos);
