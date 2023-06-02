@@ -195,8 +195,8 @@ public:
 	int getHP() {
 		return m_healthPoints;
 	}
-	void decHP() {
-		m_healthPoints--;
+	void decHP(int h) {
+		m_healthPoints = m_healthPoints - h;
 	}
 	virtual ~Character() {
 
@@ -217,6 +217,10 @@ public:
 	virtual void doSomething();
 	bool invalidIcemanCoordinate(const int& x, const int& y);
 
+	void setAnnoyed(bool a) {
+		annoyed = a;
+		decHP(2);
+	}
 	void increaseSonar() {
 		sonarCharge++;
 	}
@@ -267,6 +271,7 @@ private:
 	int sonarCharge;
 	int goldNuggets;
 	int numBarrelsCollected;
+	bool annoyed;
 };
 
 class Protestor : public Character {
@@ -279,6 +284,7 @@ public:
 		protestorDelayTicks = restTicks;
 		stunnedRestingTicks = stunnedTicks;
 		stunnedTicksCounter = 0;
+		shoutingDelayTicks = 15;
 		setVisible(true);
 		annoyed = false;
 	}
@@ -357,7 +363,7 @@ public:
 
 	void setAnnoyed(bool a) {
 		if (a) {
-			decHP();
+			decHP(1);
 		}
 		setStunnedTicksCounter(0);
 		annoyed = a;
@@ -370,6 +376,17 @@ public:
 	virtual ~Protestor() {
 
 	}
+
+	int getShoutingDelayTicks() {
+		return shoutingDelayTicks;
+	}
+	void setShoutingDelayTicks(int n) {
+		shoutingDelayTicks = n;
+	}
+
+	void increasingShoutingDelayTicks() {
+		shoutingDelayTicks++;
+	}
 private:
 	StayOrLeave m_StayLeave;
 	int m_numSquaresToMove;
@@ -378,6 +395,7 @@ private:
 	int stunnedRestingTicks;
 	int stunnedTicksCounter;
 	bool annoyed;
+	int shoutingDelayTicks;
 };
 
 class HardcoreProtestor : public Protestor {
