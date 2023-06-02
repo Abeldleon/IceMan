@@ -112,6 +112,7 @@ public:
 	void updateSonarCharge();
 	void updateOilBarrel();
 	bool overlapsAnyActor(int xPos, int yPos); //for squirt to check if it overlaps any other actor
+	GraphObject::Direction lineOfSightToIceman(int protestorX, int protestorY) ;
 
 	virtual int move()
 	{
@@ -223,6 +224,8 @@ private:
 	int numGoldForLevel;
 	int probForWaterPoolOrSonar;
 	int numOilBarrelsForLevel;
+	int boulderX;
+	int boulderY;
 
 	int ticks;
 	int protestorDelayTicks;
