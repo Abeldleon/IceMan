@@ -297,7 +297,7 @@ void RegularProtestor::doSomething()
 		std::vector<GraphObject::Direction> availableDirections;
 
 		
-		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && (getX() + 4 < 64)) {
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && (getX() + 4 < 64)) { // if there is no ice in direction, make it avaialble
 			availableDirections.push_back(right);
 		}
 		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left) && (getX() - 1 > 0)) {
@@ -310,11 +310,11 @@ void RegularProtestor::doSomething()
 			availableDirections.push_back(up);
 		}
 		if (availableDirections.size() > 0) {
-			int randomIndex = rand() % availableDirections.size();
+			int randomIndex = rand() % availableDirections.size(); // set the direction to a random avaialble direction
 			setDirection(availableDirections[randomIndex]);
 		}
 	}
-	else if(getPerpendicularTicks() <= 0){
+	else if(getPerpendicularTicks() <= 0){ // if protestor hasn't made a perpendicular turn in the last 200 ticks and it's at a junction, make it turn
 		if (getDirection() == right || getDirection() == left) {
 			std::vector<GraphObject::Direction> availableDirections;
 			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down) && (getY() - 1 > 0)) {
@@ -369,14 +369,15 @@ void RegularProtestor::doSomething()
 			setDirection(d);
 			//moveTo(getX(), getY() + 1);
 		}
-				//if (getWorld()->isOverlappingIceman(getX(), getY())) { // this code tried to get protestor to stay still if directly in front of iceman
-				//	//moveTo(getX(), getY()); // stay still if overlaps iceman. Add damage later
-				//	//setDirection(none);
-				//	setNumSquaresToMove(0);
-				//}
+				if (getWorld()->isOverlappingIceman(getX(), getY())) { // this code tried to get protestor to stay still if directly in front of iceman
+					//moveTo(getX(), getY()); // stay still if overlaps iceman. Add damage later
+					//setDirection(none);
+					//setNumSquaresToMove(0);
+					return;
+				}
 				//if (getNumSquaresToMove() == 0)
 				//	return;
-		switch (getDirection())
+		switch (getDirection()) // move in the specified direction
 		{
 		case up:
 			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64)
