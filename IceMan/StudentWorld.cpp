@@ -281,6 +281,9 @@ void StudentWorld::deleteInactiveActors() {
 	for (int i = 0; i < actorPtr.size(); i++) {
 		if (!actorPtr[i]->getIsActive()) {
 			actorPtr[i]->setVisible(false);
+			if (actorPtr[i]->isProtestor()) {
+				numProtestors--;
+			}
 			delete actorPtr[i];
 			actorPtr[i] = nullptr;
 			actorPtr.erase(actorPtr.begin() + i);
@@ -485,9 +488,14 @@ void StudentWorld::populateProtestor() {
 	//	actorPtr.push_back(new RegularProtestor(1, this)); 
 	//	return;
 	//}
-	if (numProtestors < numProtestorsForLevel && (ticks - tickAtWhichLastProtestorWasAdded > numTicksToAddNewProtestor)) {
-		actorPtr.push_back(new RegularProtestor(1, 200, 0, 0,  this));
+	//if (numProtestors < numProtestorsForLevel && (ticks - tickAtWhichLastProtestorWasAdded > numTicksToAddNewProtestor)) {
+
+	if (numProtestors < numProtestorsForLevel && (tickAtWhichLastProtestorWasAdded >= numTicksToAddNewProtestor)) {
+		actorPtr.push_back(new RegularProtestor(1, 200, protestorDelayTicks, stunnedProtestorTicks,  this));
+		numProtestors++;
+		tickAtWhichLastProtestorWasAdded = 0;
 	}
+	tickAtWhichLastProtestorWasAdded++;
 }
 GraphObject::Direction StudentWorld::lineOfSightToIceman(int protestorX, int protestorY) { // no good right now
 	int xDistance = protestorX - icemanPtr->getX();

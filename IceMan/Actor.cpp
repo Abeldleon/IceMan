@@ -264,6 +264,7 @@ void RegularProtestor::doSomething()
 	
 	if (getHP() <= 0) {
 		setLeaveState();
+		setInactive();
 	}
 	
 	decreasePerpendicularTicks();
@@ -277,10 +278,8 @@ void RegularProtestor::doSomething()
 		{
 			return;
 		}
-		decHP();
 		std::cout << "hp: " << getHP() << std::endl;
 		setAnnoyed(false);
-		setStunnedTicksCounter(0);
 	}
 
 	if (getState() == leave) {
