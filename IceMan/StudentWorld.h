@@ -51,7 +51,8 @@ public:
 		numTicksToAddNewProtestor = max(25, 200 - getLevel());
 		protestorDelayTicks = max(0, 3 - getLevel() / 4);
 		stunnedProtestorTicks = max(50, 100 - getLevel() * 10);
-		actorPtr.push_back(new RegularProtestor(1, 200, protestorDelayTicks, stunnedProtestorTicks, this)); // populate first protestor at first tick
+		tickAtWhichLastProtestorWasAdded = numTicksToAddNewProtestor;
+		//actorPtr.push_back(new RegularProtestor(1, 200, protestorDelayTicks, stunnedProtestorTicks, this)); // populate first protestor at first tick
 
 
 		// constructing oil field and inserting iceman
@@ -130,7 +131,7 @@ public:
 			}
 			formatAndSetDisplayText();
 			populateSonarKitAndWaterPool();
-
+			populateProtestor();
 			icemanPtr->doSomething();
 			for (Actor* a : actorPtr) {
 				if (!a->getIsActive() || a == nullptr)

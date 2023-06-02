@@ -356,6 +356,10 @@ public:
 	}
 
 	void setAnnoyed(bool a) {
+		if (a) {
+			decHP();
+		}
+		setStunnedTicksCounter(0);
 		annoyed = a;
 	}
 
