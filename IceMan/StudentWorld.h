@@ -112,6 +112,7 @@ public:
 	void updateWaterSquirts();
 	void updateSonarCharge();
 	void updateOilBarrel();
+	void annoyIceman();
 	bool overlapsAnyActor(int xPos, int yPos); //for squirt to check if it overlaps any other actor
 	GraphObject::Direction lineOfSightToIceman(int protestorX, int protestorY) ;
 
