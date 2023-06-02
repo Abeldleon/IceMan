@@ -75,6 +75,10 @@ void Iceman::doSomething() {
 	if (getWorld()->icemanOverlapsIce(getX(), getY())) {
 		getWorld()->playSound(SOUND_DIG);
 	}
+	if (getHP() <= 0)
+	{
+		setInactive();
+	}
 	//std::cerr << getWorld()->icemanOverlaps(getX(), getY()) << std::endl;
 	int key = 0;
 	if (getWorld()->getKey(key) == true) {
@@ -274,8 +278,6 @@ void RegularProtestor::doSomething()
 		increasingShoutingDelayTicks();
 
 	}
-
-	
 
 	if (isAnnoyed()) {
 		increaseStunnedTicksCounter();
