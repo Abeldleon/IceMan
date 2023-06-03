@@ -289,7 +289,6 @@ public:
 		annoyed = false;
 	}
 
-	void doSomething();
 	bool isProtestor() {
 		return true;
 	}
@@ -406,7 +405,7 @@ public:
 	}
 
 
-	//void doSomething();
+	void doSomething();
 	virtual ~HardcoreProtestor() {
 
 	}
@@ -419,7 +418,7 @@ public:
 	}
 
 
-	//void doSomething();
+	void doSomething();
 	virtual ~RegularProtestor() {
 
 	}
