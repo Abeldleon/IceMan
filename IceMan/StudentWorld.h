@@ -51,6 +51,7 @@ public:
 		numTicksToAddNewProtestor = max(25, 200 - getLevel());
 		protestorDelayTicks = max(0, 3 - getLevel() / 4);
 		stunnedProtestorTicks = max(50, 100 - getLevel() * 10);
+		probForHardcore = min(90, getLevel() * 10 + 30);
 		tickAtWhichLastProtestorWasAdded = numTicksToAddNewProtestor;
 		//actorPtr.push_back(new RegularProtestor(1, 200, protestorDelayTicks, stunnedProtestorTicks, this)); // populate first protestor at first tick
 
