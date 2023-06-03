@@ -75,6 +75,10 @@ void Iceman::doSomething() {
 	if (getWorld()->icemanOverlapsIce(getX(), getY())) {
 		getWorld()->playSound(SOUND_DIG);
 	}
+	if (getHP() <= 0)
+	{
+		setInactive();
+	}
 	//std::cerr << getWorld()->icemanOverlaps(getX(), getY()) << std::endl;
 	int key = 0;
 	if (getWorld()->getKey(key) == true) {
@@ -259,13 +263,12 @@ void OilBarrel::doSomething() {
 	setVisibleIfGoodieClose();
 }
 
-void RegularProtestor::doSomething()
-{
+void RegularProtestor::doSomething() {
 	if (getHP() <= 0) {
 		setLeaveState();
 		setInactive();
 	}
-	
+
 	decreasePerpendicularTicks();
 	decreaseProtestorDelayTicks();
 	if (getProtestorDelayTicks() > 0) return;
@@ -274,8 +277,6 @@ void RegularProtestor::doSomething()
 		increasingShoutingDelayTicks();
 
 	}
-
-	
 
 	if (isAnnoyed()) {
 		increaseStunnedTicksCounter();
@@ -291,7 +292,7 @@ void RegularProtestor::doSomething()
 		return;
 	}
 	setProtestorDelayTicks(4);
-	
+
 	if (getWorld()->isOverlappingIceman(getX(), getY()))
 	{
 		if (getShoutingDelayTicks() >= 15) {
@@ -312,7 +313,6 @@ void RegularProtestor::doSomething()
 		setNumSquaresToMove(8 + std::rand() % 53);
 		std::vector<GraphObject::Direction> availableDirections;
 
-		
 		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && (getX() + 4 < 64)) { // if there is no ice in direction, make it avaialble
 			availableDirections.push_back(right);
 		}
@@ -330,7 +330,7 @@ void RegularProtestor::doSomething()
 			setDirection(availableDirections[randomIndex]);
 		}
 	}
-	else if(getPerpendicularTicks() <= 0){ // if protestor hasn't made a perpendicular turn in the last 200 ticks and it's at a junction, make it turn
+	else if (getPerpendicularTicks() <= 0) { // if protestor hasn't made a perpendicular turn in the last 200 ticks and it's at a junction, make it turn
 		if (getDirection() == right || getDirection() == left) {
 			std::vector<GraphObject::Direction> availableDirections;
 			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down) && (getY() - 1 > 0)) {
@@ -364,63 +364,66 @@ void RegularProtestor::doSomething()
 		}
 	}
 	
-		GraphObject::Direction d = getWorld()->lineOfSightToIceman(getX(), getY()); // if d != none, iceman is in line of sight so turn towards iceman and move towards him
-		if (d == GraphObject::left && !getWorld()->isThereIceInThisDirection(getX(), getY(), left)) { // second condition makes it so iceman doesn't move thru ice
-			std::cerr << "iceman to left of protestor" << std::endl;
-			setDirection(d);
-			//moveTo(getX() - 1, getY());
-		}
-		else if (d == GraphObject::right && !getWorld()->isThereIceInThisDirection(getX(), getY(), right)) {
-			std::cerr << "iceman to right of protestor" << std::endl;
-			setDirection(d);
-			//moveTo(getX() + 1, getY());
-		}
-		else if (d == GraphObject::down && !getWorld()->isThereIceInThisDirection(getX(), getY(), down)) {
-			std::cerr << "iceman below protestor" << std::endl;
-			setDirection(d);
-			//moveTo(getX(), getY() - 1);
-		}
-		else if (d == GraphObject::up && !getWorld()->isThereIceInThisDirection(getX(), getY(), up)) {
-			std::cerr << "iceman above protestor" << std::endl;
-			setDirection(d);
-			//moveTo(getX(), getY() + 1);
-		}
-				if (getWorld()->isOverlappingIceman(getX(), getY())) { // this code tried to get protestor to stay still if directly in front of iceman
-					//moveTo(getX(), getY()); // stay still if overlaps iceman. Add damage later
-					//setDirection(none);
-					//setNumSquaresToMove(0);
-					return;
-				}
-				//if (getNumSquaresToMove() == 0)
-				//	return;
-		switch (getDirection()) // move in the specified direction
-		{
-		case up:
-			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64)
-				moveTo(getX(), getY() + 1);
-			else setNumSquaresToMove(0);
-				break;
-		case down:
-			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down))
-				moveTo(getX(), getY() - 1);
-			else setNumSquaresToMove(0);
-				break;
-		case right:
-			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64)
-				moveTo(getX() + 1, getY());
-			else setNumSquaresToMove(0);
-				break;
-		case left:
-			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left))
-				moveTo(getX() - 1, getY());
-			else setNumSquaresToMove(0);
-				break;
-		}
-	
-}
 
+	GraphObject::Direction d = getWorld()->lineOfSightToIceman(getX(), getY()); // if d != none, iceman is in line of sight so turn towards iceman and move towards him
+	if (d == GraphObject::left && !getWorld()->isThereIceInThisDirection(getX(), getY(), left)) { // second condition makes it so iceman doesn't move thru ice
+		std::cerr << "iceman to left of protestor" << std::endl;
+		setDirection(d);
+		//moveTo(getX() - 1, getY());
+	}
+	else if (d == GraphObject::right && !getWorld()->isThereIceInThisDirection(getX(), getY(), right)) {
+		std::cerr << "iceman to right of protestor" << std::endl;
+		setDirection(d);
+		//moveTo(getX() + 1, getY());
+	}
+	else if (d == GraphObject::down && !getWorld()->isThereIceInThisDirection(getX(), getY(), down)) {
+		std::cerr << "iceman below protestor" << std::endl;
+		setDirection(d);
+		//moveTo(getX(), getY() - 1);
+	}
+	else if (d == GraphObject::up && !getWorld()->isThereIceInThisDirection(getX(), getY(), up)) {
+		std::cerr << "iceman above protestor" << std::endl;
+		setDirection(d);
+		//moveTo(getX(), getY() + 1);
+	}
+	//if (getWorld()->isOverlappingIceman(getX(), getY())) { // this code tried to get protestor to stay still if directly in front of iceman
+	//	//moveTo(getX(), getY()); // stay still if overlaps iceman. Add damage later
+	//	//setDirection(none);
+	//	setNumSquaresToMove(0);
+	//}
+	//if (getNumSquaresToMove() == 0)
+	//	return;
+	switch (getDirection()) // move in the specified direction
+	{
+	case up:
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64)
+			moveTo(getX(), getY() + 1);
+		else setNumSquaresToMove(0);
+		break;
+	case down:
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down))
+			moveTo(getX(), getY() - 1);
+		else setNumSquaresToMove(0);
+		break;
+	case right:
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64)
+			moveTo(getX() + 1, getY());
+		else setNumSquaresToMove(0);
+		break;
+	case left:
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left))
+			moveTo(getX() - 1, getY());
+		else setNumSquaresToMove(0);
+		break;
+	}
+}
 void Acquirable::setVisibleIfGoodieClose() {
 	if (getWorld()->makeActorsVisible(getX(), getY(), false)) {
 		setVisible(true);
 	}
+}
+
+void HardcoreProtestor::doSomething()
+{
+	 
 }

@@ -399,7 +399,16 @@ private:
 };
 
 class HardcoreProtestor : public Protestor {
+public:
+	HardcoreProtestor(int numSquaresToMove, int numPerpendicularTicks, int restTicks, int stunnedTicks, StudentWorld* sw) : Protestor(IID_HARD_CORE_PROTESTER, 5, numSquaresToMove, numPerpendicularTicks, restTicks, stunnedTicks, sw) {
 
+	}
+
+
+	void doSomething();
+	virtual ~HardcoreProtestor() {
+
+	}
 };
 
 class RegularProtestor : public Protestor {

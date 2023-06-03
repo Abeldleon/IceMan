@@ -494,14 +494,20 @@ void StudentWorld::populateProtestor() {
 	//	return;
 	//}
 	//if (numProtestors < numProtestorsForLevel && (ticks - tickAtWhichLastProtestorWasAdded > numTicksToAddNewProtestor)) {
-
 	if (numProtestors < numProtestorsForLevel && (tickAtWhichLastProtestorWasAdded >= numTicksToAddNewProtestor)) {
-		actorPtr.push_back(new RegularProtestor(1, 200, protestorDelayTicks, stunnedProtestorTicks,  this));
+		int randomNumber = rand() % 100;
+		if (randomNumber <= probForHardcore) {
+			actorPtr.push_back(new HardcoreProtestor(1, 200, protestorDelayTicks, stunnedProtestorTicks,  this));
+		}
+		else {
+			actorPtr.push_back(new RegularProtestor(1, 200, protestorDelayTicks, stunnedProtestorTicks,  this));
+		}	
 		numProtestors++;
 		tickAtWhichLastProtestorWasAdded = 0;
 	}
 	tickAtWhichLastProtestorWasAdded++;
 }
+
 GraphObject::Direction StudentWorld::lineOfSightToIceman(int protestorX, int protestorY) { // no good right now
 	int xDistance = protestorX - icemanPtr->getX();
 	int yDistance = protestorY - icemanPtr->getY();
