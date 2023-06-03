@@ -425,5 +425,5 @@ void Acquirable::setVisibleIfGoodieClose() {
 
 void HardcoreProtestor::doSomething()
 {
-
+	 
 }
