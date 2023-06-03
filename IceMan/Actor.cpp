@@ -263,7 +263,7 @@ void OilBarrel::doSomething() {
 	setVisibleIfGoodieClose();
 }
 
-void Protestor::doSomething() {
+void RegularProtestor::doSomething() {
 	if (getHP() <= 0) {
 		setLeaveState();
 		setInactive();
@@ -421,4 +421,9 @@ void Acquirable::setVisibleIfGoodieClose() {
 	if (getWorld()->makeActorsVisible(getX(), getY(), false)) {
 		setVisible(true);
 	}
+}
+
+void HardcoreProtestor::doSomething()
+{
+
 }
