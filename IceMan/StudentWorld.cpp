@@ -88,12 +88,12 @@ void StudentWorld::populateGold(GoldNugget::WhoCanPickUp w, GoldNugget::PermOrTe
 			// TODO: generate random location for numGoldForLevel and create new GoldNugget at that location
 			generateRandomLocation(x, y, isGoldOrOilBarrel);
 			actorPtr.push_back(new GoldNugget(x, y, w, pt, this));
-			//cerr << "Gold " << i << " x: " << x << " y: " << y << endl;
 
 		}
 		else if (pt == GoldNugget::temporary) { // called when iceman drops gold
 			// TODO: populate gold at location that iceman is at
 			actorPtr.push_back(new GoldNugget(icemanPtr->getX(), icemanPtr->getY(), w, pt, this));
+			std::cerr << "drop temp gold" << std::endl;
 		}
 
 	}
@@ -439,7 +439,24 @@ bool StudentWorld::squirtOverlapsProtestor(int squirtX, int squirtY, int& numPro
 	}
 	return hitProtestor;
 }
-
+bool StudentWorld::goldOverlapsProtestor(int goldX, int goldY)
+{
+	for (Actor* a : actorPtr) {
+		if (a->isRegularProtestor() && objectDistance(goldX, goldY, a) < 3) {
+			playSound(SOUND_PROTESTER_FOUND_GOLD);
+			increaseScore(25);
+			a->setInactive(); // change for find shortest path
+			return true;
+		}
+		else if (a->isHardcoreProtestor() && objectDistance(goldX, goldY, a) < 3) {
+			playSound(SOUND_PROTESTER_FOUND_GOLD);
+			increaseScore(50);
+			int ticksToStare = max(50, 100 - getLevel() * 10);
+			// set stunned for ticksToStare amount of ticks
+		}
+	}
+	return false;
+}
 
 void StudentWorld::updateGoldNuggets() //GoldNugget::doSomething() calls this when it overlaps iceman
 {

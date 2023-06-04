@@ -119,6 +119,7 @@ public:
 	bool overlapsAnyActor(int xPos, int yPos); //for squirt to check if it overlaps any other actor
 	bool squirtOverlapsProtestor(int squirtX, int squirtY, int& numProtestorsOverlapping);
 	GraphObject::Direction lineOfSightToIceman(int protestorX, int protestorY) ;
+	bool goldOverlapsProtestor(int goldX, int goldY);
 
 	virtual int move()
 	{

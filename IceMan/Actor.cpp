@@ -213,6 +213,9 @@ void GoldNugget::doSomething()
 	else if (getWhoCanPickUp() == protestorCan) {
 		ticksElapsed++;
 		// TODO: if overlaps protestor, setInactive and make regular protestor leave the oil field, hardcore protestor pause
+		if (getWorld()->goldOverlapsProtestor(getX(), getY())) {
+			setInactive();
+		}
 		if (ticksElapsed == 100) {
 			setInactive();
 		}

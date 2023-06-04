@@ -28,7 +28,13 @@ public:
 		return false;
 	}
 
-	virtual bool isProtestor() {
+	virtual bool isProtestor() { // gets overridden by protestor
+		return false;
+	}
+	virtual bool isRegularProtestor() {
+		return false;
+	}
+	virtual bool isHardcoreProtestor() {
 		return false;
 	}
 	virtual void setLeaveState() {}
@@ -408,6 +414,9 @@ public:
 
 
 	void doSomething();
+	bool isHardcoreProtestor() {
+		return true;
+	}
 	virtual ~HardcoreProtestor() {
 
 	}
@@ -421,6 +430,9 @@ public:
 
 
 	void doSomething();
+	bool isRegularProtestor() {
+		return true;
+	}
 	virtual ~RegularProtestor() {
 
 	}
