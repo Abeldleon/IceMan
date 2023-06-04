@@ -163,10 +163,11 @@ void Iceman::doSomething() {
 			setInactive();
 			break;
 		case KEY_PRESS_SPACE:
-
-			getWorld()->populateWaterSquirt();
-			getWorld()->playSound(SOUND_PLAYER_SQUIRT);
-			userSquirt();
+			if (getSquirts() > 0) {
+				getWorld()->populateWaterSquirt();
+				getWorld()->playSound(SOUND_PLAYER_SQUIRT);
+				userSquirt();
+			}
 			break;
 		case 'z':
 			useSonar();
