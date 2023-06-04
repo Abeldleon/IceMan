@@ -378,6 +378,9 @@ void Protestor::doCommonProtestorStuff() {
 
 
 	GraphObject::Direction d = getWorld()->lineOfSightToIceman(getX(), getY()); // if d != none, iceman is in line of sight so turn towards iceman and move towards him
+	
+	//setDirection(d);
+
 	if (d == GraphObject::left && !getWorld()->isThereIceInThisDirection(getX(), getY(), left)) { // second condition makes it so iceman doesn't move thru ice
 		std::cerr << "iceman to left of protestor" << std::endl;
 		setDirection(d);
@@ -418,7 +421,7 @@ void Protestor::doCommonProtestorStuff() {
 		else setNumSquaresToMove(0);
 		break;
 	case right:
-		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64)
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64 && !getWorld()->isBlocked(getX() + 1, getY()))
 			moveTo(getX() + 1, getY());
 		else setNumSquaresToMove(0);
 		break;

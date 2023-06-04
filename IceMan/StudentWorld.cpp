@@ -540,17 +540,20 @@ GraphObject::Direction StudentWorld::lineOfSightToIceman(int protestorX, int pro
 		if (xDistance < 0) { // if iceman is to the right of protestor
 			xDistance = xDistance * (-1); // make distance positive
 			for (int j = 0 ; j < xDistance - 4; j++) { // return right if theres no ice btw protestor and iceman
-				if (!isThereIceInThisDirection(protestorX + j, protestorY, GraphObject::right)) { // need to also check boulder
-					return GraphObject::right;
+				if (isThereIceInThisDirection(protestorX + j, protestorY, GraphObject::right) || isBlocked(protestorX + j, protestorY)) { // need to also check boulder
+					return GraphObject::none;
 				}
 			}
+
+			return GraphObject::right;
 		}
 		if (xDistance > 0) { // if iceman is to the left of protestor
 			for (int j = 0; j < xDistance - 4; j++) {
-				if (!isThereIceInThisDirection(protestorX + j, protestorY, GraphObject::left)) {
-					return GraphObject::left;
+				if (isThereIceInThisDirection(protestorX + j, protestorY, GraphObject::left) || isBlocked(protestorX - j, protestorY)) {
+					return GraphObject::none;
 				}
 			}
+			return GraphObject::left;
 				
 		}
 	}
