@@ -163,6 +163,7 @@ void Iceman::doSomething() {
 			setInactive();
 			break;
 		case KEY_PRESS_SPACE:
+
 			getWorld()->populateWaterSquirt();
 			getWorld()->playSound(SOUND_PLAYER_SQUIRT);
 			userSquirt();
@@ -225,9 +226,12 @@ void WaterSquirt::doSomething() {
 		setInactive();
 		return;
 	}
-
-	if (getWorld()->overlapsAnyActor(getX(), getY())) {
-		setVisible(false);
+	if (getWorld()->isBlocked(getX(), getY())) { // set inactive if boulder in front of squirt
+		setInactive();
+		return;
+	}
+	int numProtestorOverlappingSquirt = -5;
+	if (getWorld()->squirtOverlapsProtestor(getX(), getY(), numProtestorOverlappingSquirt)) {
 		setInactive();
 		return;
 	}
@@ -264,11 +268,19 @@ void OilBarrel::doSomething() {
 }
 
 void Protestor::doCommonProtestorStuff() {
+	//if (!getIsActive()) { // return immedietely if protestor is inactive
+	//	return;
+	//}
 	if (getHP() <= 0) {
 		setLeaveState();
-		setInactive();
+		setInactive(); // comment out when shortest path implemented
 	}
-
+	//if (getState() == leave && getX() == 60 && getY() == 60) { // if in exit point and leave state, set inactive
+	//	setInactive();
+	//}
+	//if (getWorld()->isBlocked(getX(), getY())) {
+	//	return;
+	//}
 	decreasePerpendicularTicks();
 	decreaseProtestorDelayTicks();
 	if (getProtestorDelayTicks() > 0) return;
@@ -406,7 +418,7 @@ void Protestor::doCommonProtestorStuff() {
 		else setNumSquaresToMove(0);
 		break;
 	case right:
-		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64 && !getWorld()->isBlocked(getX() + 2, getY()))
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64)
 			moveTo(getX() + 1, getY());
 		else setNumSquaresToMove(0);
 		break;
