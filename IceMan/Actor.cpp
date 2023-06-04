@@ -396,22 +396,22 @@ void RegularProtestor::doSomething() {
 	switch (getDirection()) // move in the specified direction
 	{
 	case up:
-		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64)
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64 && !getWorld()->isBlocked(getX(), getY() + 2))
 			moveTo(getX(), getY() + 1);
 		else setNumSquaresToMove(0);
 		break;
 	case down:
-		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down))
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down) && !getWorld()->isBlocked(getX(), getY() - 2))
 			moveTo(getX(), getY() - 1);
 		else setNumSquaresToMove(0);
 		break;
 	case right:
-		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64)
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && getX() + 4 < 64 && !getWorld()->isBlocked(getX() + 2, getY()))
 			moveTo(getX() + 1, getY());
 		else setNumSquaresToMove(0);
 		break;
 	case left:
-		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left))
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left) && !getWorld()->isBlocked(getX() - 2, getY()))
 			moveTo(getX() - 1, getY());
 		else setNumSquaresToMove(0);
 		break;
