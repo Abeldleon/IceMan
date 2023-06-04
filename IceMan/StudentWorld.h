@@ -34,6 +34,8 @@ public:
 		tickAtWhichLastProtestorWasAdded = 0;
 		numTicksToAddNewProtestor = 0;
 		numProtestors = 0;
+		boulderX = 0;
+		boulderY = 0;
 
 		icemanPtr = nullptr;
 		for (int i = 0; i < VIEW_WIDTH; i++) { // initialize all iceptrs to null
@@ -115,6 +117,7 @@ public:
 	void updateOilBarrel();
 	void annoyIceman();
 	bool overlapsAnyActor(int xPos, int yPos); //for squirt to check if it overlaps any other actor
+	bool squirtOverlapsProtestor(int squirtX, int squirtY, int& numProtestorsOverlapping);
 	GraphObject::Direction lineOfSightToIceman(int protestorX, int protestorY) ;
 
 	virtual int move()

@@ -62,7 +62,8 @@ void StudentWorld::populateBoulders() {
 			}
 
 		}
-
+		boulderX = x;
+		boulderY = y;
 		actorPtr.push_back(new Boulder(x,y, this));
 		//invalidCoordinates.emplace_back(x, y);  // store coorinates in invalid so that GoldNugget and OilBarrel aren't populated nearby
 	}
@@ -419,6 +420,26 @@ bool StudentWorld::isOverlappingSquirt(int xPos, int yPos)
 	return false;
 }
 
+bool StudentWorld::squirtOverlapsProtestor(int squirtX, int squirtY, int& numProtestorsOverlapping) {
+	bool hitProtestor = false;
+	for (Actor* a : actorPtr) {
+		if (objectDistance(squirtX, squirtY, a) < 4) {
+			if (a->isProtestor() && numProtestorsOverlapping == -5) {
+				numProtestorsOverlapping = 1;
+				hitProtestor = true;
+				a->setAnnoyed(true);
+				std::cerr << "squirt overlaps with protestor" << std::endl;
+			}
+			else if (a->isProtestor() && numProtestorsOverlapping > 0) {
+				numProtestorsOverlapping++;
+				a->setAnnoyed(true);
+				std::cerr << "squirt overlaps with protestor" << std::endl;
+			}
+		}
+	}
+	return hitProtestor;
+}
+
 
 void StudentWorld::updateGoldNuggets() //GoldNugget::doSomething() calls this when it overlaps iceman
 {
@@ -444,16 +465,16 @@ void StudentWorld::annoyIceman()
 	icemanPtr->setAnnoyed(true);
 }
 
-bool StudentWorld::overlapsAnyActor(int xPos, int yPos)
-{
-	Actor* a = getOverlappingProtestor(xPos, yPos);
-	if (a != nullptr) {
-		a->setAnnoyed(true);
-		std::cout << "squirt overlaps with protestor" << std::endl;
-		return true;
-	}
-	return false;
-}
+//bool StudentWorld::overlapsAnyActor(int xPos, int yPos)
+//{
+//	Actor* a = getOverlappingProtestor(xPos, yPos);
+//	if (a != nullptr) {
+//		a->setAnnoyed(true);
+//		std::cout << "squirt overlaps with protestor" << std::endl;
+//		return true;
+//	}
+//	return false;
+//}
 
 void StudentWorld::populateWaterSquirt() { // is called by Iceman when spacebar is pressed
 	// TODO: need to do same for boulder. Will have to make boulder coordinates a data member
