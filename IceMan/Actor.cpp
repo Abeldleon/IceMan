@@ -294,6 +294,20 @@ void Protestor::doCommonProtestorStuff() {
 
 	}
 
+	if (isBribed())
+	{
+
+		std::cout << getStunnedTicksCounter() << std::endl;
+
+		increaseStunnedTicksCounter();
+		if (getStunnedTicksCounter() <= getStunnedRestingTicks())
+		{
+			return;
+		}
+		setBribed(false);
+	}
+
+
 	if (isAnnoyed()) {
 		increaseStunnedTicksCounter();
 		if (getStunnedTicksCounter() <= getStunnedRestingTicks())
