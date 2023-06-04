@@ -263,7 +263,7 @@ void OilBarrel::doSomething() {
 	setVisibleIfGoodieClose();
 }
 
-void RegularProtestor::doSomething() {
+void Protestor::doCommonProtestorStuff() {
 	if (getHP() <= 0) {
 		setLeaveState();
 		setInactive();
@@ -363,7 +363,7 @@ void RegularProtestor::doSomething() {
 			}
 		}
 	}
-	
+
 
 	GraphObject::Direction d = getWorld()->lineOfSightToIceman(getX(), getY()); // if d != none, iceman is in line of sight so turn towards iceman and move towards him
 	if (d == GraphObject::left && !getWorld()->isThereIceInThisDirection(getX(), getY(), left)) { // second condition makes it so iceman doesn't move thru ice
@@ -416,14 +416,23 @@ void RegularProtestor::doSomething() {
 		else setNumSquaresToMove(0);
 		break;
 	}
+
 }
+
+void RegularProtestor::doSomething() {
+	doCommonProtestorStuff();
+}
+void HardcoreProtestor::doSomething() {
+	// if distance < whatever
+	doCommonProtestorStuff();
+
+	//else track iceman
+	
+}
+
 void Acquirable::setVisibleIfGoodieClose() {
 	if (getWorld()->makeActorsVisible(getX(), getY(), false)) {
 		setVisible(true);
 	}
 }
 
-void HardcoreProtestor::doSomething()
-{
-	 
-}

@@ -289,6 +289,8 @@ public:
 		annoyed = false;
 	}
 
+	void doCommonProtestorStuff();
+
 	bool isProtestor() {
 		return true;
 	}
