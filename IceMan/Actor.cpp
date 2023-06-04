@@ -263,7 +263,7 @@ void OilBarrel::doSomething() {
 	setVisibleIfGoodieClose();
 }
 
-void RegularProtestor::doSomething() {
+void Protestor::doCommonProtestorStuff() {
 	if (getHP() <= 0) {
 		setLeaveState();
 		setInactive();
@@ -313,8 +313,7 @@ void RegularProtestor::doSomething() {
 		setNumSquaresToMove(8 + std::rand() % 53);
 		std::vector<GraphObject::Direction> availableDirections;
 
-
-		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && (getX() + 4 < 64)) {
+		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), right) && (getX() + 4 < 64)) { // if there is no ice in direction, make it avaialble
 			availableDirections.push_back(right);
 		}
 		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), left) && (getX() - 1 > 0)) {
@@ -327,11 +326,11 @@ void RegularProtestor::doSomething() {
 			availableDirections.push_back(up);
 		}
 		if (availableDirections.size() > 0) {
-			int randomIndex = rand() % availableDirections.size();
+			int randomIndex = rand() % availableDirections.size(); // set the direction to a random avaialble direction
 			setDirection(availableDirections[randomIndex]);
 		}
 	}
-	else if (getPerpendicularTicks() <= 0) {
+	else if (getPerpendicularTicks() <= 0) { // if protestor hasn't made a perpendicular turn in the last 200 ticks and it's at a junction, make it turn
 		if (getDirection() == right || getDirection() == left) {
 			std::vector<GraphObject::Direction> availableDirections;
 			if (!getWorld()->isThereIceInThisDirection(getX(), getY(), down) && (getY() - 1 > 0)) {
@@ -365,6 +364,7 @@ void RegularProtestor::doSomething() {
 		}
 	}
 
+
 	GraphObject::Direction d = getWorld()->lineOfSightToIceman(getX(), getY()); // if d != none, iceman is in line of sight so turn towards iceman and move towards him
 	if (d == GraphObject::left && !getWorld()->isThereIceInThisDirection(getX(), getY(), left)) { // second condition makes it so iceman doesn't move thru ice
 		std::cerr << "iceman to left of protestor" << std::endl;
@@ -393,7 +393,7 @@ void RegularProtestor::doSomething() {
 	//}
 	//if (getNumSquaresToMove() == 0)
 	//	return;
-	switch (getDirection())
+	switch (getDirection()) // move in the specified direction
 	{
 	case up:
 		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64 && !getWorld()->isBlocked(getX(), getY() + 2))
@@ -416,14 +416,23 @@ void RegularProtestor::doSomething() {
 		else setNumSquaresToMove(0);
 		break;
 	}
+
 }
+
+void RegularProtestor::doSomething() {
+	doCommonProtestorStuff();
+}
+void HardcoreProtestor::doSomething() {
+	// if distance < whatever
+	doCommonProtestorStuff();
+
+	//else track iceman
+	
+}
+
 void Acquirable::setVisibleIfGoodieClose() {
 	if (getWorld()->makeActorsVisible(getX(), getY(), false)) {
 		setVisible(true);
 	}
 }
 
-void HardcoreProtestor::doSomething()
-{
-	 
-}
