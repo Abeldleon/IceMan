@@ -41,6 +41,13 @@ public:
 
 	virtual void setAnnoyed(bool a){}
 
+	virtual void setStunnedRestingTicks ( int n ) {}
+
+	virtual bool isBribed() {
+		return false;
+	}
+	virtual void setBribed(bool a) {}
+
 	virtual bool isSquirt() {
 		return false;
 	}
@@ -293,6 +300,7 @@ public:
 		shoutingDelayTicks = 15;
 		setVisible(true);
 		annoyed = false;
+		bribed = false;
 	}
 
 	void doCommonProtestorStuff();
@@ -357,6 +365,10 @@ public:
 		stunnedTicksCounter++;
 	}
 
+	void setStunnedRestingTicks( int a) override{
+		stunnedRestingTicks = a;
+	}
+
 	int getStunnedTicksCounter() {
 		return stunnedTicksCounter;
 	}
@@ -367,6 +379,14 @@ public:
 
 	StayOrLeave getState() {
 		return m_StayLeave;
+	}
+	
+	void setBribed( bool a ) {
+		bribed = a;
+	}
+
+	bool isBribed() {
+		return bribed;
 	}
 
 	void setAnnoyed(bool a) {
@@ -395,6 +415,8 @@ public:
 	void increasingShoutingDelayTicks() {
 		shoutingDelayTicks++;
 	}
+
+
 private:
 	StayOrLeave m_StayLeave;
 	int m_numSquaresToMove;
@@ -403,6 +425,7 @@ private:
 	int stunnedRestingTicks;
 	int stunnedTicksCounter;
 	bool annoyed;
+	bool bribed;
 	int shoutingDelayTicks;
 };
 
@@ -411,9 +434,8 @@ public:
 	HardcoreProtestor(int numSquaresToMove, int numPerpendicularTicks, int restTicks, int stunnedTicks, StudentWorld* sw) : Protestor(IID_HARD_CORE_PROTESTER, 5, numSquaresToMove, numPerpendicularTicks, restTicks, stunnedTicks, sw) {
 
 	}
-
-
 	void doSomething();
+
 	bool isHardcoreProtestor() {
 		return true;
 	}

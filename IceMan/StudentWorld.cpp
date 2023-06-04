@@ -452,6 +452,11 @@ bool StudentWorld::goldOverlapsProtestor(int goldX, int goldY)
 			playSound(SOUND_PROTESTER_FOUND_GOLD);
 			increaseScore(50);
 			int ticksToStare = max(50, 100 - getLevel() * 10);
+			if (!a->isBribed()) {
+				a->setStunnedRestingTicks(ticksToStare);
+				a->setBribed(true);
+			}
+			return true;
 			// set stunned for ticksToStare amount of ticks
 		}
 	}
