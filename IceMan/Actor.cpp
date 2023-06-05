@@ -26,6 +26,7 @@ void Boulder::doSomething() { // still need to implement waiting state for 30 ti
 		}
 		Actor* overlappingProtestor = getWorld()->getOverlappingProtestor(getX(), getY());
 		if (overlappingProtestor) {
+			overlappingProtestor->setInactive(); // comment out when shortest path implemented
 			overlappingProtestor->setLeaveState();
 		}
 
