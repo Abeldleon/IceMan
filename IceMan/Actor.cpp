@@ -26,7 +26,7 @@ void Boulder::doSomething() { // still need to implement waiting state for 30 ti
 		}
 		Actor* overlappingProtestor = getWorld()->getOverlappingProtestor(getX(), getY());
 		if (overlappingProtestor) {
-			overlappingProtestor->setInactive(); // comment out when shortest path implemented
+			//overlappingProtestor->setInactive(); // comment out when shortest path implemented
 			overlappingProtestor->setLeaveState();
 		}
 
@@ -273,22 +273,30 @@ void OilBarrel::doSomething() {
 }
 
 void Protestor::doCommonProtestorStuff() {
-	//if (!getIsActive()) { // return immedietely if protestor is inactive
-	//	return;
-	//}
-	if (getHP() <= 0) {
-		setLeaveState();
-		setInactive(); // comment out when shortest path implemented
-	}
-	//if (getState() == leave && getX() == 60 && getY() == 60) { // if in exit point and leave state, set inactive
-	//	setInactive();
-	//}
-	//if (getWorld()->isBlocked(getX(), getY())) {
-	//	return;
-	//}
-	decreasePerpendicularTicks();
 	decreaseProtestorDelayTicks();
 	if (getProtestorDelayTicks() > 0) return;
+	setProtestorDelayTicks(4);
+
+
+	if (getState() == leave) {
+		GraphObject::Direction di = getWorld()->shortestPath(getX(), getY(), 60, 60);
+		setDirection(di);
+		moveInThisDirection(getDirection());
+		if (getX() == 60 && getY() == 60) {
+			setInactive();
+		}
+		if (getState() == leave) {
+			return;
+		}
+	}
+
+
+	if (getHP() <= 0) {
+		setLeaveState();
+		return;
+	}
+	decreasePerpendicularTicks();
+
 
 	if (getShoutingDelayTicks() <= 15) {
 		increasingShoutingDelayTicks();
@@ -318,11 +326,6 @@ void Protestor::doCommonProtestorStuff() {
 		std::cout << "hp: " << getHP() << std::endl;
 		setAnnoyed(false);
 	}
-
-	if (getState() == leave) {
-		return;
-	}
-	setProtestorDelayTicks(4);
 
 	if (getWorld()->isOverlappingIceman(getX(), getY()))
 	{
@@ -398,36 +401,30 @@ void Protestor::doCommonProtestorStuff() {
 
 	GraphObject::Direction d = getWorld()->lineOfSightToIceman(getX(), getY()); // if d != none, iceman is in line of sight so turn towards iceman and move towards him
 	
-	//setDirection(d);
-
 	if (d == GraphObject::left && !getWorld()->isThereIceInThisDirection(getX(), getY(), left)) { // second condition makes it so iceman doesn't move thru ice
 		std::cerr << "iceman to left of protestor" << std::endl;
 		setDirection(d);
-		//moveTo(getX() - 1, getY());
+
 	}
 	else if (d == GraphObject::right && !getWorld()->isThereIceInThisDirection(getX(), getY(), right)) {
 		std::cerr << "iceman to right of protestor" << std::endl;
 		setDirection(d);
-		//moveTo(getX() + 1, getY());
 	}
 	else if (d == GraphObject::down && !getWorld()->isThereIceInThisDirection(getX(), getY(), down)) {
 		std::cerr << "iceman below protestor" << std::endl;
 		setDirection(d);
-		//moveTo(getX(), getY() - 1);
 	}
 	else if (d == GraphObject::up && !getWorld()->isThereIceInThisDirection(getX(), getY(), up)) {
 		std::cerr << "iceman above protestor" << std::endl;
 		setDirection(d);
-		//moveTo(getX(), getY() + 1);
 	}
-	//if (getWorld()->isOverlappingIceman(getX(), getY())) { // this code tried to get protestor to stay still if directly in front of iceman
-	//	//moveTo(getX(), getY()); // stay still if overlaps iceman. Add damage later
-	//	//setDirection(none);
-	//	setNumSquaresToMove(0);
-	//}
-	//if (getNumSquaresToMove() == 0)
-	//	return;
-	switch (getDirection()) // move in the specified direction
+	moveInThisDirection(getDirection());
+
+}
+
+void Protestor::moveInThisDirection(GraphObject::Direction dir)
+{
+	switch (dir) // move in the specified direction
 	{
 	case up:
 		if (!getWorld()->isThereIceInThisDirection(getX(), getY(), up) && getY() + 4 < 64 && !getWorld()->isBlocked(getX(), getY() + 2))
@@ -450,7 +447,6 @@ void Protestor::doCommonProtestorStuff() {
 		else setNumSquaresToMove(0);
 		break;
 	}
-
 }
 
 void RegularProtestor::doSomething() {

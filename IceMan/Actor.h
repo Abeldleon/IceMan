@@ -416,6 +416,7 @@ public:
 		shoutingDelayTicks++;
 	}
 
+	void moveInThisDirection(GraphObject::Direction dir);
 
 private:
 	StayOrLeave m_StayLeave;

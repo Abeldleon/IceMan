@@ -1,5 +1,9 @@
 #include "StudentWorld.h"
 #include <string>
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <utility>
 //#include <cstdlib>
 //#include <cmath>
 
@@ -68,7 +72,7 @@ void StudentWorld::populateBoulders() {
 		//invalidCoordinates.emplace_back(x, y);  // store coorinates in invalid so that GoldNugget and OilBarrel aren't populated nearby
 	}
 
-	actorPtr.push_back(new Boulder(30, 50, this));
+	//actorPtr.push_back(new Boulder(30, 50, this));
 }
 
 
@@ -173,6 +177,11 @@ bool StudentWorld::isOverlappingIceman(int xPos, int yPos)
 
 
 
+double StudentWorld::distanceToIceman(int x, int y)
+{
+	return objectDistance(x, y, icemanPtr);
+}
+
 double StudentWorld::objectDistance(int xPos, int yPos, Actor* otherActor)
 {
 	return sqrt(pow(xPos - otherActor->getX(), 2) + pow(yPos - otherActor->getY(), 2));
@@ -248,6 +257,37 @@ int StudentWorld::min(int a, int b)
 int StudentWorld::max(int a, int b)
 {
 	return (a > b) ? a : b;
+}
+
+struct TreeNode {
+	TreeNode *up;
+	TreeNode *down;
+	TreeNode *left;
+	TreeNode *right;
+	bool seen;
+	int distance;
+	int x;
+	int y;
+};
+//TreeNode* bfs_queue(TreeNode* node, ItemType item) {
+//	queue<TreeNode*> q;
+//	TreeNode* guess;
+//	q.push(node);
+//	while (!q.empty()) {
+//		guess = q.front();
+//		q.pop();
+//		if (guess == nullptr)
+//			continue;
+//		if (guess->info == item)
+//			return guess;
+//		q.push(guess->left);
+//		q.push(guess->right);
+//	}
+//	return nullptr;
+//}
+
+void solveMaze(int x, int y) {
+
 }
 
 void StudentWorld::generateRandomLocation(int& x, int& y, ActorType at) {
@@ -575,8 +615,7 @@ GraphObject::Direction StudentWorld::lineOfSightToIceman(int protestorX, int pro
 					return GraphObject::none;
 				}
 			}
-			return GraphObject::left;
-				
+			return GraphObject::left;			
 		}
 	}
 	else if (protestorX == icemanPtr->getX()) { /// if on same column
@@ -594,9 +633,72 @@ GraphObject::Direction StudentWorld::lineOfSightToIceman(int protestorX, int pro
 					return GraphObject::down;
 				}
 			}
-
 		}
-
 	}
 	return GraphObject::none;
+}
+
+
+
+
+// Checks if a point is within the grid
+bool isValid(int x, int y) {
+	return x >= 0 && x < 65 && y >= 0 && y < 65;
+}
+
+GraphObject::Direction StudentWorld::shortestPath(int startX, int startY, int endX, int endY) {
+	std::queue<std::pair<int, int>> queue;
+	queue.push({ startX, startY });
+	for (int i = 0; i < 64; i++) { //have to reset visited
+		for (int j = 0; j < 64; j++) {
+			visited[i][j] = false;
+		}
+	}
+	visited[startX][startY] = true;
+ 	parent[startX][startY] = { -1, -1 };
+
+
+
+	while (!queue.empty()) {
+
+
+	
+		std::pair<int, int> point = queue.front();
+		queue.pop();
+
+		if (point.first == endX && point.second == endY) {  // found end point
+			std::vector<std::pair<int, int>> path;
+			while (point != std::make_pair(-1, -1)) {
+				path.push_back(point);
+				point = parent[point.first][point.second];
+			}
+			std::reverse(path.begin(), path.end());
+
+			if (path[1].first > startX) {
+				return GraphObject::right;
+			}
+			if (path[1].first < startX) {
+				return GraphObject::left;
+			}
+			if (path[1].second > startY) {
+				return GraphObject::up;
+			}
+			if (path[1].second < startY) {
+				return GraphObject::down;
+			}
+		}
+
+		for (const auto& direction : DIRECTIONS) {
+			int newX = point.first + direction.first;
+			int newY = point.second + direction.second;
+
+			if (isValid(newX, newY) && !visited[newX][newY] && !isThereIce(newX, newY) && !isBlocked(newX, newY)) {
+				parent[newX][newY] = point;
+				visited[newX][newY] = true;
+				queue.push({ newX, newY });
+			}
+		}
+	}
+	
+	return {};  // return an empty pair if no path exists
 }
