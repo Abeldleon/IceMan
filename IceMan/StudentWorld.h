@@ -16,6 +16,7 @@
 //class Ice;
 
 const int ICE_HEIGHT = 60;
+const std::pair<int, int> DIRECTIONS[] = { {0, -1}, {0, 1}, {-1, 0}, {1, 0} };
 
 class StudentWorld : public GameWorld
 {
@@ -57,7 +58,6 @@ public:
 		tickAtWhichLastProtestorWasAdded = numTicksToAddNewProtestor;
 		//actorPtr.push_back(new RegularProtestor(1, 200, protestorDelayTicks, stunnedProtestorTicks, this)); // populate first protestor at first tick
 
-
 		// constructing oil field and inserting iceman
 		populateIce();
 		populateBoulders();
@@ -96,7 +96,7 @@ public:
 	void populateWaterSquirt();
 	void populateProtestor();
 
-	double distanceToIceman();
+	double distanceToIceman(int x, int y);
 	double objectDistance(int xPos, int yPos , Actor *otherActor); // returns euclidean distance to avoid populating objects close to one another
 	bool invalidCoord(const int& x1, const int& y1);
 	bool isThereIceInThisDirection(int xPos, int yPos, GraphObject::Direction direction);
@@ -120,7 +120,8 @@ public:
 	bool squirtOverlapsProtestor(int squirtX, int squirtY, int& numProtestorsOverlapping);
 	GraphObject::Direction lineOfSightToIceman(int protestorX, int protestorY) ;
 	bool goldOverlapsProtestor(int goldX, int goldY);
-
+	void solveMaze(int x, int y);
+	GraphObject::Direction shortestPath(int startX, int startY, int endX, int endY);
 	virtual int move()
 	{
 		// This code is here merely to allow the game to build, run, and terminate after you hit enter a few times.
@@ -241,6 +242,11 @@ private:
 	int probForHardcore;
 	int numProtestors;
 	int stunnedProtestorTicks;
+
+	bool visited[VIEW_WIDTH][VIEW_HEIGHT] = { {false} };
+	std::pair<int, int> parent[VIEW_WIDTH][VIEW_HEIGHT];
+
+
 };
 
 #endif // STUDENTWORLD_H_
